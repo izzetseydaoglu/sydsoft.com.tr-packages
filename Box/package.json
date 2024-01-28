@@ -1,0 +1,43 @@
+{
+  "name": "@sydsoft.com.tr/box",
+  "private": false,
+  "version": "1.0.4",
+  "description": "",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir ./dist/csj",
+    "publishNPM": "npm run build && npm publish --dry-run && npm publish --access public"
+  },
+  "keywords": [],
+  "author": "izzetseydaoglu",
+  "license": "MIT",
+  "bugs": {
+    "email": "izzetseydaoglu@gmail.com",
+    "url": "https://github.com/izzetseydaoglu/_slib_reactts-box/issues"
+  },
+  "homepage": "https://github.com/izzetseydaoglu/_slib_reactts-box/#readme",
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18",
+    "styled-components": "^6.1.8"
+  },
+  "devDependencies": {
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "styled-components": "^6.1.8",
+    "typescript": "^5"
+  }
+}
