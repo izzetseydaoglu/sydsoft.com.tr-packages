@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2023
+ *  @author: izzetseydaoglu
+ *  @last-modified: 29.01.2024 02:41
+ */
+
 import React, {memo, useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 

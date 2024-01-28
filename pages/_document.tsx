@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2023
+ *  @author: izzetseydaoglu
+ *  @last-modified: 29.01.2024 02:41
+ */
+
 import Document, {Head, Html, Main, NextScript} from "next/document";
 
 export default class MyDocument extends Document {
