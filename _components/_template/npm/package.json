@@ -1,43 +1,41 @@
 {
-  "name": "@sydsoft.com.tr/box",
+  "name": "@sydsoft.com.tr/_template",
   "private": false,
-  "version": "1.0.4",
+  "version": "1.1.1",
   "description": "",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "files": [
-    "dist",
+    "./dist/",
     "LICENSE",
     "README.md"
   ],
   "scripts": {
-    "build": "npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --outDir ./dist/csj",
+    "build": "rm -rf ./dist && tsc && tsc --module commonjs --outDir ./dist/csj",
+    "listFiles": "npm publish --dry-run",
     "publishNPM": "npm run build && npm publish --dry-run && npm publish --access public"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [],
   "author": "izzetseydaoglu",
   "license": "MIT",
   "bugs": {
     "email": "izzetseydaoglu@gmail.com",
-    "url": "https://github.com/izzetseydaoglu/_slib_reactts-box/issues"
+    "url": "https://github.com/izzetseydaoglu/sydsoft.com.tr-packages"
   },
-  "homepage": "https://github.com/izzetseydaoglu/_slib_reactts-box/#readme",
+  "homepage": "https://github.com/izzetseydaoglu/sydsoft.com.tr-packages/#readme",
   "peerDependencies": {
     "react": "^18",
-    "react-dom": "^18",
-    "styled-components": "^6.1.8"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
-    "styled-components": "^6.1.8",
     "typescript": "^5"
   }
 }
