@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {memo, useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
     fullScreen?: boolean
 }
 
-export const Box: React.FC<Props> = React.memo(({children, className, style, margin = "0 0 20px 0", padding = 20, loading = false, fullScreen = false}) => {
+export const Box = memo(function MemoFunction({children, className, style, margin = "0 0 20px 0", padding = 20, loading = false, fullScreen = false}: Props) {
     const refMain = useRef<any>(null);
     const [fullHeightContent, setFullHeightContent] = useState<any>("100%");
 
@@ -34,7 +34,7 @@ export const Box: React.FC<Props> = React.memo(({children, className, style, mar
         style={style}
         margin={fullScreen ? "0" : margin}
         padding={fullScreen ? 0 : padding}
-        fullScreen={fullScreen}
+        $fullScreen={fullScreen}
     >
         {(fullScreen) ? <div style={{height: fullHeightContent}}>{children}</div> : children}
         {loading && <div className={"loading"}>
@@ -43,7 +43,7 @@ export const Box: React.FC<Props> = React.memo(({children, className, style, mar
     </MainBase>;
 })
 
-const MainBase = styled.div<Props>`
+const MainBase = styled.div<any>`
     position: relative;
     //width: 100%;
     max-width: 100%;
@@ -52,12 +52,12 @@ const MainBase = styled.div<Props>`
     background-color: #fff;
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
     border-radius: 8px;
-    ${({fullScreen}) => (fullScreen) && `
-    height: 100%;
-    margin:0;
-    padding:0;
-    border-radius:0;
-  `};
+    ${({$fullScreen}) => ($fullScreen) && `
+        height: 100%;
+        margin:0;
+        padding:0;
+        border-radius:0;
+   `};
 
     .sbox_header {
         background: #fff;

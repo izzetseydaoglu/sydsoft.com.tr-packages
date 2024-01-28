@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
     marginTop?: number,
 }
 
-export const BoxFooter: React.FC<Props> = React.memo(({children, className, style, marginTop}) => {
+export const BoxFooter = memo(function FunctionMemo({children, className, style, marginTop}: Props) {
     return <MainBase
         className={(className) ? "sbox_footer " + className : "sbox_footer"}
         style={{
@@ -18,7 +18,8 @@ export const BoxFooter: React.FC<Props> = React.memo(({children, className, styl
     >
         {children}
     </MainBase>
-})
+});
+
 
 const MainBase = styled.div`
     display: flex;

@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 export default function Home() {
     return (
         <main>
-            Test - Anasayfa
+            <Link href={"/test/box"}>Box</Link><br/>
         </main>
     );
 }
