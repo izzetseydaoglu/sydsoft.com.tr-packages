@@ -1,10 +1,10 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 29.01.2024 19:41
  */
 
-import React from "react";
+import React, {memo} from "react";
 import styled from "styled-components";
 import {Breakpoints} from "./Breakpoints";
 
@@ -22,7 +22,8 @@ interface Props {
     xxl?: gridValues
 }
 
-export const Col: React.FC<Props> = React.memo(({children, className, style, xs, sm, md, lg, xl, xxl}) => {
+
+export const Col = memo(function MemoFunction({children, className, style, xs, sm, md, lg, xl, xxl}: Props) {
     let renderOlcek: { xxl: number | string; xl: number | string; lg: number | string; md: number | string; sm: number | string; xs: number | string; };
     renderOlcek = {xs: 12, sm: 12, md: 12, lg: 12, xl: 12, xxl: 12};
     renderOlcek.xxl = xxl || xl || lg || md || sm || xs || 12;
@@ -40,7 +41,7 @@ export const Col: React.FC<Props> = React.memo(({children, className, style, xs,
     >
         {children}
     </MainBase>;
-})
+});
 
 
 const calcColResponsive = (val: any) => {
@@ -58,45 +59,45 @@ const calcColResponsive = (val: any) => {
         max-width:100%;   
       `;
     }
+    // @ts-ignore
     if (parseInt(val) > 0) {
-        return `
-        flex-basis:${((parseInt(val) * 100) / 12) + "%"};
-        flex-grow:0;   
-        max-width:${((parseInt(val) * 100) / 12) + "%"};   
-      `;
+        // @ts-ignore
+        return `flex-basis:${((parseInt(val) * 100) / 12) + "%"};flex-grow:0;max-width:${((parseInt(val) * 100) / 12) + "%"};`;
     }
+    return "";
 }
 
-const MainBase = styled.div<Props>`
-  position: relative;
-  width: auto;
-  box-sizing: border-box;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: auto;
+const MainBase = styled.div<any>`
+    position: relative;
+    width: auto;
+    box-sizing: border-box;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
 
-  // @DIKKAT - Burada sıralama önemli, geniş ekrandan başlayıp aşağı doğru yazılır.
-  ${Breakpoints.xxl} {
-    ${(props) => calcColResponsive(props.xxl)}
-  }
+    // @DIKKAT - Burada sıralama önemli, geniş ekrandan başlayıp aşağı doğru yazılır.
 
-  ${Breakpoints.xl} {
-    ${(props) => calcColResponsive(props.xl)}
-  }
+    ${Breakpoints.xxl} {
+        ${(props) => calcColResponsive(props.xxl)}
+    }
 
-  ${Breakpoints.lg} {
-    ${(props) => calcColResponsive(props.lg)}
-  }
+    ${Breakpoints.xl} {
+        ${(props) => calcColResponsive(props.xl)}
+    }
 
-  ${Breakpoints.md} {
-    ${(props) => calcColResponsive(props.md)}
-  }
+    ${Breakpoints.lg} {
+        ${(props) => calcColResponsive(props.lg)}
+    }
 
-  ${Breakpoints.sm} {
-    ${(props) => calcColResponsive(props.sm)}
-  }
+    ${Breakpoints.md} {
+        ${(props) => calcColResponsive(props.md)}
+    }
 
-  ${Breakpoints.xs} {
-    ${(props) => calcColResponsive(props.xs)}
-  }
+    ${Breakpoints.sm} {
+        ${(props) => calcColResponsive(props.sm)}
+    }
+
+    ${Breakpoints.xs} {
+        ${(props) => calcColResponsive(props.xs)}
+    }
 `;

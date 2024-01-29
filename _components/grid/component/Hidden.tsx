@@ -1,10 +1,10 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 29.01.2024 19:41
  */
 
-import React from "react";
+import React, {memo, useEffect} from "react";
 import {BreakpointsValues} from "./Breakpoints";
 
 interface Props {
@@ -13,10 +13,8 @@ interface Props {
     onlyHidden?: string[]
 }
 
-
-export const Hidden: React.FC<Props> = React.memo(({children, hidden, onlyHidden}) => {
-
-    React.useEffect((): void => {
+export const Hidden = memo(function MemoFunction({children, hidden, onlyHidden}: Props) {
+    useEffect((): void => {
         if (typeof window === "undefined") return;
         const cssCheck = document.getElementsByClassName("shidden_css")[0];
         if (!cssCheck) {
@@ -46,8 +44,8 @@ export const Hidden: React.FC<Props> = React.memo(({children, hidden, onlyHidden
     }
 
     return React.cloneElement(children, {className: classList.join(" ")});
+});
 
-})
 const shidden_css = `
 @media only screen and (max-width: ${BreakpointsValues.xs}px) {
     .shidden-xs { display: none !important; }
