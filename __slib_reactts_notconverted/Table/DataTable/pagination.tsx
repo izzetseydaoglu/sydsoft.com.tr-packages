@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 29.01.2024 21:51
  */
 
 import {Button} from "../../Form";
-import Icon from "../../Icon/Icon";
+import Icon from "../../../_components/icon/component/Icon";
 import Popover from "../../Popover";
 import {Menu} from "../../Menu";
 

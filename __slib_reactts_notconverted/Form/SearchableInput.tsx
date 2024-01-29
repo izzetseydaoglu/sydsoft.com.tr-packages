@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 29.01.2024 21:51
  */
 
 
@@ -9,7 +9,7 @@
 import React, {useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react'
 import styled from 'styled-components'
 import {Input, PropsInput} from "./Input";
-import Icon from "../Icon/Icon";
+import Icon from "../../_components/icon/component/Icon";
 import {Button} from "./Button";
 import {convertForSearch} from "../_globalFunctions";
 import {isDev} from "@/_slib_reactts/_globalFunctions";

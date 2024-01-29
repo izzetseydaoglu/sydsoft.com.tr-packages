@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 29.01.2024 21:51
  */
 import React from "react";
 import styled from "styled-components";
@@ -17,7 +17,7 @@ interface Props {
 }
 
 
-const Icon: React.FC<Props> = React.memo(({className, style, iconOzel, iconMui, ...other}) => {
+export const Icon: React.FC<Props> = ({className, style, iconOzel, iconMui, ...other}) => {
 
     if (iconMui) {
         return <Mui style={style} className={className ? className + " material-icons" : "material-icons"} aria-hidden="true" {...other}>{iconMui}</Mui>
@@ -42,8 +42,7 @@ const Icon: React.FC<Props> = React.memo(({className, style, iconOzel, iconMui, 
         }
     }
     return null;
-})
-export default Icon;
+}
 
 const ozelIkonlar = [
     {

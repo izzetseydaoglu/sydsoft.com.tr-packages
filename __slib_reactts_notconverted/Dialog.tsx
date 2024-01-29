@@ -1,10 +1,10 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 29.01.2024 21:51
  */
 import React from "react";
-import Modal from "./Modal/Modal";
+import Modal from "../_components/modal/component/Modal";
 import {Button} from "./Form";
 import {htmlParser, isDev} from "@/_slib_reactts/_globalFunctions";
 import {createRoot} from "react-dom/client";
