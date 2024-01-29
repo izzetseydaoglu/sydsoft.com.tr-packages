@@ -1,13 +1,13 @@
 {
-  "name": "@sydsoft.com.tr/box",
+  "name": "@sydsoft.com.tr/alert",
   "private": false,
-  "version": "1.1.7",
+  "version": "1.0.0",
   "description": "",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "files": [
-    "./dist",
+    "./dist/",
     "LICENSE",
     "README.md"
   ],
@@ -38,7 +38,6 @@
     "@types/react-dom": "^18",
     "react": "^18",
     "react-dom": "^18",
-    "styled-components": "^6.1.8",
     "typescript": "^5"
   }
 }

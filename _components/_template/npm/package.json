@@ -1,7 +1,7 @@
 {
   "name": "@sydsoft.com.tr/_template",
   "private": false,
-  "version": "1.1.1",
+  "version": "1.0.0",
   "description": "",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -12,7 +12,8 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rm -rf ./dist && tsc && tsc --module commonjs --outDir ./dist/csj",
+    "build": "rm -rf ./dist && tsc",
+    "buildCommonJS": "rm -rf ./dist && tsc && tsc --module commonjs --outDir ./dist/csj",
     "listFiles": "npm publish --dry-run",
     "publishNPM": "npm run build && npm publish --dry-run && npm publish --access public"
   },
