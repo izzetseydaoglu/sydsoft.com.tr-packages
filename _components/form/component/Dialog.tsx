@@ -1,14 +1,14 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 21:51
+ *  @last-modified: 30.01.2024 04:13
  */
 import React from "react";
-import Modal from "../_components/modal/component/Modal";
-import {Button} from "./Form";
-import {htmlParser, isDev} from "@/_slib_reactts/_globalFunctions";
 import {createRoot} from "react-dom/client";
+import HTMLReactParser from "html-react-parser";
+import {Modal} from "@sydsoft.com.tr/modal";
 import {Box, BoxFooter} from "@sydsoft.com.tr/box";
+import {Button} from "./Button";
 
 
 export type propsDialog = {
@@ -29,9 +29,8 @@ export type propsDialog = {
 
 }
 
-export const sDialog = (config: propsDialog) => new Promise((resolve) => {
+export const Dialog = (config: propsDialog) => new Promise((resolve) => {
     if (typeof window === "undefined") return false;
-    isDev && console.log("sDialog");
     let mainDiv: any = document.getElementById("sdialog");
     if (!mainDiv) {
         const createDiv = document.createElement("div");
@@ -98,7 +97,7 @@ export const sDialog = (config: propsDialog) => new Promise((resolve) => {
     >
         <Box style={settings.styleBox}>
             <div style={settings.styleMessage}>
-                {htmlParser(settings.message)}
+                {HTMLReactParser(settings.message)}
             </div>
             {(settings.acceptButtonShow || settings.cancelButtonShow) && (
                 <BoxFooter style={settings.styleBoxFooter}>

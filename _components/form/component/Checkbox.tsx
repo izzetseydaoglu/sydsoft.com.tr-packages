@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 30.01.2024 04:13
  */
 
 import React, {useRef} from 'react'
@@ -53,6 +53,7 @@ export const Checkbox: React.FC<Props> = ({
                 checked={checked}
                 required={required}
                 style={styleCheckbox}
+                disabled={disabled}
             />
             {label && <label onClick={toogleCheck} style={styleLabel}>{label}</label>}
             {children && <div>{children}</div>}
@@ -61,17 +62,17 @@ export const Checkbox: React.FC<Props> = ({
 }
 
 const MainBase = styled.div`
-  position: relative;
-  display: inline-flex;
-  align-items: flex-start;
-  justify-content: center;
-  box-sizing: border-box;
-  font-size: 1rem;
-  line-height: 1.4375em;
-  user-select: none;
-  
-  input,label {
-    cursor: pointer !important;
-  }
+    position: relative;
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: center;
+    box-sizing: border-box;
+    font-size: 1rem;
+    line-height: 1.4375em;
+    user-select: none;
+
+    input, label {
+        cursor: pointer !important;
+    }
 
 `

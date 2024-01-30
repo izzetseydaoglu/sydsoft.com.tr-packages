@@ -1,19 +1,34 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 30.01.2024 04:13
+ */
+
+/**
+ * TODO: Bu güncellemeleri daha sonra yapalım.
+ * - StyledComponents'i kaldırıp, sadece css kullanalım.
+ *
  */
 
 import React, {useRef} from 'react';
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
-export const upload_ext_ok = ["pdf", "doc", "docx", "xls", "xlsx", "jpg", "jpeg", "png", "bmp", "tiff", "tif", "udf", "txt", "rtf", "csv", "xml", "zip", "rar"];
-export const upload_maxsize = 30;
-export const upload_maxfile = 50;
 
-export default function ButtonUpload(props: any) {
-    const {style, button, onChange, ext_ok, maxSize, multiple, ...other} = props;
+interface Props {
+    button: any,
+    multiple?: boolean,
+    ext_ok?: string[],
+    maxSize?: number,
+    onChange?: any,
+    style?: React.CSSProperties
+}
+
+const upload_ext_ok = ["pdf", "doc", "docx", "xls", "xlsx", "jpg", "jpeg", "png", "bmp", "tiff", "tif", "udf", "txt", "rtf", "csv", "xml", "zip", "rar"];
+const upload_maxsize = 30;
+const upload_maxfile = 50;
+
+export default function ButtonUpload({multiple = false, maxSize = upload_maxsize, ext_ok = upload_ext_ok, ...other}: Props) {
+    const {style, button, onChange} = other;
 
 
     const fileSelected = (e: any) => {
@@ -50,46 +65,33 @@ export default function ButtonUpload(props: any) {
 
 
     const refUploadBtn = useRef<any>();
-    return <SydUploadBase style={style} onClick={() => refUploadBtn.current.click()}>
-        {button}
-        <input className={"input"}
-               ref={refUploadBtn}
-               type={"file"}
-               onChange={fileSelected}
-               multiple={multiple}
-               accept={ext_ok.map((i: any) => "." + i).join(",")}
-               {...other}
-        />
-    </SydUploadBase>
+    return (
+        <SydUploadBase style={style} onClick={() => refUploadBtn.current.click()}>
+            {button}
+            <input className={"input"}
+                   ref={refUploadBtn}
+                   type={"file"}
+                   onChange={fileSelected}
+                   multiple={multiple}
+                   accept={ext_ok.map((i: any) => "." + i).join(",")}
+                   {...other}
+            />
+        </SydUploadBase>
+    )
 
-};
-
-ButtonUpload.propTypes = {
-    button: PropTypes.any.isRequired,
-    multiple: PropTypes.bool,
-    ext_ok: PropTypes.array,
-    maxSize: PropTypes.number,
-    onChange: PropTypes.any,
-    style: PropTypes.object,
-};
-
-ButtonUpload.defaultProps = {
-    multiple: false,
-    maxSize: upload_maxsize,
-    ext_ok: upload_ext_ok
 };
 
 
 const SydUploadBase = styled.div`
-  position: relative;
+    position: relative;
 
-  .input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    pointer-events: none;
-  }
+    .input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0;
+        pointer-events: none;
+    }
 `;

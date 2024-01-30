@@ -1,13 +1,13 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 30.01.2024 04:13
  */
 
-import React from "react";
-import {Col, Row, SpacingValues} from "../Grid";
+import React, {memo} from "react";
 import {Label} from "./Label";
 import useDeepCompareEffect from "use-deep-compare-effect";
+import {Col, Row, SpacingValues} from "@sydsoft.com.tr/grid";
 
 type gridValues = "auto" | "full" | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type grid = {
@@ -47,7 +47,7 @@ interface Props {
 }
 
 
-export const FormOlustur: React.FC<Props> = React.memo(props => {
+export const FormOlustur = memo(function FunctionMemo(props: Props) {
 
     useDeepCompareEffect(() => {
         if (props.formOgeler && props.onChange && props.form) {
@@ -124,20 +124,3 @@ export const FormOlustur: React.FC<Props> = React.memo(props => {
 
 });
 
-
-FormOlustur.defaultProps = {
-    formType: "label",
-    justifyContent: "flex-start",
-    sabitGrid: {
-        label: {
-            xs: 12,
-            md: 4
-        },
-        input: {
-            xs: 12,
-            md: 8
-        }
-    },
-    rowSpacing: 2,
-    colSpacing: 2
-}

@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 21:51
+ *  @last-modified: 30.01.2024 04:13
  */
 
 
@@ -9,10 +9,8 @@
 import React, {useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react'
 import styled from 'styled-components'
 import {Input, PropsInput} from "./Input";
-import Icon from "../../_components/icon/component/Icon";
 import {Button} from "./Button";
-import {convertForSearch} from "../_globalFunctions";
-import {isDev} from "@/_slib_reactts/_globalFunctions";
+import {Icon} from "@sydsoft.com.tr/icon";
 
 interface Props extends PropsInput {
     autoCompleteList: { value?: string, label?: string, [key: string | number]: any }[] | any,
@@ -41,9 +39,14 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
     onChange, inputRef, valueKey = "value", labelKey = "label", placeholder, endAdornment,
     refModal = null, ...other
 }, forwardedRef) => {
+    const isDev = (!process.env.NODE_ENV || process.env.NODE_ENV === "development");
 
-    const refMain = useRef<any>();
-    const refInput = inputRef || useRef<any>();
+    const refInput = useRef<any>(null)
+    const refMain = useRef<any>(null);
+    useEffect(() => {
+        if (inputRef) inputRef.current = refInput.current;
+    }, [inputRef]);
+
     const refComponentInput = useRef<any>();
     const refList = useRef<any>();
 
@@ -117,6 +120,23 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
             window.removeEventListener("keydown", checkESC);
         }
     }, [autoCompleteList, open])
+    const isString = (value: any) => typeof value === 'string' || value instanceof String;
+    const cevirTumuKucuk = (text: any = "") => {
+        if (!isString(text)) return text;
+        return text.toString().toLocaleLowerCase("tr-TR")
+    }
+    const convertForSearch = (value: string) => {
+        let data = cevirTumuKucuk(value);
+        data = data.replace(/ö/g, 'o');
+        data = data.replace(/ç/g, 'c');
+        data = data.replace(/ş/g, 's');
+        data = data.replace(/ı/g, 'i');
+        data = data.replace(/ğ/g, 'g');
+        data = data.replace(/ü/g, 'u');
+        data = data.replace(/[^a-z\d]/g, ""); // %_- are allowed
+        data = data.replace(/^\s+|\s+$/g, "");
+        return data;
+    };
 
     const data = useMemo(() => {
         let list: any[];
@@ -342,75 +362,75 @@ export const SearchableInput = React.forwardRef(Component);
 
 
 const MainBase = styled.div`
-  .inputbase > .input {
-    padding: 9.4px 9.4px 9.4px 14px;
-  }
-
-  .list {
-    position: relative;
-    margin-top: -4px;
-    z-index: 1000;
-
-    ul {
-      position: absolute;
-      top: 3px;
-      left: 1%;
-      width: 98%;
-      height: 0;
-      overflow: hidden;
-      background: transparent;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-
-      &.open {
-        height: auto;
-        max-height: 300px;
-        overflow-x: hidden;
-        overflow-y: visible;
-        //scroll-behavior: smooth;
-        padding: 5px 0;
-        border: 1px #ced4da solid;
-        background: #fff;
-      }
-
-      li {
-        cursor: pointer;
-        display: block;
-        padding: 8px 10px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-
-        &:hover, &.selected {
-          background: #d9e0e3;
-        }
-
-        &.active {
-          background: #e1eff7;
-          font-weight: 500;
-        }
-
-        .create {
-          margin-right: 5px;
-          font-style: italic;
-        }
-      }
-
-      .message {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        display: block;
-        padding: 15px 10px;
-        cursor: default;
-
-        &.loading {
-          padding: 5px 10px;
-          background-color: #ced4da38;
-          text-align: center;
-        }
-      }
+    .inputbase > .input {
+        padding: 9.4px 9.4px 9.4px 14px;
     }
-  }
+
+    .list {
+        position: relative;
+        margin-top: -4px;
+        z-index: 1000;
+
+        ul {
+            position: absolute;
+            top: 3px;
+            left: 1%;
+            width: 98%;
+            height: 0;
+            overflow: hidden;
+            background: transparent;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            &.open {
+                height: auto;
+                max-height: 300px;
+                overflow-x: hidden;
+                overflow-y: visible;
+                //scroll-behavior: smooth;
+                padding: 5px 0;
+                border: 1px #ced4da solid;
+                background: #fff;
+            }
+
+            li {
+                cursor: pointer;
+                display: block;
+                padding: 8px 10px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+
+                &:hover, &.selected {
+                    background: #d9e0e3;
+                }
+
+                &.active {
+                    background: #e1eff7;
+                    font-weight: 500;
+                }
+
+                .create {
+                    margin-right: 5px;
+                    font-style: italic;
+                }
+            }
+
+            .message {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                display: block;
+                padding: 15px 10px;
+                cursor: default;
+
+                &.loading {
+                    padding: 5px 10px;
+                    background-color: #ced4da38;
+                    text-align: center;
+                }
+            }
+        }
+    }
 `

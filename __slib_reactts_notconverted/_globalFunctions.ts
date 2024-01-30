@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 30.01.2024 04:13
  */
 
 import {useEffect, useRef} from "react";
@@ -162,7 +162,6 @@ export const detectOs = () => {
     }
     return operatingSystem;
 }
-
 
 export const validateEmail = (email: string) => {
     return String(email)

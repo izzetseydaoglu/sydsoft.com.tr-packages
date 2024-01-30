@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 21:51
+ *  @last-modified: 30.01.2024 04:13
  */
 import React, {memo, useEffect, useRef, useState} from "react";
 import ReactDOM from "react-dom";
@@ -26,13 +26,18 @@ interface Props {
 }
 
 
-export const Row = memo(function MemoFunction({
+export const Modal = memo(function MemoFunction({
     refModal = null, children, open = false, close,
     keepMounted = false, fullScreen = false, hideBackdrop = true, hideEsc = false, hideCloseButton = false,
     modalStyle, backdropStyle, vertialAlign = "center", horizontalAlign = "center"
 }: Props) {
     const [modalDiv, setModalDiv] = useState<HTMLElement | null>(null);
-    const ref = useRef<HTMLDivElement | null>(refModal || null);
+    const ref = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        if (refModal) refModal.current = ref.current;
+    }, [refModal]);
+
 
     const onClose = () => {
         if (close) close();

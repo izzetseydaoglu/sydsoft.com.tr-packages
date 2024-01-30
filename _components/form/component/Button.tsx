@@ -1,14 +1,14 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 30.01.2024 04:13
  */
 
 import React, {memo, useEffect, useState} from 'react'
 import styled from 'styled-components'
-import Tooltip, {typeTooltipPosition} from "../../_components/tooltip/component/Tooltip";
-import {propsDialog, sDialog} from "../Dialog";
 import Link from "next/link";
+import {Tooltip, typeTooltipPosition} from "@sydsoft.com.tr/tooltip";
+import {Dialog, propsDialog} from "./Dialog";
 
 interface Props {
     children?: React.ReactNode
@@ -57,6 +57,7 @@ export const Button = memo(function MemoFunction({
     autoFocus,
     ...other
 }: Props) {
+
     const ripple = (e: any): void => {
         const el = e.currentTarget
         const circle = document.createElement('span')
@@ -71,7 +72,7 @@ export const Button = memo(function MemoFunction({
     const handleClick = (e: any) => {
         ripple(e)
         if (dialog) {
-            sDialog(dialog).then(result => {
+            Dialog(dialog).then(result => {
                 if (result && onClick) {
                     onClick(e)
                 }
@@ -80,7 +81,6 @@ export const Button = memo(function MemoFunction({
             if (onClick) onClick(e)
         }
     }
-
 
     const createClassList = () => {
         const list = ['sbutton'];

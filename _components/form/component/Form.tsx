@@ -1,10 +1,10 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 30.01.2024 04:13
  */
 
-import React, {FormEventHandler} from "react";
+import React, {FormEventHandler, memo} from "react";
 
 interface Props {
     children?: React.ReactNode,
@@ -13,7 +13,7 @@ interface Props {
     disableOnEnterSubmit?: boolean,
 }
 
-export const Form: React.FC<Props> = React.memo(({onSubmit, style, disableOnEnterSubmit = false, ...other}) => {
+export const Form = memo(function FunctionMemo({onSubmit, style, disableOnEnterSubmit = false, ...other}: Props) {
     const onKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
         if (e.key === "Enter" && disableOnEnterSubmit) {
             e.preventDefault();
