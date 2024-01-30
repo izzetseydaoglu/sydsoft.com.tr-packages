@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 30.01.2024 04:13
+ *  @last-modified: 30.01.2024 04:44
  */
 
 import React, {useRef, useState} from "react";
 import {Button, Input} from "../../_components/form/component";
-import {Icon} from "@sydsoft.com.tr/icon";
+import {Icon} from "../../_components/icon/component/Icon";
 
 export default function Home() {
     const [showpassword, setShowPassword] = useState<boolean>(false)

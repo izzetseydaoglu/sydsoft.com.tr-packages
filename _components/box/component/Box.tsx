@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 02:41
+ *  @last-modified: 30.01.2024 04:44
  */
 
 import React, {memo, useEffect, useRef, useState} from "react";
@@ -89,7 +89,6 @@ const MainBase = styled.div<any>`
         margin-left: -${({padding}) => padding}px;
         margin-right: -${({padding}) => padding}px;
     }
-
 
     & > .loading {
         position: absolute;
