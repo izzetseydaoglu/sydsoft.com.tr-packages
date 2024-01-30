@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 30.01.2024 04:13
+ *  @last-modified: 31.01.2024 02:50
  */
 import React, {memo, useEffect, useRef, useState} from "react";
 import ReactDOM from "react-dom";
@@ -81,27 +81,33 @@ export const Modal = memo(function MemoFunction({
 
     if ((!keepMounted && !open) || typeof window === "undefined") return null;
 
-    const Component = <MainBase style={{alignItems: vertialAlign, justifyContent: horizontalAlign, ...backdropStyle}} open={open} fullScreen={fullScreen}>
-        <div ref={ref} className={"modal"} style={modalStyle}>
-            {(!hideCloseButton) && (
-                <Tooltip title={"Kapat"} position={"left"} distance={(fullScreen) ? 50 : 30}>
-                    <div className={"close_fixed"}>
-                        <div className={"close"} onClick={onClose}>✕</div>
-                    </div>
-                </Tooltip>
-            )}
-            {children}
-        </div>
-    </MainBase>;
+    const Component = (
+        <MainBase
+            style={{alignItems: vertialAlign, justifyContent: horizontalAlign, ...backdropStyle}}
+            $open={open}
+            $fullScreen={fullScreen}
+        >
+            <div ref={ref} className={"modal"} style={modalStyle}>
+                {(!hideCloseButton) && (
+                    <Tooltip title={"Kapat"} position={"left"} distance={(fullScreen) ? 50 : 30}>
+                        <div className={"close_fixed"}>
+                            <div className={"close"} onClick={onClose}>✕</div>
+                        </div>
+                    </Tooltip>
+                )}
+                {children}
+            </div>
+        </MainBase>
+    );
 
     return (modalDiv) ? ReactDOM.createPortal(Component, modalDiv) : null;
 });
 
-const MainBase = styled.div<Props>`
+const MainBase = styled.div<any>`
     position: fixed;
     z-index: 1300;
     inset: 0;
-    display: ${({open}) => (open) ? "flex" : "none"};
+    display: ${({$open}) => ($open) ? "flex" : "none"};
     align-items: center;
     justify-content: center;
     background: rgba(0, 0, 0, 0.23);
@@ -124,7 +130,7 @@ const MainBase = styled.div<Props>`
         z-index: 1;
         outline: none;
 
-        ${({fullScreen}) => fullScreen && `
+        ${({$fullScreen}) => $fullScreen && `
         max-width: 100%;
         width: 100%;
         height: 100%;

@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 02:41
+ *  @last-modified: 31.01.2024 02:50
  */
 
 import React, {memo, ReactNode} from "react";
@@ -22,7 +22,7 @@ interface Props {
 
 export const BoxHeader = memo(function FunctionMemo({className, title, icon, menu, mainStyle, iconStyle, titleStyle, menuStyle, marginBottom, component = "div"}: Props) {
     return <MainBase
-        component={component}
+        $component={component}
         className={className ? "sbox_header " + className : "sbox_header"}
         style={{
             marginBottom,
@@ -36,7 +36,7 @@ export const BoxHeader = memo(function FunctionMemo({className, title, icon, men
 })
 
 
-const MainBase = styled.div.attrs(({component}: Props) => ({as: component ? component : "div"}))<Props>`
+const MainBase = styled.div.attrs(({$component}: any) => ({as: $component ? $component : "div"}))<Props>`
     position: relative;
     min-width: 100%;
     //min-height: 50px;

@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 30.01.2024 04:13
+ *  @last-modified: 31.01.2024 02:50
  */
 
 import React, {memo, useEffect, useState} from 'react'
@@ -118,13 +118,13 @@ export const Button = memo(function MemoFunction({
             let checkHref = (other?.disabled) ? "#" : href;
             renderComponent = (
                 <Link href={checkHref} target={(other?.disabled) ? "_self" : target}>
-                    <MainBase component={"div"} {...ortakProps}>{onlyIcon ? onlyIcon : children}</MainBase>
+                    <MainBase $component={"div"} {...ortakProps}>{onlyIcon ? onlyIcon : children}</MainBase>
                 </Link>
             )
         }
     } else {
         renderComponent = (
-            <MainBase component={component} type={type} {...ortakProps}>
+            <MainBase $component={component} type={type} {...ortakProps}>
                 {onlyIcon ? onlyIcon : children}
             </MainBase>
         )
@@ -142,7 +142,7 @@ export const Button = memo(function MemoFunction({
 });
 
 
-const MainBase = styled.div.attrs<any>(({component}: Props) => ({as: component || 'button'}))<Props>`
+const MainBase = styled.div.attrs<any>(({$component}: any) => ({as: $component || 'button'}))<Props>`
     width: ${({$fullWidth}) => ($fullWidth ? '100%' : 'unset')};
     position: relative;
     display: inline-flex;

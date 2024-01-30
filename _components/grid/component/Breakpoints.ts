@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 19:41
+ *  @last-modified: 31.01.2024 02:50
  */
 
 export const BreakpointsValues = {
@@ -30,18 +30,3 @@ export const Breakpoints = {
 // Large	lg	≥992px
 // Extra large	xl	≥1200px
 // Extra extra large	xxl	≥1400px
-
-// // Small devices (landscape phones, 576px and up)
-// @media (min-width: 576px) { ... }
-//
-// // Medium devices (tablets, 768px and up)
-// @media (min-width: 768px) { ... }
-//
-// // Large devices (desktops, 992px and up)
-// @media (min-width: 992px) { ... }
-//
-// // X-Large devices (large desktops, 1200px and up)
-// @media (min-width: 1200px) { ... }
-//
-// // XX-Large devices (larger desktops, 1400px and up)
-// @media (min-width: 1400px) { ... }

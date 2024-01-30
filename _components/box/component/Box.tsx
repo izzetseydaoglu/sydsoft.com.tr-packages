@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 30.01.2024 04:44
+ *  @last-modified: 31.01.2024 02:50
  */
 
 import React, {memo, useEffect, useRef, useState} from "react";
@@ -11,8 +11,8 @@ type Props = {
     children: React.ReactNode,
     className?: string,
     style?: React.CSSProperties,
-    padding?: number
     margin?: string
+    padding?: number
     loading?: boolean
     fullScreen?: boolean
 }
@@ -31,15 +31,15 @@ export const Box = memo(function MemoFunction({children, className, style, margi
                 if (footer) diff += footer.getBoundingClientRect().height;
                 setFullHeightContent(`calc(100vh - ${diff}px)`);
             }
-        }, 500)
+        }, 500);
     }, []);
 
     return <MainBase
         ref={refMain}
         className={className ? "sbox " + className : "sbox"}
         style={style}
-        margin={fullScreen ? "0" : margin}
-        padding={fullScreen ? 0 : padding}
+        $margin={fullScreen ? "0" : margin}
+        $padding={fullScreen ? 0 : padding}
         $fullScreen={fullScreen}
     >
         {(fullScreen) ? <div style={{height: fullHeightContent}}>{children}</div> : children}
@@ -53,8 +53,8 @@ const MainBase = styled.div<any>`
     position: relative;
     //width: 100%;
     max-width: 100%;
-    margin: ${({margin}) => margin};
-    padding: ${({padding}) => padding}px;
+    margin: ${({$margin}) => $margin};
+    padding: ${({$padding}) => $padding}px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
     border-radius: 8px;
@@ -69,9 +69,9 @@ const MainBase = styled.div<any>`
         background: #fff;
         color: #646465;
         border-bottom: 1px solid #E6E5E6;
-        margin-top: -${({padding}) => padding}px;
-        margin-left: -${({padding}) => padding}px;
-        margin-right: -${({padding}) => padding}px;
+        margin-top: -${({$padding}) => $padding}px;
+        margin-left: -${({$padding}) => $padding}px;
+        margin-right: -${({$padding}) => $padding}px;
         margin-bottom: 15px;
         border-top-left-radius: inherit;
         border-top-right-radius: inherit;
@@ -85,9 +85,9 @@ const MainBase = styled.div<any>`
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         margin-top: 15px;
-        margin-bottom: -${({padding}) => padding}px;
-        margin-left: -${({padding}) => padding}px;
-        margin-right: -${({padding}) => padding}px;
+        margin-bottom: -${({$padding}) => $padding}px;
+        margin-left: -${({$padding}) => $padding}px;
+        margin-right: -${({$padding}) => $padding}px;
     }
 
     & > .loading {
