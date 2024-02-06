@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 21:51
+ *  @last-modified: 7.02.2024 02:05
  */
 import React from "react";
 import styled from "styled-components";
@@ -78,7 +78,7 @@ const ozelIkonlar = [
     }
 ];
 const Mui = styled.span<Props>`
-  user-select: none;
+    user-select: none;
   width: 1em;
   height: 1em;
   display: inline-block;

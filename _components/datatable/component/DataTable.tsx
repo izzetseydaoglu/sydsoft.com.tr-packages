@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 6.02.2024 23:45
+ *  @last-modified: 7.02.2024 02:05
  */
 
 import React, {useEffect, useState} from "react";
@@ -158,7 +158,7 @@ export const DataTable = ({columns, rows = [], actions, settings = {}, api = fal
 
 
     return (
-        <CSS_DataTable style={style} borderSpacing={config.borderSpacing}>
+        <CSS_DataTable style={style} $borderSpacing={config.borderSpacing}>
             <div className={"tablebase"}>
                 <table>
                     <TableNoApi_THEAD {...{columns, rows, config, setConfig, settingsFilter, setSettingsFilter, actions}}/>

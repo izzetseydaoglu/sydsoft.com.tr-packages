@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 6.02.2024 23:45
+ *  @last-modified: 7.02.2024 02:05
  */
 
 import styled from "styled-components";
 
-export const CSS_DataTable = styled.div.attrs<any>((props: { borderSpacing: number }) => props)`
+export const CSS_DataTable = styled.div.attrs<any>((props: any) => props)`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -57,7 +57,7 @@ export const CSS_DataTable = styled.div.attrs<any>((props: { borderSpacing: numb
 
     thead > tr:nth-child(1) > th {
       //position: relative;
-      border: ${(props: any) => props.borderSpacing}px solid #fff;
+        border: ${(props: any) => props.$borderSpacing}px solid #fff;
       border-bottom: 1px #d7d7d7 solid;
       border-top: none;
       cursor: default;
@@ -216,7 +216,7 @@ export const CSS_DataTable = styled.div.attrs<any>((props: { borderSpacing: numb
       }
 
       & > td {
-        border: ${(props: any) => props.borderSpacing}px solid #fff;
+          border: ${(props: any) => props.$borderSpacing}px solid #fff;
 
         .value {
           //margin: 0 auto;
