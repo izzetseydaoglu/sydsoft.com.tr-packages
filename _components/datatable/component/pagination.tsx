@@ -1,13 +1,14 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 21:51
+ *  @last-modified: 6.02.2024 23:45
  */
+import React from "react";
+import {Menu} from "@sydsoft.com.tr/menu";
+import {Popover} from "@sydsoft.com.tr/popover";
+import {Button} from "@sydsoft.com.tr/form";
+import {Icon} from "@sydsoft.com.tr/icon";
 
-import {Button} from "../../Form";
-import Icon from "../../../_components/icon/component/Icon";
-import Popover from "../../Popover";
-import {Menu} from "../../Menu";
 
 export const TableNoApi_Pagination = ({activePage, count, rowsPerPage, totalPages, setSettingsFilter}: any) => {
 
@@ -32,7 +33,7 @@ export const TableNoApi_Pagination = ({activePage, count, rowsPerPage, totalPage
     const RowsPerPageList = () => {
         const pages: any[] = []
         {
-            [5, 10, 15, 20, 30, 50, 100, 500, 1000].map((i, key) => {
+            [5, 10, 15, 20, 30, 50, 100, 500, 1000].map((i) => {
                 pages.push({
                     title: i,
                     onClick: () => setPageSize(i),

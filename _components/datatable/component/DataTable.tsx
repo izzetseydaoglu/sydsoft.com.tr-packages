@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 6.02.2024 23:45
  */
 
 import React, {useEffect, useState} from "react";
@@ -10,7 +10,7 @@ import {TableNoApi_THEAD} from "./thead";
 import {TableNoApi_TBODY} from "./tbody";
 import {TableNoApi_Pagination} from "./pagination";
 import useDeepCompareEffect from "use-deep-compare-effect";
-import {filterData, isDev, paginateData, sortData} from "../../_globalFunctions";
+import {filterData, paginateData, sortData} from "./func";
 
 type columnsType = {
     field: string,
@@ -145,7 +145,6 @@ export const DataTable = ({columns, rows = [], actions, settings = {}, api = fal
             setSettingsFilter(initialSettings)
             createDataNoApi();
         }
-        isDev && console.log("ChangeRows", rows);
     }, [rows, rows?.length])
 
 
@@ -158,7 +157,6 @@ export const DataTable = ({columns, rows = [], actions, settings = {}, api = fal
     };
 
 
-    isDev && console.log("DataTable", rows);
     return (
         <CSS_DataTable style={style} borderSpacing={config.borderSpacing}>
             <div className={"tablebase"}>

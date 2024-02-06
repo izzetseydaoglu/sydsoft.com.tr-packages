@@ -1,13 +1,13 @@
 {
-  "name": "@sydsoft.com.tr/box",
+  "name": "@sydsoft.com.tr/menu",
   "private": false,
-  "version": "1.1.9",
+  "version": "1.0.2",
   "description": "",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "files": [
-    "./dist",
+    "./dist/",
     "LICENSE",
     "README.md"
   ],
@@ -31,14 +31,13 @@
   "peerDependencies": {
     "react": "^18",
     "react-dom": "^18",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6"
   },
   "devDependencies": {
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "react": "^18",
     "react-dom": "^18",
-    "styled-components": "^6.1.8",
     "typescript": "^5"
   }
 }

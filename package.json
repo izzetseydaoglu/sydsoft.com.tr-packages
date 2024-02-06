@@ -11,9 +11,12 @@
   "dependencies": {
     "@sydsoft.com.tr/alert": "^1.0.0",
     "@sydsoft.com.tr/box": "^1.1.7",
+    "@sydsoft.com.tr/form": "^1.0.8",
     "@sydsoft.com.tr/grid": "^1.0.0",
     "@sydsoft.com.tr/icon": "^1.0.0",
+    "@sydsoft.com.tr/menu": "^1.0.2",
     "@sydsoft.com.tr/modal": "^1.0.1",
+    "@sydsoft.com.tr/popover": "^1.0.0",
     "@sydsoft.com.tr/tooltip": "^1.0.7",
     "html-react-parser": "^5.1.1",
     "jquery": "^3.7.1",

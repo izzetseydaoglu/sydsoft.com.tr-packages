@@ -1,17 +1,17 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 21:51
+ *  @last-modified: 6.02.2024 23:45
  */
 
-import Icon from "../../../_components/icon/component/Icon";
 import React, {useState} from "react";
-import {Input} from "../../Form";
-import Tooltip from "../../../_components/tooltip/component/Tooltip";
+import {Icon} from "@sydsoft.com.tr/icon";
+import {Tooltip} from "@sydsoft.com.tr/tooltip";
+import {Input} from "@sydsoft.com.tr/form";
 
 export const TableNoApi_THEAD = ({columns, rows, config, setConfig, settingsFilter, setSettingsFilter, actions}: any) => {
-    if (!config.header) return null;
     const [focusFilter, setFocusFilter] = useState<boolean>(false);
+    if (!config.header) return null;
 
     const handleSort = (field: string) => {
         setSettingsFilter((prev: any) => ({

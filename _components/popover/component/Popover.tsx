@@ -1,9 +1,9 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 6.02.2024 23:45
  */
-import React, {ReactElement, useEffect} from "react";
+import React, {memo, ReactElement, useEffect} from "react";
 import {createRoot} from "react-dom/client";
 
 type position = "top" | "bottom" | "left" | "right";
@@ -17,14 +17,12 @@ interface Props {
     distance?: number;
 }
 
-
-const Popover: React.FC<Props> = React.memo(({
+export const Popover = memo(function MemoFunction({
     children, component,
     position = "top", arrow = false, distance = 5,
     removeWhenClickInside = false,
     ...other
-}) => {
-
+}: Props) {
     // const refChildren = useRef<any>(null);
 
     useEffect((): any => {
@@ -165,9 +163,7 @@ const Popover: React.FC<Props> = React.memo(({
         onClick: popoverEkle,
         ...other,
     });
-})
-
-export default Popover;
+});
 
 const popoverCss = `
 .spopover {

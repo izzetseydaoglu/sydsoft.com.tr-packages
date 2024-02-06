@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 30.01.2024 04:13
+ *  @last-modified: 6.02.2024 23:45
  */
 
 import {useEffect, useRef} from "react";
@@ -42,69 +42,6 @@ export const convertForSearch = (value: string) => {
     return data;
 };
 
-export function filterData(rows: any[], filters: { [key: string]: any }): any[] {
-    if (isEmptyObject(filters)) {
-        return rows;
-    }
-
-    return Object.values(rows).filter((row) => {
-        return Object.keys(filters).every((field) => {
-            const value = row[field]
-            const operator = filters[field]["operator"];
-            const searchValue = filters[field]["value"]
-
-            if (isString(value)) {
-                if (operator == "=") {
-                    return value == searchValue;
-                } else {
-                    return convertForSearch(value).includes(convertForSearch(searchValue))
-                }
-            }
-
-            if (isBoolean(value)) {
-                return (searchValue === 'true' && value) || (searchValue === 'false' && !value)
-            }
-
-            if (isNumber(value)) {
-                return value == searchValue
-            }
-
-            return false
-        })
-    })
-}
-
-export function sortData(rows: any[], order: "asc" | "desc", orderBy: string): any[] {
-    function convertType(value: any) {
-        if (isNumber(value)) {
-            return value.toString()
-        }
-
-        if (isBoolean(value)) {
-            return value ? '1' : '-1'
-        }
-
-        return value
-    }
-
-    // return rows.sort((a, b) => {
-    return Object.values(rows).sort((a, b) => {
-
-        if (isNull(a[orderBy])) return 1
-        if (isNull(b[orderBy])) return -1
-
-        const aLocale = convertType(a[orderBy])
-        const bLocale = convertType(b[orderBy])
-
-        if (order === 'asc') {
-            return aLocale.localeCompare(bLocale, 'tr', {numeric: isNumber(b[orderBy])})
-        } else {
-            return bLocale.localeCompare(aLocale, 'tr', {numeric: isNumber(a[orderBy])})
-        }
-    })
-}
-
-export const paginateData = (data: any[], page: number, pageSize: number) => [...data].slice((page - 1) * pageSize, page * pageSize);
 
 export const cevir_array = (array: object[] = [], value: any, hedef = "value", istenen = "label") => {
     const r: any = array.find((item: any) => (convertForSearch(item[hedef].toString()) === convertForSearch(value.toString())))

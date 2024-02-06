@@ -1,11 +1,10 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 31.01.2024 02:50
+ *  @last-modified: 6.02.2024 23:45
  */
 
 import React, {memo, ReactNode} from "react";
-import styled from "styled-components";
 
 interface Props {
     className?: string,
@@ -21,8 +20,9 @@ interface Props {
 }
 
 export const BoxHeader = memo(function FunctionMemo({className, title, icon, menu, mainStyle, iconStyle, titleStyle, menuStyle, marginBottom, component = "div"}: Props) {
-    return <MainBase
-        $component={component}
+    const Comp = component;
+    return <Comp
+        data-component={component}
         className={className ? "sbox_header " + className : "sbox_header"}
         style={{
             marginBottom,
@@ -32,47 +32,7 @@ export const BoxHeader = memo(function FunctionMemo({className, title, icon, men
         {icon && <div className={"icon"} style={iconStyle}>{icon}</div>}
         {title && <div className={"title"} style={titleStyle}>{title}</div>}
         {menu && <div className={"menu"} style={menuStyle}>{menu}</div>}
-    </MainBase>;
+    </Comp>;
 })
 
 
-const MainBase = styled.div.attrs(({$component}: any) => ({as: $component ? $component : "div"}))<Props>`
-    position: relative;
-    min-width: 100%;
-    //min-height: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    margin: 10px 0 5px 0;
-    padding: 5px 15px;
-
-    & > .icon {
-        display: inline-flex;
-        align-items: center;
-        flex: 0 0 auto;
-        text-align: center;
-        margin-right: 5px;
-    }
-
-    & > .title {
-        flex: 1;
-        font-size: 15px;
-        font-weight: 500;
-        line-height: 1;
-        padding: 10px 0;
-    }
-
-    & > .menu {
-        display: inline-flex;
-        flex: 0 0 auto;
-        align-items: center;
-        justify-content: center;
-        margin-left: 5px;
-        margin-right: -10px;
-
-        & > * {
-            margin: 0 3px;
-        }
-    }
-`;

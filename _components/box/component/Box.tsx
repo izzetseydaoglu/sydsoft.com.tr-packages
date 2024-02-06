@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 31.01.2024 02:50
+ *  @last-modified: 6.02.2024 23:45
  */
 
 import React, {memo, useEffect, useRef, useState} from "react";
@@ -66,6 +66,15 @@ const MainBase = styled.div<any>`
    `};
 
     .sbox_header {
+        position: relative;
+        min-width: 100%;
+        //min-height: 50px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 10px 0 5px 0;
+        padding: 5px 15px;
         background: #fff;
         color: #646465;
         border-bottom: 1px solid #E6E5E6;
@@ -77,6 +86,34 @@ const MainBase = styled.div<any>`
         border-top-right-radius: inherit;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+        & > .icon {
+            display: inline-flex;
+            align-items: center;
+            flex: 0 0 auto;
+            text-align: center;
+            margin-right: 5px;
+        }
+
+        & > .title {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1;
+            padding: 10px 0;
+        }
+
+        & > .menu {
+            display: inline-flex;
+            flex: 0 0 auto;
+            align-items: center;
+            justify-content: center;
+            margin-left: 5px;
+            margin-right: -10px;
+
+            & > * {
+                margin: 0 3px;
+            }
+        }
     }
 
     .sbox_footer {

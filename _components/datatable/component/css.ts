@@ -1,12 +1,12 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 6.02.2024 23:45
  */
 
 import styled from "styled-components";
 
-export const CSS_DataTable = styled.div.attrs((props: { borderSpacing: number }) => props)`
+export const CSS_DataTable = styled.div.attrs<any>((props: { borderSpacing: number }) => props)`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -57,7 +57,7 @@ export const CSS_DataTable = styled.div.attrs((props: { borderSpacing: number })
 
     thead > tr:nth-child(1) > th {
       //position: relative;
-      border: ${(props: { borderSpacing: number }) => props.borderSpacing}px solid #fff;
+      border: ${(props: any) => props.borderSpacing}px solid #fff;
       border-bottom: 1px #d7d7d7 solid;
       border-top: none;
       cursor: default;
@@ -88,7 +88,7 @@ export const CSS_DataTable = styled.div.attrs((props: { borderSpacing: number })
       }
 
       &:hover {
-        box-shadow: inset 0 -1px 1px 0px #3d89c1;
+        box-shadow: inset 0 -1px 1px 0 #3d89c1;
 
         [data-sortable=true] {
           .ordericon {
@@ -135,7 +135,7 @@ export const CSS_DataTable = styled.div.attrs((props: { borderSpacing: number })
     }
 
     thead > tr.filters_open {
-      box-shadow: 0px -2px 20px 6px #dadde1;
+      box-shadow: 0 -2px 20px 6px #dadde1;
 
       th {
         padding: 3px;
@@ -216,7 +216,7 @@ export const CSS_DataTable = styled.div.attrs((props: { borderSpacing: number })
       }
 
       & > td {
-        border: ${(props: { borderSpacing: number }) => props.borderSpacing}px solid #fff;
+        border: ${(props: any) => props.borderSpacing}px solid #fff;
 
         .value {
           //margin: 0 auto;
