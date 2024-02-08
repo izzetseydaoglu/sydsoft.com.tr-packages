@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 8.02.2024 05:12
+ *  @last-modified: 8.02.2024 05:13
  */
 
 import React, {useEffect, useState} from "react";
@@ -27,7 +27,7 @@ type columnsType = {
     className?: string,
     styleTH?: React.CSSProperties,
     styleTD?: React.CSSProperties,
-    inputProps: PropsInput,
+    inputProps?: PropsInput,
 }
 type filtersType = {
     operator: "=" | "like",
