@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 6.02.2024 23:45
+ *  @last-modified: 8.02.2024 05:18
  */
 
 import React, {useState} from "react";
@@ -126,6 +126,7 @@ export const TableNoApi_THEAD = ({columns, rows, config, setConfig, settingsFilt
                                 onChange={(e: any) => handleSearch(e.target.value, column.field)}
                                 onFocus={() => setFocusFilter(true)}
                                 onBlur={() => setFocusFilter(false)}
+                                {...(column?.inputProps)}
                             />
                         ) || (
                             <Input
@@ -136,6 +137,7 @@ export const TableNoApi_THEAD = ({columns, rows, config, setConfig, settingsFilt
                                 onChange={(e: any) => handleSearch(e.target.value, column.field)}
                                 onFocus={() => setFocusFilter(true)}
                                 onBlur={() => setFocusFilter(false)}
+                                {...(column?.inputProps)}
                             />
                         )}
                     </div>
