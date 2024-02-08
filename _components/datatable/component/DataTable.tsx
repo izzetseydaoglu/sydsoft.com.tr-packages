@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 7.02.2024 02:05
+ *  @last-modified: 8.02.2024 05:12
  */
 
 import React, {useEffect, useState} from "react";
@@ -11,6 +11,7 @@ import {TableNoApi_TBODY} from "./tbody";
 import {TableNoApi_Pagination} from "./pagination";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import {filterData, paginateData, sortData} from "./func";
+import {PropsInput} from "@sydsoft.com.tr/form";
 
 type columnsType = {
     field: string,
@@ -24,8 +25,9 @@ type columnsType = {
     hide?: boolean,
     render?: (row: any, sira: number) => void,
     className?: string,
-    styleTH?: object,
-    styleTD?: object,
+    styleTH?: React.CSSProperties,
+    styleTD?: React.CSSProperties,
+    inputProps: PropsInput,
 }
 type filtersType = {
     operator: "=" | "like",
