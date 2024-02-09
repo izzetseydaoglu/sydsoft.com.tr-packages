@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 9.02.2024 06:07
+ *  @last-modified: 9.02.2024 16:55
  */
 
 import React, {useCallback, useEffect, useRef, useState} from 'react'
@@ -507,6 +507,8 @@ const MainBase = styled.div`
             &:disabled {
                 background: #ebebeb;
                 cursor: not-allowed;
+                color: #000;
+                opacity: 0.7;
             }
 
             &.select {
