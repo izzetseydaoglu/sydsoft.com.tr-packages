@@ -1,21 +1,25 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 30.01.2024 04:13
+ *  @last-modified: 9.02.2024 06:07
  */
 
 
-// TODO: Disable olunca da değiştirilebiliyor. Iptal etmek lazım
 import React, {useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react'
 import styled from 'styled-components'
-import {Input, PropsInput} from "./Input";
-import {Button} from "./Button";
 import {Icon} from "@sydsoft.com.tr/icon";
+import {Button} from "./Button";
+import {Input, PropsInput} from "./Input";
+import useDeepCompareEffect from "use-deep-compare-effect";
+
+type typeList = {
+    value?: string, label?: string, [key: string | number]: any
+}[];
 
 interface Props extends PropsInput {
-    autoCompleteList: { value?: string, label?: string, [key: string | number]: any }[] | any,
+    autoCompleteList?: typeList | any,
     onChange?: Function,
-    value?: any,
+    value: string | number,
     valueKey?: string,
     labelKey?: string,
     itemComponent?: any,
@@ -24,6 +28,8 @@ interface Props extends PropsInput {
     onSelect?: Function, // Bir item seçildiğinde tetiklenir.
     newCreate?: boolean, // Yeni bir item oluşturulabilir.
     refModal?: any, // Modal içerisinde kullanılacaksa, modal ref'ini gönderin.
+    style?: React.CSSProperties,
+    disabled?: boolean,
 }
 
 type handle = {
@@ -31,13 +37,14 @@ type handle = {
     close: () => void;
     checkByValue: (value: string, openList: boolean) => void;
     setLoading: (loading: boolean) => void;
+    setAutoCompleteList: (list: typeList) => void;
 };
 
 const Component: React.ForwardRefRenderFunction<handle, Props> = ({
     api = false, onText, onSelect, newCreate = false,
-    name, value, autoCompleteList, itemComponent,
+    name, value, autoCompleteList = [], itemComponent,
     onChange, inputRef, valueKey = "value", labelKey = "label", placeholder, endAdornment,
-    refModal = null, ...other
+    refModal, style, disabled, ...other
 }, forwardedRef) => {
     const isDev = (!process.env.NODE_ENV || process.env.NODE_ENV === "development");
 
@@ -45,53 +52,40 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
     const refMain = useRef<any>(null);
     useEffect(() => {
         if (inputRef) inputRef.current = refInput.current;
-    }, [inputRef]);
+    }, [refInput.current]);
 
     const refComponentInput = useRef<any>();
     const refList = useRef<any>();
 
-    const [loading, setLoading] = useState<boolean>((!api));
+    const [data, setData] = useState<any[]>(autoCompleteList);
     const [text, setText] = useState<string>("");
     const [open, setOpen] = useState<boolean>(false);
     const [filter, setFilter] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(true);
+
 
     useImperativeHandle(forwardedRef, () => ({
-        open: () => {
-            setOpen(true);
-        },
-        close: () => {
-            setOpen(false);
-        },
+        open: () => setOpen(true),
+        close: () => setOpen(false),
         checkByValue: (value: string, openList: boolean = false) => checkByValue(value, openList),
-        setLoading: (value) => {
-            setLoading(value);
+        setLoading: (value) => setLoading(value),
+        setAutoCompleteList: (list: typeList) => {
+            setData(list);
+            setLoading(false);
         }
     }));
 
 
-    useEffect(() => {
-        if (refModal) {
-            if (open) {
-                refModal.current.style.overflow = "visible";
-            } else {
-                refModal.current.style.overflow = "auto";
-                refModal.current.style.overflowX = "hidden";
-            }
-        }
-    }, [open])
+    useDeepCompareEffect(() => {
+        if (api && Object.keys(data).length > 0) checkByValue(value, open);
+        // if (Object.keys(data).length > 0) checkByValue(value, open);
+        isDev && console.log("useDeepCompareEffect", "data", data, value);
+    }, [data])
 
     useEffect(() => {
-        if (!api) setLoading(false);
-    }, [])
-
-    useEffect(() => {
-        if (api && Object.keys(autoCompleteList).length > 0) checkByValue(value, open);
-    }, [autoCompleteList])
-
-    useEffect(() => {
-        if (Object.keys(autoCompleteList).length > 0) {
-            if (value.toString().length > 0) {
-                checkByValue(value.toString(), open);
+        if (Object.keys(data).length > 0) {
+            if (value && value.toString().length > 0) {
+                checkByValue(value, open);
             } else {
                 if (!api) clear(false);
             }
@@ -108,21 +102,34 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
             if (e.keyCode === 27 || e.key === "Escape" || e.code === "Escape") checkByInput();
         }
         if (open) {
-            setScroll();
+            setScrollPosition();
         }
 
         window.addEventListener("mousedown", checkHideBackDrop)
         window.addEventListener("keydown", checkESC);
-        isDev && console.log("useEffect", "open+autoCompleteList", autoCompleteList);
+        // isDev && console.log("useEffect", "open+data", data);
         return () => {
-            isDev && console.log("useEffect-unMount", "open+autoCompleteList");
+            // isDev && console.log("useEffect-unMount", "open+data");
             window.removeEventListener("mousedown", checkHideBackDrop);
             window.removeEventListener("keydown", checkESC);
         }
-    }, [autoCompleteList, open])
-    const isString = (value: any) => typeof value === 'string' || value instanceof String;
+    }, [data, open]);
+    useEffect(() => {
+        if (refModal && refModal.current) {
+            if (open) {
+                refModal.current.style.overflow = "visible";
+            } else {
+                refModal.current.style.overflow = "auto";
+                refModal.current.style.overflowX = "hidden";
+            }
+        }
+    }, [open])
+    useEffect(() => {
+        if (!api) setLoading(false);
+    }, [])
+
+
     const cevirTumuKucuk = (text: any = "") => {
-        if (!isString(text)) return text;
         return text.toString().toLocaleLowerCase("tr-TR")
     }
     const convertForSearch = (value: string) => {
@@ -137,25 +144,25 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         data = data.replace(/^\s+|\s+$/g, "");
         return data;
     };
-
-    const data = useMemo(() => {
+    const filteredData = useMemo(() => {
         let list: any[];
         if (filter.length > 0) {
-            list = Object.values(autoCompleteList).filter((item: any) => {
+            list = Object.values(data).filter((item: any) => {
                 return convertForSearch(item[labelKey]).includes(convertForSearch(filter)) || item[labelKey] == filter;
             })
         } else {
-            list = autoCompleteList;
+            list = data;
         }
 
         if (newCreate && text.length > 0) {
-            const filterText = Object.values(autoCompleteList).find((item: any) => (item[labelKey].toString().toLowerCase() === text.toString().toLowerCase()));
+            const filterText = Object.values(data).find((item: any) => (item[labelKey].toString().toLowerCase() === text.toString().toLowerCase()));
             if (!filterText) {
                 list = [{[labelKey]: text, [valueKey]: text, create: true}, ...list];
             }
         }
         return list;
-    }, [autoCompleteList, filter])
+    }, [data, filter])
+
 
     const Change = (e: any) => {
         setValue(false, true);
@@ -186,13 +193,14 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
 
     };
 
-    const checkByValue = (value: string, openList: boolean = false) => {
-        setValue(Object.values(autoCompleteList).find((item: any) => (item[valueKey].toString().toLowerCase() === value.toString().toLowerCase())), openList);
+    const checkByValue = (value: string | number, openList: boolean = false) => {
+        const find = Object.values(data).find((item: any) => (cevirTumuKucuk(item[valueKey]) === cevirTumuKucuk(value)));
+        setValue(find, openList);
     }
 
     const checkByInput = () => {
-        isDev && console.log("checkByInput", refInput.current.value, autoCompleteList);
-        const findByLabel: any = Object.values(autoCompleteList).find((item: any) => (item[labelKey].toString().toLowerCase() === refInput.current.value.toLowerCase()));
+        isDev && console.log("checkByInput", refInput.current.value, data);
+        const findByLabel: any = Object.values(data).find((item: any) => (cevirTumuKucuk(item[labelKey]) === cevirTumuKucuk(refInput.current.value)));
         if (findByLabel && value == findByLabel[valueKey]) {
             setOpen(false);
             isDev && console.log("findByLabel - Zaten Aynı", findByLabel);
@@ -201,7 +209,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         setValue(findByLabel, false);
         if (!findByLabel) setText("");
 
-        if (api && !findByLabel && Object.keys(autoCompleteList).length === 0) {
+        if (api && !findByLabel && Object.keys(data).length === 0) {
             if (onText) onText("");
         }
     };
@@ -214,7 +222,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         if (focusInput) refInput?.current?.focus();
     };
 
-    function setScroll() {
+    function setScrollPosition() {
         if (refList.current) {
             let position = 0;
             const text = refList.current.querySelector("li.item.selected");
@@ -306,12 +314,13 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
             checkByInput();
         }
 
-        setScroll();
+        setScrollPosition();
     };
 
     return <MainBase
         ref={refMain}
         onKeyDown={onKeyDown}
+        style={style}
     >
         <Input
             {...other}
@@ -322,14 +331,15 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
             onFocus={() => setOpen(true)}
             onChange={Change}
             endAdornment={
-                <div style={{marginRight: 5}} tabIndex={-1}>
+                (!disabled) && (<div style={{marginRight: 5}} tabIndex={-1}>
                     <Button title={"Temizle"} tabIndex={-1} hidden={!(text && text.length > 0)} onClick={() => clear(true, true)} onlyIcon={<Icon iconMui={"clear"} style={{color: "#444"}}/>}/>
                     {endAdornment}
-                    <Button tabIndex={-1} hidden={!(Object.keys(autoCompleteList).length > 0)} onClick={() => setOpen(!open)} onlyIcon={<Icon iconMui={(open) ? "keyboard_arrow_up" : "keyboard_arrow_down"} style={{color: "#444"}}/>}/>
-                </div>
+                    <Button tabIndex={-1} hidden={!(Object.keys(data).length > 0)} onClick={() => setOpen(!open)} onlyIcon={<Icon iconMui={(open) ? "keyboard_arrow_up" : "keyboard_arrow_down"} style={{color: "#444"}}/>}/>
+                </div>)
             }
             placeholder={(loading) ? "Lütfen bekleyiniz..." : placeholder}
             loading={loading}
+            disabled={disabled}
             propsInput={{
                 ...other?.propsInput,
                 autoComplete: "off"
@@ -338,8 +348,8 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
 
         <div className={"list"}>
             <ul ref={refList} className={(open) ? "open" : ""}>
-                {(Object.keys(data).length === 0 || loading) && (<div className={(loading) ? "message loading" : "message"}>{(loading) ? "Lütfen bekleyiniz..." : "Kayıt bulunamadı..."}</div>)}
-                {Object.values(data).map((item: any, key: number) => {
+                {(Object.keys(filteredData).length === 0 || loading) && (<div className={(loading) ? "message loading" : "message"}>{(loading) ? "Lütfen bekleyiniz..." : "Kayıt bulunamadı..."}</div>)}
+                {Object.values(filteredData).map((item: any, key: number) => {
                     const itemValue = item[valueKey];
                     const itemLabel = item[labelKey];
                     return <li key={key}
@@ -363,7 +373,7 @@ export const SearchableInput = React.forwardRef(Component);
 
 const MainBase = styled.div`
     .inputbase > .input {
-        padding: 9.4px 9.4px 9.4px 14px;
+        padding: 9px 9px 9px 14px;
     }
 
     .list {

@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 31.01.2024 02:50
+ *  @last-modified: 9.02.2024 06:07
  */
 import React, {memo, useEffect, useRef, useState} from "react";
 import ReactDOM from "react-dom";
@@ -36,7 +36,7 @@ export const Modal = memo(function MemoFunction({
 
     useEffect(() => {
         if (refModal) refModal.current = ref.current;
-    }, [refModal]);
+    }, [ref.current]);
 
 
     const onClose = () => {

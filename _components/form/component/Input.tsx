@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 30.01.2024 04:13
+ *  @last-modified: 9.02.2024 06:07
  */
 
 import React, {useCallback, useEffect, useRef, useState} from 'react'
@@ -182,11 +182,11 @@ export const Input: React.FC<PropsInput> = ({
     const refMain = useRef<any>(null);
     useEffect(() => {
         if (inputRef) inputRef.current = refInput.current;
-    }, [inputRef]);
+    }, [refInput.current]);
 
     useEffect(() => {
         if (componentRef) componentRef.current = refMain.current;
-    }, [componentRef]);
+    }, [refMain.current]);
 
     const [inputFilled, setInputFilled] = useState(value && value.toString().length > 0);
     const [focus, setFocus] = useState(false);

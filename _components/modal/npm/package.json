@@ -1,7 +1,7 @@
 {
   "name": "@sydsoft.com.tr/modal",
   "private": false,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
