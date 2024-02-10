@@ -1,10 +1,11 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 6.02.2024 23:45
+ *  @last-modified: 10.02.2024 06:07
  */
 
 import React from "react";
+import {ActionsTD} from "./actionsTD";
 
 export const TableNoApi_TBODY = ({columns, data, actions, config, rowOnClick, rowOnClass, settingsFilter}: any) => {
     const onClick = (e: any, row: any) => (rowOnClick) ? rowOnClick(row, e) : null
@@ -26,13 +27,7 @@ export const TableNoApi_TBODY = ({columns, data, actions, config, rowOnClick, ro
                        className={checkClassNames(row)}
             >
                 {(actions && config.actionsPosition == "start") &&
-                    <td className={(config.actionsAutoHide) ? "actions hide" : "actions"} onClick={(e) => e.stopPropagation()}>
-                        <div>
-                            {(actions).map((action: any, key: number) => {
-                                return React.cloneElement(action(row), {key});
-                            })}
-                        </div>
-                    </td>
+                    <ActionsTD actions={actions} row={row} config={config}/>
                 }
                 {Object.values(columns).map((column: any, key: number) => {
                     if (column.hide) return null;
@@ -50,16 +45,11 @@ export const TableNoApi_TBODY = ({columns, data, actions, config, rowOnClick, ro
                     </td>
                 })}
                 {(actions && config.actionsPosition == "end") &&
-                    <td className={(config.actionsAutoHide) ? "actions hide" : "actions"} onClick={(e) => e.stopPropagation()}>
-                        <div>
-                            {(actions).map((action: any, key: number) => {
-                                return React.cloneElement(action(row), {key});
-                            })}
-                        </div>
-                    </td>
+                    <ActionsTD actions={actions} row={row} config={config}/>
                 }
             </tr>
         })}
         </tbody>
     );
 };
+

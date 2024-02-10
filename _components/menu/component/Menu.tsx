@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 6.02.2024 23:45
+ *  @last-modified: 10.02.2024 06:07
  */
 
 import Link from "next/link";
@@ -31,15 +31,18 @@ export const Menu = memo(function MemoFunction({menu, className, style, withIcon
         className={className ? "smenu " + className : "smenu"}
         style={style}
     >
-        {menu.map(({icon, title, onClick, seperator, href, style, ...other}: typeMenu, key: React.Key) => {
-            if (seperator) return <li key={key} className={"seperator"}/>
-            const component = <li key={key} style={style} onClick={onClick} {...other}>
-                {(withIcon) && <div className={"icon"}>{icon}</div>}
-                <div className={"title"}>{title}</div>
-            </li>;
-            if (href) return <Link key={key} href={href} {...other}><a>{component}</a></Link>
-            return component;
-        })}
+        {
+            Object.values(menu).map((item: typeMenu, key: number) => {
+                const {icon, title, onClick, seperator, href, style, ...other} = item;
+                if (seperator) return <li key={key} className={"seperator"}/>
+                const Component = <li key={key} style={style} onClick={onClick} {...other}>
+                    {(withIcon) && <div className={"menuicon"}>{icon}</div>}
+                    <div className={"menutitle"}>{title}</div>
+                </li>;
+                if (href) return <Link key={key} href={href} {...other}><a>{Component}</a></Link>
+                return Component;
+            })
+        }
     </MainBase>;
 });
 
@@ -48,7 +51,7 @@ const MainBase = styled.ul`
     position: relative;
     width: 100%;
     background-color: #fff;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+    box-shadow: 0 2px 4px rgb(0 0 0 / 40%), 0 8px 16px rgb(0 0 0 / 10%);
     border-radius: 8px;
     margin: 0;
     padding: 0;
@@ -70,33 +73,38 @@ const MainBase = styled.ul`
         }
 
         &:first-child {
-            margin-top: 5px
+            margin-top: 5px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
         }
 
         &:last-child {
-            margin-bottom: 5px
+            margin-bottom: 5px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
         }
 
         &:hover {
             background: #f0f2f5;
         }
 
-        .icon {
+        .menuicon {
             display: inline-flex;
             overflow: hidden;
             width: 35px;
             flex: 0 0 auto;
             align-items: center;
             justify-content: center;
-            margin-right: 5px;
+            margin-right: 15px;
             color: #606060;
         }
 
-        .title {
+        .menutitle {
             display: inline-flex;
             flex: 1;
             align-items: center;
             justify-content: flex-start;
+            margin-right: 10px;
         }
     }
 `;

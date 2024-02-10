@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 8.02.2024 05:13
+ *  @last-modified: 10.02.2024 06:07
  */
 
 import React, {useEffect, useState} from "react";
@@ -86,7 +86,7 @@ export const DataTable = ({columns, rows = [], actions, settings = {}, api = fal
         header: true,
         stickyHeader: true,
         styleTHEAD: {},
-        actionsAutoHide: true,
+        actionsAutoHide: false,
         actionsPosition: "end",
         notFoundMessage: "Herhangi bir kayıt bulunamadı",
         borderSpacing: 1,

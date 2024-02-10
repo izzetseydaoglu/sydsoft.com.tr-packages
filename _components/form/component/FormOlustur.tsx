@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 30.01.2024 04:13
+ *  @last-modified: 10.02.2024 06:07
  */
 
 import React, {memo} from "react";
@@ -33,7 +33,8 @@ export type PropsFormOgeler = {
 
 interface Props {
     // form: { [key: string | number]: any; }[],
-    form: any[],
+    // form: any[],
+    form: { [key: string | number]: any; },
     formOgeler: PropsFormOgeler[],
     onChange: Function,
     sabitGrid: {

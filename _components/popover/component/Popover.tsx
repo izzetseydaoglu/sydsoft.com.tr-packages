@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 6.02.2024 23:45
+ *  @last-modified: 10.02.2024 06:07
  */
 import React, {memo, ReactElement, useEffect} from "react";
 import {createRoot} from "react-dom/client";
@@ -9,7 +9,7 @@ import {createRoot} from "react-dom/client";
 type position = "top" | "bottom" | "left" | "right";
 
 interface Props {
-    component: ReactElement,
+    Component: ReactElement,
     children: ReactElement;
     position?: position;
     removeWhenClickInside?: boolean;
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const Popover = memo(function MemoFunction({
-    children, component,
+    children, Component,
     position = "top", arrow = false, distance = 5,
     removeWhenClickInside = false,
     ...other
@@ -72,7 +72,6 @@ export const Popover = memo(function MemoFunction({
     }
 
     const popoverGecikmeliSil = () => setTimeout(() => popoverSil(), 100)
-
 
     const popoverPosition = ({target, position}: { target: HTMLElement, position: position }) => {
         const popover = document.body.getElementsByClassName("spopover")[0];
@@ -159,7 +158,8 @@ export const Popover = memo(function MemoFunction({
         }
     }
 
-    return React.cloneElement(component, {
+
+    return React.cloneElement(Component, {
         onClick: popoverEkle,
         ...other,
     });

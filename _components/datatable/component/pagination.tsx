@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2023
  *  @author: izzetseydaoglu
- *  @last-modified: 6.02.2024 23:45
+ *  @last-modified: 10.02.2024 06:07
  */
 import React from "react";
 import {Menu} from "@sydsoft.com.tr/menu";
@@ -52,13 +52,13 @@ export const TableNoApi_Pagination = ({activePage, count, rowsPerPage, totalPage
             <div className={"bilgi"}>Sayfa: <span>{activePage} / {totalPages}</span></div>
 
 
-            <Popover component={<Button className={"sayfala"} buttonClass={"link"}>Sayfala: <span>{rowsPerPage}</span></Button>} removeWhenClickInside={true}>
+            <Popover Component={<Button className={"sayfala"} buttonClass={"link"}>Sayfala: <span>{rowsPerPage}</span></Button>} removeWhenClickInside={true}>
                 <RowsPerPageList/>
             </Popover>
 
             <Button buttonClass={"link"} disabled={activePage === 1} onClick={() => setActivePage(1)} onlyIcon={<Icon iconMui={"first_page"}/>}/>
             <Button buttonClass={"link"} disabled={activePage === 1} onClick={() => setActivePage(activePage - 1)} onlyIcon={<Icon iconMui={"chevron_left"}/>}/>
-            <Popover component={<Button buttonClass={"link"}>{activePage}</Button>} removeWhenClickInside={true}>
+            <Popover Component={<Button buttonClass={"link"}>{activePage}</Button>} removeWhenClickInside={true}>
                 <PagesList/>
             </Popover>
             <Button buttonClass={"link"} disabled={activePage === totalPages} onClick={() => setActivePage(activePage + 1)} onlyIcon={<Icon iconMui={"chevron_right"}/>}/>
