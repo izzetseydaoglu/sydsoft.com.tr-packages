@@ -1,7 +1,7 @@
 /**
- * Copyright (c) 2023
+ * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 9.02.2024 06:07
+ *  @last-modified: 12.02.2024 01:15
  */
 
 
@@ -10,7 +10,7 @@ import styled from 'styled-components'
 import {Icon} from "@sydsoft.com.tr/icon";
 import {Button} from "./Button";
 import {Input, PropsInput} from "./Input";
-import useDeepCompareEffect from "use-deep-compare-effect";
+// import {Button, Input, PropsInput} from "@sydsoft.com.tr/form";
 
 type typeList = {
     value?: string, label?: string, [key: string | number]: any
@@ -19,7 +19,7 @@ type typeList = {
 interface Props extends PropsInput {
     autoCompleteList?: typeList | any,
     onChange?: Function,
-    value: string | number,
+    value: string | number | undefined,
     valueKey?: string,
     labelKey?: string,
     itemComponent?: any,
@@ -30,6 +30,7 @@ interface Props extends PropsInput {
     refModal?: any, // Modal içerisinde kullanılacaksa, modal ref'ini gönderin.
     style?: React.CSSProperties,
     disabled?: boolean,
+    parentInputValue?: any,
 }
 
 type handle = {
@@ -37,19 +38,19 @@ type handle = {
     close: () => void;
     checkByValue: (value: string, openList: boolean) => void;
     setLoading: (loading: boolean) => void;
-    setAutoCompleteList: (list: typeList) => void;
+    setAutoCompleteList: (list: typeList, value?: string | null) => void;
 };
 
 const Component: React.ForwardRefRenderFunction<handle, Props> = ({
     api = false, onText, onSelect, newCreate = false,
     name, value, autoCompleteList = [], itemComponent,
     onChange, inputRef, valueKey = "value", labelKey = "label", placeholder, endAdornment,
-    refModal, style, disabled, ...other
+    refModal, style, disabled, parentInputValue, ...other
 }, forwardedRef) => {
     const isDev = (!process.env.NODE_ENV || process.env.NODE_ENV === "development");
 
-    const refInput = useRef<any>(null)
     const refMain = useRef<any>(null);
+    const refInput = useRef<any>(null)
     useEffect(() => {
         if (inputRef) inputRef.current = refInput.current;
     }, [refInput.current]);
@@ -58,10 +59,10 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
     const refList = useRef<any>();
 
     const [data, setData] = useState<any[]>(autoCompleteList);
-    const [text, setText] = useState<string>("");
+    const [text, setText] = useState<string>(""); //Inputta görünen
+    const [filter, setFilter] = useState<string>(""); // Filtrelemeye tabi tutulan
     const [open, setOpen] = useState<boolean>(false);
-    const [filter, setFilter] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(api);
 
 
     useImperativeHandle(forwardedRef, () => ({
@@ -69,17 +70,23 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         close: () => setOpen(false),
         checkByValue: (value: string, openList: boolean = false) => checkByValue(value, openList),
         setLoading: (value) => setLoading(value),
-        setAutoCompleteList: (list: typeList) => {
+        setAutoCompleteList: (list: typeList, value = null) => {
             setData(list);
+            if (value) checkByValue(value, false, list);
             setLoading(false);
         }
     }));
 
+    useEffect(() => {
+        if (parentInputValue) {
+            clear(false);
+        }
+    }, [parentInputValue])
 
-    useDeepCompareEffect(() => {
-        if (api && Object.keys(data).length > 0) checkByValue(value, open);
+    useEffect(() => {
+        if (!api && Object.keys(data).length > 0) checkByValue(value, open);
         // if (Object.keys(data).length > 0) checkByValue(value, open);
-        isDev && console.log("useDeepCompareEffect", "data", data, value);
+        isDev && console.log("useDeepCompareEffect =>", name, "data")
     }, [data])
 
     useEffect(() => {
@@ -90,6 +97,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
                 if (!api) clear(false);
             }
         }
+        isDev && console.log("useEffect-value =>", name, value);
     }, [value])
 
     useEffect(() => {
@@ -101,19 +109,15 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         const checkESC = (e: any) => {
             if (e.keyCode === 27 || e.key === "Escape" || e.code === "Escape") checkByInput();
         }
-        if (open) {
-            setScrollPosition();
-        }
 
         window.addEventListener("mousedown", checkHideBackDrop)
-        window.addEventListener("keydown", checkESC);
-        // isDev && console.log("useEffect", "open+data", data);
+        if (refMain.current) refMain.current.addEventListener("keydown", checkESC);
         return () => {
-            // isDev && console.log("useEffect-unMount", "open+data");
             window.removeEventListener("mousedown", checkHideBackDrop);
-            window.removeEventListener("keydown", checkESC);
+            if (refMain.current) refMain.current.removeEventListener("keydown", checkESC);
         }
     }, [data, open]);
+
     useEffect(() => {
         if (refModal && refModal.current) {
             if (open) {
@@ -123,10 +127,10 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
                 refModal.current.style.overflowX = "hidden";
             }
         }
-    }, [open])
-    useEffect(() => {
-        if (!api) setLoading(false);
-    }, [])
+        if (open) {
+            setScrollPosition();
+        }
+    }, [open]);
 
 
     const cevirTumuKucuk = (text: any = "") => {
@@ -144,6 +148,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         data = data.replace(/^\s+|\s+$/g, "");
         return data;
     };
+
     const filteredData = useMemo(() => {
         let list: any[];
         if (filter.length > 0) {
@@ -163,7 +168,6 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         return list;
     }, [data, filter])
 
-
     const Change = (e: any) => {
         setValue(false, true);
         setText(e.target.value);
@@ -182,7 +186,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         }
         setFilter("");
         if (onChange && newValue != value) {
-            isDev && console.log("onChange", newValue, value);
+            isDev && console.log("onChange =>", name, "yeni:" + newValue, "eski:" + value);
             onChange({
                 target: {
                     name,
@@ -193,17 +197,18 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
 
     };
 
-    const checkByValue = (value: string | number, openList: boolean = false) => {
-        const find = Object.values(data).find((item: any) => (cevirTumuKucuk(item[valueKey]) === cevirTumuKucuk(value)));
+    const checkByValue = (value: any, openList: boolean = false, list: typeList = []) => {
+        const targetList = list.length > 0 ? list : data;
+        const find = Object.values(targetList).find((item: any) => (cevirTumuKucuk(item[valueKey]) === cevirTumuKucuk(value)));
         setValue(find, openList);
     }
 
     const checkByInput = () => {
-        isDev && console.log("checkByInput", refInput.current.value, data);
+        isDev && console.log("checkByInput =>", name, refInput.current.value, data);
         const findByLabel: any = Object.values(data).find((item: any) => (cevirTumuKucuk(item[labelKey]) === cevirTumuKucuk(refInput.current.value)));
         if (findByLabel && value == findByLabel[valueKey]) {
             setOpen(false);
-            isDev && console.log("findByLabel - Zaten Aynı", findByLabel);
+            isDev && console.log("findByLabel - Zaten Aynı =>", name, findByLabel);
             return;
         }
         setValue(findByLabel, false);
@@ -220,6 +225,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         setValue(false, openList);
         if (onText) onText("");
         if (focusInput) refInput?.current?.focus();
+        isDev && console.log("clear");
     };
 
     function setScrollPosition() {

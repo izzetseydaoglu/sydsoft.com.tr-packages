@@ -1,12 +1,13 @@
 /**
- * Copyright (c) 2023
+ * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 10.02.2024 06:07
+ *  @last-modified: 12.02.2024 01:15
  */
 
 import Link from "next/link";
 import React, {memo} from "react";
 import styled from "styled-components";
+import {Dialog} from "@sydsoft.com.tr/form";
 
 
 export type typeMenu = {
@@ -27,6 +28,20 @@ interface Props {
 }
 
 export const Menu = memo(function MemoFunction({menu, className, style, withIcon = true}: Props) {
+
+    const handleClick = (item: any, e: any) => {
+        if (!(item.onClick)) return;
+        if (item.dialog) {
+            Dialog({...item.dialog}).then(result => {
+                if (result && item.onClick) {
+                    item.onClick(e)
+                }
+            });
+        } else {
+            item.onClick(e)
+        }
+    }
+
     return <MainBase
         className={className ? "smenu " + className : "smenu"}
         style={style}
@@ -35,7 +50,7 @@ export const Menu = memo(function MemoFunction({menu, className, style, withIcon
             Object.values(menu).map((item: typeMenu, key: number) => {
                 const {icon, title, onClick, seperator, href, style, ...other} = item;
                 if (seperator) return <li key={key} className={"seperator"}/>
-                const Component = <li key={key} style={style} onClick={onClick} {...other}>
+                const Component = <li key={key} style={style} onClick={(e: any) => handleClick(item, e)} {...other}>
                     {(withIcon) && <div className={"menuicon"}>{icon}</div>}
                     <div className={"menutitle"}>{title}</div>
                 </li>;

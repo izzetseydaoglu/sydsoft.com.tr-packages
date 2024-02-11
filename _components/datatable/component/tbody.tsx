@@ -1,7 +1,7 @@
 /**
- * Copyright (c) 2023
+ * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 10.02.2024 06:07
+ *  @last-modified: 12.02.2024 01:15
  */
 
 import React from "react";

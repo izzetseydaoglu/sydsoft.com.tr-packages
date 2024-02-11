@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2023
+ * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 10.02.2024 06:07
+ *  @last-modified: 12.02.2024 01:15
  */
 
 import React from "react";
 import {Icon} from "@sydsoft.com.tr/icon";
 import {Popover} from "@sydsoft.com.tr/popover";
-import {Menu} from "@sydsoft.com.tr/menu";
 import {Button} from "@sydsoft.com.tr/form";
+import {Menu} from "@sydsoft.com.tr/menu";
 
 export const ActionsTD = ({actions, row, config}: any) => {
 
@@ -29,6 +29,10 @@ export const ActionsTD = ({actions, row, config}: any) => {
                     icon: action(row).icon,
                     title: action(row).title,
                     onClick: action(row).onClick,
+                    dialog: action(row).dialog,
+                    seperator: action(row).seperator,
+                    style: action(row).style,
+                    href: action(row).href
                 })
             }
         });
