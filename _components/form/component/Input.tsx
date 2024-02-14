@@ -1,7 +1,7 @@
 /**
- * Copyright (c) 2023
+ * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 9.02.2024 16:55
+ *  @last-modified: 15.02.2024 01:46
  */
 
 import React, {useCallback, useEffect, useRef, useState} from 'react'
@@ -81,6 +81,7 @@ export interface PropsInput {
     endAdornment?: any
 
     //--Ozel Fonksiyonlar
+    sadeceYazi?: boolean
     sadeceSayi?: boolean
     tumuBuyuk?: boolean
     tumuKucuk?: boolean
@@ -164,6 +165,7 @@ export const Input: React.FC<PropsInput> = ({
     ilkSec,
     multiline,
     rows,
+    sadeceYazi,
     sadeceSayi,
     tumuBuyuk,
     tumuKucuk,
@@ -200,7 +202,7 @@ export const Input: React.FC<PropsInput> = ({
     }, [value, defaultValue])
 
     useEffect(() => {
-        if (type === "number") sadeceSayi = true;
+        // if (type === "number") sadeceSayi = true; //TODO: sadeceSayi burada değiştirelemez ki!!!
         if (select && ilkSec && value.toString().length === 0) {
             if (select.length) {
                 const ilkItem = (select[0][valueKey]) ? select[0][valueKey] : "";
@@ -278,12 +280,30 @@ export const Input: React.FC<PropsInput> = ({
     const Click = useCallback((e: any) => onClick ? onClick(e) : null, [onClick])
 
     const KeyPress = useCallback((e: any) => {
+        if (sadeceYazi) {
+            if (
+                !(e.which >= 65 && e.which <= 90) && // büyük harfler
+                !(e.which >= 97 && e.which <= 122) && // küçük harfler
+                e.which !== 32 && // boşluk karakteri
+                e.which !== 46 && // . karakteri
+                e.which !== 220 && e.which !== 252 && // Ü
+                e.which !== 214 && e.which !== 246 && // Ö
+                e.which !== 199 && e.which !== 231 && // Ç
+                e.which !== 286 && e.which !== 287 && // Ğ
+                e.which !== 304 && e.which !== 105 && // İ
+                e.which !== 350 && e.which !== 352 && // Ş
+                e.which !== 305  // ı
+            ) {
+                e.preventDefault();
+                return;
+            }
+        }
         if ((sadeceSayi || dosyaNoGiris) && (e.which < 48 || e.which > 57)) e.preventDefault();
         if (dosyaNoGiris && e.which !== 8 && e.target.value.length === 4 && e.target.value.search("/") === -1) {
             e.target.value = e.target.value + "/"
         }
         onKeyPress ? onKeyPress(e) : null
-    }, [sadeceSayi, dosyaNoGiris, onKeyPress])
+    }, [sadeceYazi, sadeceSayi, dosyaNoGiris, onKeyPress])
 
     const KeyUp = useCallback((e: any) => onKeyUp ? onKeyUp(e) : null, [onKeyUp])
 
