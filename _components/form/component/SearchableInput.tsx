@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 12.02.2024 01:15
+ *  @last-modified: 16.02.2024 00:03
  */
 
 
@@ -26,6 +26,7 @@ interface Props extends PropsInput {
     api?: boolean, // api ile çalışıyorsa true gönderin.
     onText?: Function, // Text değiştiğinde tetiklenir.
     onSelect?: Function, // Bir item seçildiğinde tetiklenir.
+    onLoad?: Function, // Component hazır olduğunda tetiklenir.
     newCreate?: boolean, // Yeni bir item oluşturulabilir.
     refModal?: any, // Modal içerisinde kullanılacaksa, modal ref'ini gönderin.
     style?: React.CSSProperties,
@@ -42,7 +43,7 @@ type handle = {
 };
 
 const Component: React.ForwardRefRenderFunction<handle, Props> = ({
-    api = false, onText, onSelect, newCreate = false,
+    api = false, onText, onSelect, onLoad, newCreate = false,
     name, value, autoCompleteList = [], itemComponent,
     onChange, inputRef, valueKey = "value", labelKey = "label", placeholder, endAdornment,
     refModal, style, disabled, parentInputValue, ...other
@@ -63,6 +64,10 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
     const [filter, setFilter] = useState<string>(""); // Filtrelemeye tabi tutulan
     const [open, setOpen] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(api);
+
+    useEffect(() => {
+        if (onLoad) onLoad(value ?? "");
+    }, []);
 
 
     useImperativeHandle(forwardedRef, () => ({
