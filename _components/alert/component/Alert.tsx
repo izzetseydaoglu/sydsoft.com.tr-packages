@@ -1,7 +1,7 @@
 /**
- * Copyright (c) 2023
+ * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 04:09
+ *  @last-modified: 18.02.2024 02:14
  */
 
 import React, {useEffect} from "react";
@@ -10,8 +10,18 @@ import {createRoot} from "react-dom/client";
 
 const sAlertTimeout = Array();
 
+type typeAlert = {
+    defaultTimer?: string
+    defaultErrorTimer?: string
+    defaultSuccessTimer?: string
+}
 
-export const Alert: React.FC = () => {
+
+export const Alert = ({
+    defaultTimer = "5000",
+    defaultErrorTimer = "10000",
+    defaultSuccessTimer = "5000"
+}: typeAlert) => {
     useEffect(() => {
         if (typeof window === "undefined") return;
         const divCheck = document.getElementById("salert");
@@ -19,6 +29,9 @@ export const Alert: React.FC = () => {
             // let div = document.createElement('div') as HTMLDivElement
             const div = document.createElement('div');
             div.setAttribute("id", "salert");
+            div.setAttribute("defaultTimer", defaultTimer);
+            div.setAttribute("defaultErrorTimer", defaultErrorTimer);
+            div.setAttribute("defaultSuccessTimer", defaultSuccessTimer);
             const alertStyle = [
                 "position: fixed",
                 "bottom: 0",
@@ -37,16 +50,17 @@ export const Alert: React.FC = () => {
     }, [])
 
     return null;
-};
+}
 
 
-interface PropsAdd {
+type typeAddAlert = {
     type: "error" | "success" | "warning" | "info" | "loading",
     message: string,
     timer?: number | boolean
+    style?: React.CSSProperties
 }
 
-export const alert_add = ({type, message, timer = 5000}: PropsAdd) => {
+export const alert_add = ({type, message, style, timer}: typeAddAlert) => {
     if (typeof window === "undefined") return false;
     const mainDiv = document.getElementById("salert");
     if (mainDiv) {
@@ -57,16 +71,41 @@ export const alert_add = ({type, message, timer = 5000}: PropsAdd) => {
             if (mainDiv && alert && mainDiv.contains(alert)) mainDiv.removeChild(alert)
         }
         const root = createRoot(alert!);
-        const Component = <MainBase className={type}>
+        const Component = <MainBase className={type} style={style}>
             <div className={"message"} dangerouslySetInnerHTML={{__html: message}}/>
             <div className={"close"} onClick={onClose}>✕</div>
         </MainBase>
         root.render(Component);
-        // ReactDOM.render(Component, alert);
-        if (typeof timer === "number" && timer > 0) {
-            const timeout = setTimeout(() => onClose(), timer);
-            sAlertTimeout.push(timeout);
+
+
+        const defaultTimer = mainDiv.getAttribute("defaulttimer") ?? "5000";
+        const defaultErrorTimer = mainDiv.getAttribute("defaulterrortimer") ?? "10000";
+        const defaultSuccessTimer = mainDiv.getAttribute("defaultsuccesstimer") ?? "5000";
+
+        const timerFilled = (typeof timer === "number" && timer > 0);
+
+        let newTimer = timerFilled ? timer : defaultTimer;
+
+        switch (type) {
+            case "error":
+                newTimer = timerFilled ? timer : defaultErrorTimer;
+                break;
+            case "success":
+                newTimer = timerFilled ? timer : defaultSuccessTimer;
+                break;
+            default:
+                break;
         }
+        newTimer = newTimer as number;
+
+        if (typeof timer !== "boolean") {
+            // False gelmişse sabit kalsın
+            if (newTimer > 0) {
+                const timeout = setTimeout(() => onClose(), newTimer);
+                sAlertTimeout.push(timeout);
+            }
+        }
+
 
         return alert;
     }
@@ -102,9 +141,10 @@ export function alertCheck(response: any) {
 
 const MainBase = styled.div`
     position: relative;
-    min-width: 200px;
-    width: 100%;
-    margin: 6px 0;
+    //min-width: 200px;
+    min-width: 50px;
+    width: fit-content;
+    margin: 6px 0 6px auto;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: default;
@@ -119,6 +159,7 @@ const MainBase = styled.div`
     animation: show 0.3s;
     font-family: inherit;
     font-size: 1rem;
+    line-height: 1.5;
 
 
     .message {
