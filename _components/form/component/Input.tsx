@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 15.02.2024 01:46
+ *  @last-modified: 18.02.2024 00:54
  */
 
 import React, {useCallback, useEffect, useRef, useState} from 'react'
@@ -640,8 +640,8 @@ const MainBase = styled.div`
         }
 
         &.end {
-            margin-left: 10px;
-            margin-right: 4px;
+            margin-left: -5px;
+            margin-right: 10px;
         }
     }
 `

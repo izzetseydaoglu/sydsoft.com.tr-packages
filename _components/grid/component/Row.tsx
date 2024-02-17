@@ -1,7 +1,7 @@
 /**
- * Copyright (c) 2023
+ * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 29.01.2024 19:41
+ *  @last-modified: 18.02.2024 00:54
  */
 
 import React, {memo} from "react";
@@ -17,6 +17,7 @@ interface Props {
     flexWrap?: "wrap" | "wrap-reverse" | "nowrap",
     justifyContent?: "flex-start" | "center" | "flex-end" | "space-between" | "space-around" | "space-evenly",
     alignContent?: "flex-start" | "center" | "flex-end" | "stretch" | "baseline",
+    alignItems?: "flex-start" | "center" | "flex-end" | "stretch" | "baseline",
     rowSpacing?: SpacingValues,
     colSpacing?: SpacingValues,
 }
@@ -32,6 +33,7 @@ export const Row = memo(function MemoFunction({
     flexWrap = "wrap",
     justifyContent = "flex-start",
     alignContent = "center",
+    alignItems = "center",
 }: Props) {
     return <MainBase
         className={(className) ? "row " + className : "row"}
@@ -40,6 +42,7 @@ export const Row = memo(function MemoFunction({
         style={{
             justifyContent: justifyContent,
             alignContent: alignContent,
+            alignItems: alignItems,
             flexDirection: flexDirection,
             flexWrap: flexWrap,
             ...style,
