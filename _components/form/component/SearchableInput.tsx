@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 16.02.2024 00:03
+ *  @last-modified: 25.02.2024 14:27
  */
 
 
@@ -40,6 +40,7 @@ type handle = {
     checkByValue: (value: string, openList: boolean) => void;
     setLoading: (loading: boolean) => void;
     setAutoCompleteList: (list: typeList, value?: string | null) => void;
+    clear: (openList: boolean) => void;
 };
 
 const Component: React.ForwardRefRenderFunction<handle, Props> = ({
@@ -79,7 +80,8 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
             setData(list);
             if (value) checkByValue(value, false, list);
             setLoading(false);
-        }
+        },
+        clear: (openList: boolean = false) => clear(openList),
     }));
 
     useEffect(() => {
@@ -199,7 +201,6 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
                 }
             })
         }
-
     };
 
     const checkByValue = (value: any, openList: boolean = false, list: typeList = []) => {
