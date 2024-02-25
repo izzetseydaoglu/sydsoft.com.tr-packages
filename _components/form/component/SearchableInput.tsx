@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 25.02.2024 14:27
+ *  @last-modified: 25.02.2024 14:33
  */
 
 
@@ -40,7 +40,7 @@ type handle = {
     checkByValue: (value: string, openList: boolean) => void;
     setLoading: (loading: boolean) => void;
     setAutoCompleteList: (list: typeList, value?: string | null) => void;
-    clear: (openList: boolean) => void;
+    clear: (openList?: boolean, focusInput?: boolean) => void;
 };
 
 const Component: React.ForwardRefRenderFunction<handle, Props> = ({
@@ -81,7 +81,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
             if (value) checkByValue(value, false, list);
             setLoading(false);
         },
-        clear: (openList: boolean = false) => clear(openList),
+        clear: (openList: boolean = false, focusInput: boolean = false) => clear(openList, focusInput),
     }));
 
     useEffect(() => {
@@ -184,7 +184,6 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
     };
 
     const setValue = (result: any, openList: boolean) => {
-        if (onSelect) onSelect(result);
         setOpen(openList);
         const newValue = (result && result[valueKey]) ? result[valueKey] : "";
         if (result) {
@@ -201,6 +200,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
                 }
             })
         }
+        if (onSelect) onSelect(result);
     };
 
     const checkByValue = (value: any, openList: boolean = false, list: typeList = []) => {
