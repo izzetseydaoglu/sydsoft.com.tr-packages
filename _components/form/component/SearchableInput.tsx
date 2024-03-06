@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 25.02.2024 14:33
+ *  @last-modified: 6.03.2024 03:23
  */
 
 
@@ -32,6 +32,7 @@ interface Props extends PropsInput {
     style?: React.CSSProperties,
     disabled?: boolean,
     parentInputValue?: any,
+    listPositionRelative?: boolean,
 }
 
 type handle = {
@@ -47,7 +48,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
     api = false, onText, onSelect, onLoad, newCreate = false,
     name, value, autoCompleteList = [], itemComponent,
     onChange, inputRef, valueKey = "value", labelKey = "label", placeholder, endAdornment,
-    refModal, style, disabled, parentInputValue, ...other
+    refModal, style, disabled, parentInputValue, listPositionRelative, ...other
 }, forwardedRef) => {
     const isDev = (!process.env.NODE_ENV || process.env.NODE_ENV === "development");
 
@@ -128,7 +129,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
     useEffect(() => {
         if (refModal && refModal.current) {
             if (open) {
-                refModal.current.style.overflow = "visible";
+                refModal.current.style.overflow = "auto overlay";
             } else {
                 refModal.current.style.overflow = "auto";
                 refModal.current.style.overflowX = "hidden";
@@ -136,6 +137,11 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         }
         if (open) {
             setScrollPosition();
+
+            if (refModal && refModal.current && refMain && refMain.current) {
+                refModal.current.scrollTop = refMain.current.offsetTop + 300;
+            }
+
         }
     }, [open]);
 
@@ -333,6 +339,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         ref={refMain}
         onKeyDown={onKeyDown}
         style={style}
+
     >
         <Input
             {...other}
@@ -358,7 +365,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
             }}
         />
 
-        <div className={"list"}>
+        <div className={"list"} data-relative={listPositionRelative}>
             <ul ref={refList} className={(open) ? "open" : ""}>
                 {(Object.keys(filteredData).length === 0 || loading) && (<div className={(loading) ? "message loading" : "message"}>{(loading) ? "Lütfen bekleyiniz..." : "Kayıt bulunamadı..."}</div>)}
                 {Object.values(filteredData).map((item: any, key: number) => {
@@ -392,6 +399,14 @@ const MainBase = styled.div`
         position: relative;
         margin-top: -4px;
         z-index: 1000;
+
+        &[data-relative="true"] {
+            z-index: 1 !important;
+
+            & > ul {
+                position: relative !important;
+            }
+        }
 
         ul {
             position: absolute;

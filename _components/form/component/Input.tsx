@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 18.02.2024 00:54
+ *  @last-modified: 6.03.2024 03:23
  */
 
 import React, {useCallback, useEffect, useRef, useState} from 'react'
@@ -87,6 +87,7 @@ export interface PropsInput {
     tumuKucuk?: boolean
     seoCevir?: boolean
     dosyaNoGiris?: boolean
+    fileNameGiris?: boolean
     dateGecmisKontrol?: boolean
 
     //--Mask
@@ -171,6 +172,7 @@ export const Input: React.FC<PropsInput> = ({
     tumuKucuk,
     seoCevir,
     dosyaNoGiris,
+    fileNameGiris,
     dateGecmisKontrol,
     mask = "",
     maskSettings = {
@@ -239,6 +241,11 @@ export const Input: React.FC<PropsInput> = ({
     }, [mask, maskSettings, onFocus])
 
     const Blur = useCallback((e: any) => {
+        if (fileNameGiris && e.target.value !== "" && /[/\\?%*:|"'<>]/g.test(e.target.value)) {
+            e.target.value = e.target.value.replace(/[/\\?%*:|"'<>]/g, '-');
+            if (onChange) onChange(e);
+            alert_add({type: "warning", message: "Lütfen dosya adındaki özel karakter değiştirildi."})
+        }
         if (dosyaNoGiris && e.target.value !== "" && !/^[1-2]\d{3}\/\d/.test(e.target.value)) {
             e.target.value = "";
             if (onChange) onChange(e);

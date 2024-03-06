@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 16.02.2024 03:33
+ *  @last-modified: 6.03.2024 03:23
  */
 
 
@@ -10,7 +10,7 @@ import {alert_add} from "@sydsoft.com.tr/alert";
 
 
 interface Props {
-    children: React.ReactNode,
+    children?: React.ReactNode,
     refUploadInput?: any,
     required?: boolean,
     multiple?: boolean,
@@ -20,13 +20,14 @@ interface Props {
     onChange?: Function,
     targetForm?: Function,
     name?: string
+    label?: string
 }
 
 const upload_ext_ok = ["pdf", "doc", "docx", "xls", "xlsx", "jpg", "jpeg", "png", "bmp", "tiff", "tif", "udf", "txt", "rtf", "csv", "xml", "zip", "rar"];
 const upload_maxsize = 30;
 const upload_maxfile = 50;
 
-export const UploadBase = ({children, targetForm, onChange, name = "file__", required = true, multiple = false, maxSize = upload_maxsize, ext_ok = upload_ext_ok, style, refUploadInput = null}: Props) => {
+export const UploadBase = ({children, targetForm, onChange, name = "file__", required = true, multiple = false, maxSize = upload_maxsize, ext_ok = upload_ext_ok, style, refUploadInput = null, label}: Props) => {
     const ref = useRef<HTMLInputElement | null>(null);
     useEffect(() => {
         if (refUploadInput) refUploadInput.current = ref.current;
@@ -78,7 +79,7 @@ export const UploadBase = ({children, targetForm, onChange, name = "file__", req
 
 
     return (
-        <div style={{position: "relative", cursor: "pointer", ...style}}>
+        <div style={{position: "relative", cursor: "pointer", ...style}} data-label={label ?? ""}>
             {children}
             <input
                 ref={ref}
