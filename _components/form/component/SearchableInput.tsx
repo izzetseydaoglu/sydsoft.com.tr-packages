@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 6.03.2024 03:23
+ *  @last-modified: 13.03.2024 06:17
  */
 
 
@@ -129,10 +129,9 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
     useEffect(() => {
         if (refModal && refModal.current) {
             if (open) {
-                refModal.current.style.overflow = "auto overlay";
+                refModal.current.style.overflow = "visible";
             } else {
-                refModal.current.style.overflow = "auto";
-                refModal.current.style.overflowX = "hidden";
+                refModal.current.style.overflow = "auto overlay";
             }
         }
         if (open) {

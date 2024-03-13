@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 6.03.2024 03:23
+ *  @last-modified: 13.03.2024 06:17
  */
 
 
@@ -16,6 +16,7 @@ interface Props {
     multiple?: boolean,
     ext_ok?: string[],
     maxSize?: number,
+    maxFile?: number,
     style?: React.CSSProperties,
     onChange?: Function,
     targetForm?: Function,
@@ -27,7 +28,18 @@ const upload_ext_ok = ["pdf", "doc", "docx", "xls", "xlsx", "jpg", "jpeg", "png"
 const upload_maxsize = 30;
 const upload_maxfile = 50;
 
-export const UploadBase = ({children, targetForm, onChange, name = "file__", required = true, multiple = false, maxSize = upload_maxsize, ext_ok = upload_ext_ok, style, refUploadInput = null, label}: Props) => {
+export const UploadBase = ({
+    children, targetForm,
+    onChange, name = "file__",
+    required = true,
+    multiple = false,
+    maxSize = upload_maxsize,
+    maxFile = upload_maxfile,
+    ext_ok = upload_ext_ok,
+    style,
+    refUploadInput = null,
+    label
+}: Props) => {
     const ref = useRef<HTMLInputElement | null>(null);
     useEffect(() => {
         if (refUploadInput) refUploadInput.current = ref.current;
@@ -38,8 +50,8 @@ export const UploadBase = ({children, targetForm, onChange, name = "file__", req
             e.target.value = null;
             return null;
         }
-        if (e.target.files.length > upload_maxfile) {
-            alert_add({type: 'error', message: 'En fazla ' + upload_maxfile + ' dosya seçebilirsiniz.'});
+        if (e.target.files.length > maxFile) {
+            alert_add({type: 'error', message: 'En fazla ' + maxFile + ' dosya seçebilirsiniz.'});
             e.target.value = null;
             return null;
         }
