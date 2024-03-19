@@ -1,7 +1,7 @@
 /**
- * Copyright (c) 2023
+ * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 30.01.2024 04:13
+ *  @last-modified: 20.03.2024 01:11
  */
 import React from "react";
 import {createRoot} from "react-dom/client";
@@ -26,6 +26,7 @@ export type propsDialog = {
     styleMessage?: object;
     styleBox?: object;
     styleBoxFooter?: object;
+    autoFocus?: "accept" | "cancel";
 
 }
 
@@ -55,24 +56,15 @@ export const Dialog = (config: propsDialog) => new Promise((resolve) => {
         },
         styleBox: {margin: 0, minWidth: 250},
         styleBoxFooter: {padding: "8px 5px"},
+        autoFocus: "accept",
         ...config
     }
 
-
-    // const checkEnter = (e: any) => {
-    //     isDev && console.log(e);
-    //     if (e.keyCode === 13 || e.key === "Enter" || e.code === "Enter") onAccept();
-    // }
-    //
-    // window.addEventListener("keydown", checkEnter)
-
     const close = () => {
         if (mainDiv) {
-            // ReactDOM.unmountComponentAtNode(mainDiv);
             root.unmount();
             mainDiv.remove();
         }
-        // window.removeEventListener("keydown", checkEnter);
     }
 
     const onCancel = () => {
@@ -101,12 +93,11 @@ export const Dialog = (config: propsDialog) => new Promise((resolve) => {
             </div>
             {(settings.acceptButtonShow || settings.cancelButtonShow) && (
                 <BoxFooter style={settings.styleBoxFooter}>
-                    {settings.cancelButtonShow && <Button buttonClass={settings.cancelButtonClass} onClick={onCancel}>{settings.cancelButtonText}</Button>}
-                    {settings.acceptButtonShow && <Button autoFocus={true} buttonClass={settings.acceptButtonClass} onClick={onAccept}>{settings.acceptButtonText}</Button>}
+                    {settings.cancelButtonShow && <Button autoFocus={(settings.autoFocus === "cancel")} buttonClass={settings.cancelButtonClass} onClick={onCancel}>{settings.cancelButtonText}</Button>}
+                    {settings.acceptButtonShow && <Button autoFocus={(settings.autoFocus === "accept")} buttonClass={settings.acceptButtonClass} onClick={onAccept}>{settings.acceptButtonText}</Button>}
                 </BoxFooter>
             )}
         </Box>
     </Modal>
-    // ReactDOM.render(Component, mainDiv);
     root.render(Component);
 });

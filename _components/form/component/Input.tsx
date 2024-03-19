@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 6.03.2024 03:23
+ *  @last-modified: 20.03.2024 01:11
  */
 
 import React, {useCallback, useEffect, useRef, useState} from 'react'
@@ -288,19 +288,8 @@ export const Input: React.FC<PropsInput> = ({
 
     const KeyPress = useCallback((e: any) => {
         if (sadeceYazi) {
-            if (
-                !(e.which >= 65 && e.which <= 90) && // büyük harfler
-                !(e.which >= 97 && e.which <= 122) && // küçük harfler
-                e.which !== 32 && // boşluk karakteri
-                e.which !== 46 && // . karakteri
-                e.which !== 220 && e.which !== 252 && // Ü
-                e.which !== 214 && e.which !== 246 && // Ö
-                e.which !== 199 && e.which !== 231 && // Ç
-                e.which !== 286 && e.which !== 287 && // Ğ
-                e.which !== 304 && e.which !== 105 && // İ
-                e.which !== 350 && e.which !== 352 && // Ş
-                e.which !== 305  // ı
-            ) {
+            const turkishLetters = /[ğüşıöçĞÜŞİÖÇ]/;
+            if (!(/[A-Za-z\s.]/.test(e.key) || turkishLetters.test(e.key))) {
                 e.preventDefault();
                 return;
             }
