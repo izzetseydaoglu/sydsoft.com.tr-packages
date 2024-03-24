@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 12.02.2024 01:15
+ *  @last-modified: 24.03.2024 12:21
  */
 
 import Link from "next/link";
@@ -17,6 +17,7 @@ export type typeMenu = {
     href?: string,
     seperator?: boolean,
     style?: React.CSSProperties,
+    fullComponent?: any,
     [key: string | number]: any;
 };
 
@@ -48,9 +49,10 @@ export const Menu = memo(function MemoFunction({menu, className, style, withIcon
     >
         {
             Object.values(menu).map((item: typeMenu, key: number) => {
-                const {icon, title, onClick, seperator, href, style, ...other} = item;
+                const {fullComponent, icon, title, onClick, seperator, href, style, itemProps, ...other} = item;
+                if (fullComponent) return fullComponent;
                 if (seperator) return <li key={key} className={"seperator"}/>
-                const Component = <li key={key} style={style} onClick={(e: any) => handleClick(item, e)} {...other}>
+                const Component = <li key={key} style={style} onClick={(e: any) => handleClick(item, e)} {...itemProps} {...other}>
                     {(withIcon) && <div className={"menuicon"}>{icon}</div>}
                     <div className={"menutitle"}>{title}</div>
                 </li>;

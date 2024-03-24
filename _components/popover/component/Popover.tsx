@@ -1,7 +1,7 @@
 /**
- * Copyright (c) 2023
+ * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 10.02.2024 06:07
+ *  @last-modified: 24.03.2024 12:21
  */
 import React, {memo, ReactElement, useEffect} from "react";
 import {createRoot} from "react-dom/client";
@@ -59,7 +59,8 @@ export const Popover = memo(function MemoFunction({
             popoverPosition({target, position: position});
         }, 100);
         window.addEventListener("mousedown", checkHideBackDrop)
-        if (removeWhenClickInside) popover.addEventListener("mouseup", popoverGecikmeliSil)
+        if (removeWhenClickInside) popover.addEventListener("mouseup", popoverGecikmeliSil);
+        document.body.classList.add("spopover_open");
     }
 
     const popoverSil = () => {
@@ -68,7 +69,8 @@ export const Popover = memo(function MemoFunction({
             if (removeWhenClickInside) check.removeEventListener("mouseup", popoverGecikmeliSil)
             check.remove();
         }
-        window.removeEventListener("mousedown", checkHideBackDrop)
+        window.removeEventListener("mousedown", checkHideBackDrop);
+        document.body.classList.remove("spopover_open");
     }
 
     const popoverGecikmeliSil = () => setTimeout(() => popoverSil(), 100)
