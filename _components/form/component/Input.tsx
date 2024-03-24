@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 20.03.2024 01:11
+ *  @last-modified: 25.03.2024 01:08
  */
 
 import React, {useCallback, useEffect, useRef, useState} from 'react'
@@ -89,6 +89,7 @@ export interface PropsInput {
     dosyaNoGiris?: boolean
     fileNameGiris?: boolean
     dateGecmisKontrol?: boolean
+    autoSelectText?: boolean
 
     //--Mask
     mask?: string
@@ -174,6 +175,7 @@ export const Input: React.FC<PropsInput> = ({
     dosyaNoGiris,
     fileNameGiris,
     dateGecmisKontrol,
+    autoSelectText,
     mask = "",
     maskSettings = {
         clearIfNotMatch: true,
@@ -181,9 +183,12 @@ export const Input: React.FC<PropsInput> = ({
     },
 }) => {
 
-
     const refInput = useRef<any>(null)
     const refMain = useRef<any>(null);
+
+    const [inputFilled, setInputFilled] = useState(value && value.toString().length > 0);
+    const [focus, setFocus] = useState(false);
+
     useEffect(() => {
         if (inputRef) inputRef.current = refInput.current;
     }, [refInput.current]);
@@ -192,8 +197,12 @@ export const Input: React.FC<PropsInput> = ({
         if (componentRef) componentRef.current = refMain.current;
     }, [refMain.current]);
 
-    const [inputFilled, setInputFilled] = useState(value && value.toString().length > 0);
-    const [focus, setFocus] = useState(false);
+
+    useEffect(() => {
+        if (autoSelectText && !select && refInput?.current) {
+            refInput.current.select();
+        }
+    }, []);
 
     useEffect(() => {
         const filled = (String(value) && value.toString().length > 0) || (defaultValue && defaultValue.toString().length > 0);
