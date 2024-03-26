@@ -1,9 +1,9 @@
 /**
  * Copyright (c) 2024
  *  @author: izzetseydaoglu
- *  @last-modified: 20.03.2024 01:11
+ *  @last-modified: 26.03.2024 22:29
  */
-import React from "react";
+import React, {ReactNode} from "react";
 import {createRoot} from "react-dom/client";
 import HTMLReactParser from "html-react-parser";
 import {Modal} from "@sydsoft.com.tr/modal";
@@ -15,8 +15,8 @@ export type propsDialog = {
     message: any;
     acceptButtonShow?: boolean;
     cancelButtonShow?: boolean;
-    acceptButtonText?: string;
-    cancelButtonText?: string;
+    acceptButtonText?: string | ReactNode;
+    cancelButtonText?: string | ReactNode;
     acceptButtonClass?: | 'default' | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'link';
     cancelButtonClass?: | 'default' | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'link';
     vertialAlign?: "flex-start" | "center" | "flex-end";
