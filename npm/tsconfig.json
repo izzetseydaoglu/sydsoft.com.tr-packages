@@ -1,0 +1,22 @@
+{
+    "include": ["../@base", "global.d.ts"],
+    "exclude": ["./dist", "node_modules"],
+    "compilerOptions": {
+        "module": "esnext",
+        "lib": ["dom", "esnext"],
+        "importHelpers": true,
+        "declaration": true,
+        "sourceMap": false,
+        "rootDir": "../@base",
+        "outDir": "./dist/esm",
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "moduleResolution": "Node",
+        "jsx": "react-jsx",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true
+    }
+}

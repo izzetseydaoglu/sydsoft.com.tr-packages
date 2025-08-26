@@ -4,12 +4,13 @@
  *  @last-modified: 13.03.2024 06:17
  */
 
+import { Input, PropsInput } from "../../../@base/form/Input";
+import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 
-import React, {useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react'
-import styled from 'styled-components'
-import {Icon} from "@sydsoft.com.tr/icon";
-import {Button} from "./Button";
-import {Input, PropsInput} from "./Input";
+import { Button } from "../../../@base/form/Button";
+import { Icon } from "@sydsoft.com.tr/icon";
+import styled from 'styled-components';
+
 // import {Button, Input, PropsInput} from "@sydsoft.com.tr/form";
 
 type typeList = {

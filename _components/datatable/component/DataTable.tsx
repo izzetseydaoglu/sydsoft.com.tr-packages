@@ -78,10 +78,11 @@ type Props = {
     style?: React.CSSProperties,
     rowOnClick?: Function,
     rowOnClass?: Function,
+    onSettingsChange?: Function,
 }
 
 
-export const DataTable = ({columns, rows = [], actions, settings = {}, api = false, setApi, rowOnClick, rowOnClass, style}: Props) => {
+export const DataTable = ({columns, rows = [], actions, settings = {}, api = false, setApi, rowOnClick, rowOnClass, style, onSettingsChange}: Props) => {
     const [config, setConfig] = useState<settingsType>({
         header: true,
         stickyHeader: true,
@@ -123,6 +124,8 @@ export const DataTable = ({columns, rows = [], actions, settings = {}, api = fal
                 orderBy: settingsFilter.orderBy,
                 filters: settingsFilter.filters,
             });
+        } else if (onSettingsChange) {
+            onSettingsChange(settingsFilter)
         } else {
             createDataNoApi();
         }

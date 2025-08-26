@@ -1,31 +1,52 @@
-/**
- * Copyright (c) 2023
- *  @author: izzetseydaoglu
- *  @last-modified: 31.01.2024 02:50
- */
+import { Box, BoxContent, BoxFooter, BoxHeader, Icon } from "@/@base";
 
-import React from "react";
-import {Box} from "@/_components/box/component/Box";
-import {BoxFooter, BoxHeader} from "@/_components/box/component";
-import {Col, Row} from "@/_components/grid/component";
-
-export default function Home() {
+export default function Test() {
     return (
-        <main>
-            asdasd
+        <Box style={{ margin: 10, maxHeight: 300 }}>
+            <BoxHeader
+                icon={<Icon iconMui={"inbox"} />}
+                menu={
+                    <>
+                        <span>1</span>
+                        <span>2</span>
+                    </>
+                }>
+                ZorbaTitle
+            </BoxHeader>
+            <BoxContent>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
+                <p>Deneme</p>
 
-            <Row>
-                <Col xs={"auto"}>1</Col>
-                <Col xs={"full"}>full</Col>
-                <Col xs={3}>2</Col>
-            </Row>
-
-
-            <Box margin={"50px"} fullScreen={false}>
-                <BoxHeader title={"Test"} component={"h2"}/>
-                asd
-                <BoxFooter>Deneme</BoxFooter>
-            </Box>
-        </main>
+            </BoxContent>
+            <BoxFooter>Footer</BoxFooter>
+        </Box>
     );
 }

@@ -1,0 +1,41 @@
+{
+    "name": "@sydsoft/base",
+    "private": false,
+    "version": "1.4.0",
+    "description": "",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/esm/index.d.ts",
+    "files": [
+        "./dist/",
+        "README.md"
+    ],
+    "scripts": {
+        "test": "npm run build && npm pack",
+        "copyCSS": "copyfiles -u 2 \"../@base/**/*.css\" dist/esm",
+        "build": "rm -rf ./dist && tsc && npm run copyCSS",
+        "publishNPM": "npm run build && npm version patch && npm version minor && npm publish --dry-run && npm publish --access public"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "keywords": [],
+    "author": "izzetseydaoglu",
+    "license": "MIT",
+    "bugs": {
+        "email": "izzetseydaoglu@gmail.com",
+        "url": "https://github.com/izzetseydaoglu/sydsoft.com.tr-packages"
+    },
+    "homepage": "https://github.com/izzetseydaoglu/sydsoft.com.tr-packages/#readme",
+    "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18"
+    },
+    "devDependencies": {
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "react": "^18",
+        "react-dom": "^18",
+        "typescript": "^5"
+    }
+}
