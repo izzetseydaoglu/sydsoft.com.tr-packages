@@ -1,39 +1,33 @@
-/**
- * Copyright (c) 2024
- *  @author: izzetseydaoglu
- *  @last-modified: 13.03.2024 06:17
- */
+import { Icon, isDev } from "@/@base";
+import { Input, PropsInput } from "./Input";
+import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 
-import { Input, PropsInput } from "../../../@base/form/Input";
-import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
-
-import { Button } from "../../../@base/form/Button";
-import { Icon } from "@sydsoft.com.tr/icon";
-import styled from 'styled-components';
-
-// import {Button, Input, PropsInput} from "@sydsoft.com.tr/form";
+import { Button } from "./Button";
+import styles from "./styles/SearchableInput.module.css";
 
 type typeList = {
-    value?: string, label?: string, [key: string | number]: any
+    value?: string;
+    label?: string;
+    [key: string | number]: any;
 }[];
 
 interface Props extends PropsInput {
-    autoCompleteList?: typeList | any,
-    onChange?: Function,
-    value: string | number | undefined,
-    valueKey?: string,
-    labelKey?: string,
-    itemComponent?: any,
-    api?: boolean, // api ile çalışıyorsa true gönderin.
-    onText?: Function, // Text değiştiğinde tetiklenir.
-    onSelect?: Function, // Bir item seçildiğinde tetiklenir.
-    onLoad?: Function, // Component hazır olduğunda tetiklenir.
-    newCreate?: boolean, // Yeni bir item oluşturulabilir.
-    refModal?: any, // Modal içerisinde kullanılacaksa, modal ref'ini gönderin.
-    style?: React.CSSProperties,
-    disabled?: boolean,
-    parentInputValue?: any,
-    listPositionRelative?: boolean,
+    autoCompleteList?: typeList | any;
+    onChange?: Function;
+    value: string | number | undefined;
+    valueKey?: string;
+    labelKey?: string;
+    itemComponent?: any;
+    api?: boolean; // api ile çalışıyorsa true gönderin.
+    onText?: Function; // Text değiştiğinde tetiklenir.
+    onSelect?: Function; // Bir item seçildiğinde tetiklenir.
+    onLoad?: Function; // Component hazır olduğunda tetiklenir.
+    newCreate?: boolean; // Yeni bir item oluşturulabilir.
+    refModal?: any; // Modal içerisinde kullanılacaksa, modal ref'ini gönderin.
+    style?: React.CSSProperties;
+    disabled?: boolean;
+    parentInputValue?: any;
+    listPositionRelative?: boolean;
 }
 
 type handle = {
@@ -45,16 +39,34 @@ type handle = {
     clear: (openList?: boolean, focusInput?: boolean) => void;
 };
 
-const Component: React.ForwardRefRenderFunction<handle, Props> = ({
-    api = false, onText, onSelect, onLoad, newCreate = false,
-    name, value, autoCompleteList = [], itemComponent,
-    onChange, inputRef, valueKey = "value", labelKey = "label", placeholder, endAdornment,
-    refModal, style, disabled, parentInputValue, listPositionRelative, ...other
-}, forwardedRef) => {
-    const isDev = (!process.env.NODE_ENV || process.env.NODE_ENV === "development");
-
+const Component: React.ForwardRefRenderFunction<handle, Props> = (
+    {
+        api = false,
+        onText,
+        onSelect,
+        onLoad,
+        newCreate = false,
+        name,
+        value,
+        autoCompleteList = [],
+        itemComponent,
+        onChange,
+        inputRef,
+        valueKey = "value",
+        labelKey = "label",
+        placeholder,
+        endAdornment,
+        refModal,
+        style,
+        disabled,
+        parentInputValue,
+        listPositionRelative,
+        ...other
+    },
+    forwardedRef
+) => {
     const refMain = useRef<any>(null);
-    const refInput = useRef<any>(null)
+    const refInput = useRef<any>(null);
     useEffect(() => {
         if (inputRef) inputRef.current = refInput.current;
     }, [refInput.current]);
@@ -72,7 +84,6 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         if (onLoad) onLoad(value ?? "");
     }, []);
 
-
     useImperativeHandle(forwardedRef, () => ({
         open: () => setOpen(true),
         close: () => setOpen(false),
@@ -83,20 +94,20 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
             if (value) checkByValue(value, false, list);
             setLoading(false);
         },
-        clear: (openList: boolean = false, focusInput: boolean = false) => clear(openList, focusInput),
+        clear: (openList: boolean = false, focusInput: boolean = false) => clear(openList, focusInput)
     }));
 
     useEffect(() => {
         if (parentInputValue) {
             clear(false);
         }
-    }, [parentInputValue])
+    }, [parentInputValue]);
 
     useEffect(() => {
         if (!api && Object.keys(data).length > 0) checkByValue(value, open);
         // if (Object.keys(data).length > 0) checkByValue(value, open);
-        isDev && console.log("useDeepCompareEffect =>", name, "data")
-    }, [data])
+        isDev && console.log("useDeepCompareEffect =>", name, "data");
+    }, [data]);
 
     useEffect(() => {
         if (Object.keys(data).length > 0) {
@@ -107,24 +118,24 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
             }
         }
         isDev && console.log("useEffect-value =>", name, value);
-    }, [value])
+    }, [value]);
 
     useEffect(() => {
         const checkHideBackDrop = (e: any) => {
             if (open && refMain.current && !refMain.current.contains(e.target)) {
                 checkByInput();
             }
-        }
+        };
         const checkESC = (e: any) => {
             if (e.keyCode === 27 || e.key === "Escape" || e.code === "Escape") checkByInput();
-        }
+        };
 
-        window.addEventListener("mousedown", checkHideBackDrop)
+        window.addEventListener("mousedown", checkHideBackDrop);
         if (refMain.current) refMain.current.addEventListener("keydown", checkESC);
         return () => {
             window.removeEventListener("mousedown", checkHideBackDrop);
             if (refMain.current) refMain.current.removeEventListener("keydown", checkESC);
-        }
+        };
     }, [data, open]);
 
     useEffect(() => {
@@ -141,22 +152,20 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
             if (refModal && refModal.current && refMain && refMain.current) {
                 refModal.current.scrollTop = refMain.current.offsetTop + 300;
             }
-
         }
     }, [open]);
 
-
     const cevirTumuKucuk = (text: any = "") => {
-        return text.toString().toLocaleLowerCase("tr-TR")
-    }
+        return text.toString().toLocaleLowerCase("tr-TR");
+    };
     const convertForSearch = (value: string) => {
         let data = cevirTumuKucuk(value);
-        data = data.replace(/ö/g, 'o');
-        data = data.replace(/ç/g, 'c');
-        data = data.replace(/ş/g, 's');
-        data = data.replace(/ı/g, 'i');
-        data = data.replace(/ğ/g, 'g');
-        data = data.replace(/ü/g, 'u');
+        data = data.replace(/ö/g, "o");
+        data = data.replace(/ç/g, "c");
+        data = data.replace(/ş/g, "s");
+        data = data.replace(/ı/g, "i");
+        data = data.replace(/ğ/g, "g");
+        data = data.replace(/ü/g, "u");
         data = data.replace(/[^a-z\d]/g, ""); // %_- are allowed
         data = data.replace(/^\s+|\s+$/g, "");
         return data;
@@ -167,19 +176,19 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         if (filter.length > 0) {
             list = Object.values(data).filter((item: any) => {
                 return convertForSearch(item[labelKey]).includes(convertForSearch(filter)) || item[labelKey] == filter;
-            })
+            });
         } else {
             list = data;
         }
 
         if (newCreate && text.length > 0) {
-            const filterText = Object.values(data).find((item: any) => (item[labelKey].toString().toLowerCase() === text.toString().toLowerCase()));
+            const filterText = Object.values(data).find((item: any) => item[labelKey].toString().toLowerCase() === text.toString().toLowerCase());
             if (!filterText) {
-                list = [{[labelKey]: text, [valueKey]: text, create: true}, ...list];
+                list = [{ [labelKey]: text, [valueKey]: text, create: true }, ...list];
             }
         }
         return list;
-    }, [data, filter])
+    }, [data, filter]);
 
     const Change = (e: any) => {
         setValue(false, true);
@@ -191,9 +200,9 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
 
     const setValue = (result: any, openList: boolean) => {
         setOpen(openList);
-        const newValue = (result && result[valueKey]) ? result[valueKey] : "";
+        const newValue = result && result[valueKey] ? result[valueKey] : "";
         if (result) {
-            const newLabel = (result && result[labelKey]) ? result[labelKey] : "";
+            const newLabel = result && result[labelKey] ? result[labelKey] : "";
             setText(newLabel);
         }
         setFilter("");
@@ -204,20 +213,20 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
                     name,
                     value: newValue
                 }
-            })
+            });
         }
         if (onSelect) onSelect(result);
     };
 
     const checkByValue = (value: any, openList: boolean = false, list: typeList = []) => {
         const targetList = list.length > 0 ? list : data;
-        const find = Object.values(targetList).find((item: any) => (cevirTumuKucuk(item[valueKey]) === cevirTumuKucuk(value)));
+        const find = Object.values(targetList).find((item: any) => cevirTumuKucuk(item[valueKey]) === cevirTumuKucuk(value));
         setValue(find, openList);
-    }
+    };
 
     const checkByInput = () => {
         isDev && console.log("checkByInput =>", name, refInput.current.value, data);
-        const findByLabel: any = Object.values(data).find((item: any) => (cevirTumuKucuk(item[labelKey]) === cevirTumuKucuk(refInput.current.value)));
+        const findByLabel: any = Object.values(data).find((item: any) => cevirTumuKucuk(item[labelKey]) === cevirTumuKucuk(refInput.current.value));
         if (findByLabel && value == findByLabel[valueKey]) {
             setOpen(false);
             isDev && console.log("findByLabel - Zaten Aynı =>", name, findByLabel);
@@ -261,7 +270,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
             if (text) {
                 checkByValue(text.dataset.value);
             } else if (refList.current.querySelectorAll("li.item").length > 0) {
-                checkByValue((refList.current.querySelectorAll("li.item")[0].dataset.value));
+                checkByValue(refList.current.querySelectorAll("li.item")[0].dataset.value);
             } else {
                 clear(true, true);
             }
@@ -288,7 +297,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
                 if (next.classList.contains("item")) {
                     next.classList.add("selected");
                 } else {
-                    selectNext(next)
+                    selectNext(next);
                 }
             } else {
                 selectFirst();
@@ -302,7 +311,7 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
                 if (next.classList.contains("item")) {
                     next.classList.add("selected");
                 } else {
-                    selectPrev(next)
+                    selectPrev(next);
                 }
             } else {
                 selectLast();
@@ -335,139 +344,69 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = ({
         setScrollPosition();
     };
 
-    return <MainBase
-        ref={refMain}
-        onKeyDown={onKeyDown}
-        style={style}
+    return (
+        <div ref={refMain} className={styles.component} onKeyDown={onKeyDown} style={style}>
+            <Input
+                {...other}
+                name={name}
+                value={text}
+                inputRef={refInput}
+                componentRef={refComponentInput}
+                onFocus={() => setOpen(true)}
+                onChange={Change}
+                endAdornment={
+                    !disabled && (
+                        <div style={{ marginRight: 5 }} tabIndex={-1}>
+                            <Button
+                                title={"Temizle"}
+                                tabIndex={-1}
+                                hidden={!(text && text.length > 0)}
+                                onClick={() => clear(true, true)}
+                                onlyIcon={<Icon iconMui={"clear"} style={{ color: "#444" }} />}
+                            />
+                            {endAdornment}
+                            <Button
+                                tabIndex={-1}
+                                hidden={!(Object.keys(data).length > 0)}
+                                onClick={() => setOpen(!open)}
+                                onlyIcon={<Icon iconMui={open ? "keyboard_arrow_up" : "keyboard_arrow_down"} style={{ color: "#444" }} />}
+                            />
+                        </div>
+                    )
+                }
+                placeholder={loading ? "Lütfen bekleyiniz..." : placeholder}
+                loading={loading}
+                disabled={disabled}
+                propsInput={{
+                    ...other?.propsInput,
+                    autoComplete: "off"
+                }}
+            />
 
-    >
-        <Input
-            {...other}
-            name={name}
-            value={text}
-            inputRef={refInput}
-            componentRef={refComponentInput}
-            onFocus={() => setOpen(true)}
-            onChange={Change}
-            endAdornment={
-                (!disabled) && (<div style={{marginRight: 5}} tabIndex={-1}>
-                    <Button title={"Temizle"} tabIndex={-1} hidden={!(text && text.length > 0)} onClick={() => clear(true, true)} onlyIcon={<Icon iconMui={"clear"} style={{color: "#444"}}/>}/>
-                    {endAdornment}
-                    <Button tabIndex={-1} hidden={!(Object.keys(data).length > 0)} onClick={() => setOpen(!open)} onlyIcon={<Icon iconMui={(open) ? "keyboard_arrow_up" : "keyboard_arrow_down"} style={{color: "#444"}}/>}/>
-                </div>)
-            }
-            placeholder={(loading) ? "Lütfen bekleyiniz..." : placeholder}
-            loading={loading}
-            disabled={disabled}
-            propsInput={{
-                ...other?.propsInput,
-                autoComplete: "off"
-            }}
-        />
-
-        <div className={"list"} data-relative={listPositionRelative}>
-            <ul ref={refList} className={(open) ? "open" : ""}>
-                {(Object.keys(filteredData).length === 0 || loading) && (<div className={(loading) ? "message loading" : "message"}>{(loading) ? "Lütfen bekleyiniz..." : "Kayıt bulunamadı..."}</div>)}
-                {Object.values(filteredData).map((item: any, key: number) => {
-                    const itemValue = item[valueKey];
-                    const itemLabel = item[labelKey];
-                    return <li key={key}
-                               className={(itemValue === value) ? "item active" : "item"}
-                               data-value={itemValue}
-                               data-label={itemLabel}
-                               onClick={() => setValue(item, false)}
-                    >
-                        {item.create && <span className={"create"}>Yeni Oluştur:</span>}
-                        {(itemComponent) ? itemComponent(item) : itemLabel}
-                    </li>
-                })}
-            </ul>
+            <div className={styles.listDiv} data-relative={listPositionRelative}>
+                <ul ref={refList} className={`${styles.list} ${open ? styles.open : ""}`}>
+                    {(Object.keys(filteredData).length === 0 || loading) && (
+                        <div className={`${styles.message} ${loading ? styles.loading : ""}`}>{loading ? "Lütfen bekleyiniz..." : "Kayıt bulunamadı..."}</div>
+                    )}
+                    {Object.values(filteredData).map((item: any, key: number) => {
+                        const itemValue = item[valueKey];
+                        const itemLabel = item[labelKey];
+                        return (
+                            <li
+                                key={key}
+                                className={`${styles.listItem} ${itemValue === value ? styles.active : ""}`}
+                                data-value={itemValue}
+                                data-label={itemLabel}
+                                onClick={() => setValue(item, false)}>
+                                {item.create && <span className={styles.newCreate}>Yeni Oluştur: </span>}
+                                {itemComponent ? itemComponent(item) : itemLabel}
+                            </li>
+                        );
+                    })}
+                </ul>
+            </div>
         </div>
-
-    </MainBase>
-}
+    );
+};
 
 export const SearchableInput = React.forwardRef(Component);
-
-
-const MainBase = styled.div`
-    .inputbase > .input {
-        padding: 9px 9px 9px 14px;
-    }
-
-    .list {
-        position: relative;
-        margin-top: -4px;
-        z-index: 1000;
-
-        &[data-relative="true"] {
-            z-index: 1 !important;
-
-            & > ul {
-                position: relative !important;
-            }
-        }
-
-        ul {
-            position: absolute;
-            top: 3px;
-            left: 1%;
-            width: 98%;
-            height: 0;
-            overflow: hidden;
-            background: transparent;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-
-            &.open {
-                height: auto;
-                max-height: 300px;
-                overflow-x: hidden;
-                overflow-y: visible;
-                //scroll-behavior: smooth;
-                padding: 5px 0;
-                border: 1px #ced4da solid;
-                background: #fff;
-            }
-
-            li {
-                cursor: pointer;
-                display: block;
-                padding: 8px 10px;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;
-
-                &:hover, &.selected {
-                    background: #d9e0e3;
-                }
-
-                &.active {
-                    background: #e1eff7;
-                    font-weight: 500;
-                }
-
-                .create {
-                    margin-right: 5px;
-                    font-style: italic;
-                }
-            }
-
-            .message {
-                text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;
-                display: block;
-                padding: 15px 10px;
-                cursor: default;
-
-                &.loading {
-                    padding: 5px 10px;
-                    background-color: #ced4da38;
-                    text-align: center;
-                }
-            }
-        }
-    }
-`

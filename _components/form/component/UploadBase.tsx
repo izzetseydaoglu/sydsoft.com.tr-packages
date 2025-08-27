@@ -4,24 +4,23 @@
  *  @last-modified: 13.03.2024 06:17
  */
 
+import React, { useEffect, useRef } from "react";
 
-import React, {useEffect, useRef} from 'react';
-import {alert_add} from "@sydsoft.com.tr/alert";
-
+import { alert_add } from "@sydsoft.com.tr/alert";
 
 interface Props {
-    children?: React.ReactNode,
-    refUploadInput?: any,
-    required?: boolean,
-    multiple?: boolean,
-    ext_ok?: string[],
-    maxSize?: number,
-    maxFile?: number,
-    style?: React.CSSProperties,
-    onChange?: Function,
-    targetForm?: Function,
-    name?: string
-    label?: string
+    children?: React.ReactNode;
+    refUploadInput?: any;
+    required?: boolean;
+    multiple?: boolean;
+    ext_ok?: string[];
+    maxSize?: number;
+    maxFile?: number;
+    style?: React.CSSProperties;
+    onChange?: Function;
+    targetForm?: Function;
+    name?: string;
+    label?: string;
 }
 
 const upload_ext_ok = ["pdf", "doc", "docx", "xls", "xlsx", "jpg", "jpeg", "png", "bmp", "tiff", "tif", "udf", "txt", "rtf", "csv", "xml", "zip", "rar"];
@@ -29,8 +28,10 @@ const upload_maxsize = 30;
 const upload_maxfile = 50;
 
 export const UploadBase = ({
-    children, targetForm,
-    onChange, name = "file__",
+    children,
+    targetForm,
+    onChange,
+    name = "file__",
     required = true,
     multiple = false,
     maxSize = upload_maxsize,
@@ -51,7 +52,7 @@ export const UploadBase = ({
             return null;
         }
         if (e.target.files.length > maxFile) {
-            alert_add({type: 'error', message: 'En fazla ' + maxFile + ' dosya seçebilirsiniz.'});
+            alert_add({ type: "error", message: "En fazla " + maxFile + " dosya seçebilirsiniz." });
             e.target.value = null;
             return null;
         }
@@ -59,12 +60,12 @@ export const UploadBase = ({
         const fileList: any = [];
         Object.values(e.target.files).map((file: any) => {
             const size = file.size;
-            const ext = file.name.replace(/^.*\./, '').toLowerCase();
+            const ext = file.name.replace(/^.*\./, "").toLowerCase();
 
             if (ext_ok.indexOf(ext) === -1) {
-                alert_add({type: 'error', message: "Yüklemeye çalıştığınız dosya türü desteklenmiyor. Desteklenen dosya türleri: " + ext_ok.join(", ")});
-            } else if (size > (maxSize * 1000000)) {
-                alert_add({type: 'error', message: "En fazla " + maxSize + "MB büyüklüğündeki dosyaları seçebilirsiniz."});
+                alert_add({ type: "error", message: "Yüklemeye çalıştığınız dosya türü desteklenmiyor. Desteklenen dosya türleri: " + ext_ok.join(", ") });
+            } else if (size > maxSize * 1000000) {
+                alert_add({ type: "error", message: "En fazla " + maxSize + "MB büyüklüğündeki dosyaları seçebilirsiniz." });
             } else {
                 fileList.push(file);
             }
@@ -77,21 +78,19 @@ export const UploadBase = ({
             let uniqueID = new Date().getTime();
             fileList.map((file: any) => {
                 uniqueID = uniqueID + 1;
-                newform = {...newform, [name + uniqueID]: file}
+                newform = { ...newform, [name + uniqueID]: file };
                 nameList.push(file.name);
-            })
+            });
             targetForm((prev: any) => ({
                 ...prev,
-                uploadBaseList: {...newform},
+                uploadBaseList: { ...newform },
                 uploadBaseListName: nameList.join(", ")
-            }))
+            }));
         }
-
     };
 
-
     return (
-        <div style={{position: "relative", cursor: "pointer", ...style}} data-label={label ?? ""}>
+        <div style={{ position: "relative", cursor: "pointer", ...style }} data-label={label ?? ""}>
             {children}
             <input
                 ref={ref}
@@ -112,15 +111,14 @@ export const UploadBase = ({
                 }}
             />
         </div>
-    )
-}
-
+    );
+};
 
 export const uploadBase_CreateForm = (formData: any) => {
-    let newform = {...formData};
-    const list = formData["uploadBaseList"] ?? {}
-    Object.keys(list).map((fileKey: any) => newform = {...newform, [fileKey]: list[fileKey]})
+    let newform = { ...formData };
+    const list = formData["uploadBaseList"] ?? {};
+    Object.keys(list).map((fileKey: any) => (newform = { ...newform, [fileKey]: list[fileKey] }));
     delete newform["uploadBaseList"];
     delete newform["uploadBaseListName"];
     return newform;
-}
+};

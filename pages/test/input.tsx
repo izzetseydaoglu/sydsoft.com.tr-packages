@@ -1,4 +1,4 @@
-import { BoxContent, Button, Icon, Input, isDev } from "@/@base";
+import { BoxContent, Button, Form, Icon, Input, Label, isDev } from "@/@base";
 import { useEffect, useRef, useState } from "react";
 
 import { applyInputMask } from "@/@base/_lib/inputMask";
@@ -82,7 +82,12 @@ export default function Test() {
                 onChange={(e: { target: { value: any } }) => setValueSelect(e.target.value)}
             />
             <br />
-            <Button type="submit">Save</Button>
+            ## Form Test ##
+            <Form disableOnEnterSubmit={true}>
+                <Label required>Deneme</Label>
+                <Input name="inputName" required label="PlaceHolder" placeholder="Placeholder" value={value} onChange={(e: { target: { value: any } }) => setValue(e.target.value)} />
+                <Button type="submit">Save</Button>
+            </Form>
         </BoxContent>
     );
 }

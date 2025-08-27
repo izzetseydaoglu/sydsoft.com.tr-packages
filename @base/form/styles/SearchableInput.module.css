@@ -1,0 +1,79 @@
+.component {
+}
+.component input {
+    padding: 9px 9px 9px 14px;
+}
+
+.listDiv {
+    position: relative;
+    margin-top: -4px;
+    z-index: 1000;
+}
+
+.listDiv[data-relative="true"] {
+    z-index: 1 !important;
+}
+.listDiv[data-relative="true"] > ul {
+    position: relative !important;
+}
+
+.list {
+    position: absolute;
+    top: 3px;
+    left: 1%;
+    width: 98%;
+    height: 0;
+    overflow: hidden;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.list.open {
+    height: auto;
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding: 5px 0;
+    border: 1px #ced4da solid;
+    background: #fff;
+}
+
+.listItem {
+    cursor: pointer;
+    display: block;
+    padding: 8px 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.listItem:hover,
+.listItem.selected {
+    background: #d9e0e3;
+}
+
+.listItem.active {
+    background: #cbe2ef;
+    font-weight: 500;
+}
+
+.newCreate {
+    margin-right: 5px;
+    font-style: italic;
+}
+
+.message {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    padding: 15px 10px;
+    cursor: default;
+}
+.loading {
+    padding: 5px 10px;
+    background-color: #ced4da38;
+    text-align: center;
+}
