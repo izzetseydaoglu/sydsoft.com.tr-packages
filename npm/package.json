@@ -1,7 +1,7 @@
 {
     "name": "@sydsoft/base",
     "private": false,
-    "version": "1.4.0",
+    "version": "1.5.0",
     "description": "",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.js",

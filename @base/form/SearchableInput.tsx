@@ -1,8 +1,9 @@
-import { Icon, isDev } from "@/@base";
 import { Input, PropsInput } from "./Input";
 import React, { useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 
 import { Button } from "./Button";
+import { Icon } from "../icon";
+import { isDev } from "../_lib/baseFunctions";
 import styles from "./styles/SearchableInput.module.css";
 
 type typeList = {

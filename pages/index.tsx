@@ -29,8 +29,11 @@ export default function Home() {
             <br />
             <Link href={"/test/checkbox"}>Checkbox</Link>
             <br />
-            <Link href={"/test/grid"}>Grid</Link> <br />
+            <Link href={"/test/grid"}>Grid</Link>
+            <br />
             <Link href={"/test/form"}>Form</Link>
+            <br />
+            <Link href={"/test/uploadbase"}>UploadBase</Link>
         </main>
     );
 }

@@ -7,10 +7,9 @@ type Props = {
     className?: string;
     style?: React.CSSProperties;
     loading?: boolean;
-    fullScreen?: boolean;
 };
 
-export const Box = memo(function MemoFunction({ children, className, style, loading = false, fullScreen = false }: Props) {
+export const Box = memo(function MemoFunction({ children, className, style, loading = false }: Props) {
     const boxRef = useRef<HTMLDivElement>(null);
 
     const [hasContent, setHasContent] = useState(false);
