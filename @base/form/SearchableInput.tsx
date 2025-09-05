@@ -363,14 +363,14 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = (
                                 tabIndex={-1}
                                 hidden={!(text && text.length > 0)}
                                 onClick={() => clear(true, true)}
-                                onlyIcon={<Icon iconMui={"clear"} style={{ color: "#444" }} />}
+                                onlyIcon={<Icon name={"close"} style={{ color: "#444" }} />}
                             />
                             {endAdornment}
                             <Button
                                 tabIndex={-1}
                                 hidden={!(Object.keys(data).length > 0)}
                                 onClick={() => setOpen(!open)}
-                                onlyIcon={<Icon iconMui={open ? "keyboard_arrow_up" : "keyboard_arrow_down"} style={{ color: "#444" }} />}
+                                onlyIcon={<Icon name={open ? "keyboard_arrow_up" : "keyboard_arrow_down"} style={{ color: "#444" }} />}
                             />
                         </div>
                     )

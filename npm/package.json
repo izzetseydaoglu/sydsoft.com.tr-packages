@@ -1,7 +1,7 @@
 {
     "name": "@sydsoft/base",
     "private": false,
-    "version": "1.5.0",
+    "version": "1.13.0",
     "description": "",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.js",
@@ -11,9 +11,10 @@
         "README.md"
     ],
     "scripts": {
-        "test": "npm run build && npm pack",
-        "copyCSS": "copyfiles -u 2 \"../@base/**/*.css\" dist/esm",
-        "build": "rm -rf ./dist && tsc && npm run copyCSS",
+        "test": "rm -rf ../*.tgz && rm -rf ../.next && npm run build && npm pack --pack-destination ../ && cd ../ && npm uninstall @sydsoft/base && npm install *.tgz && npm run dev",
+        "buildCommonJS": "rm -rf ./dist && tsc && tsc --module commonjs --outDir ./dist/csj",
+        "copyFiles": "copyfiles -u 2 \"../@base/**/*.css\" dist/esm",
+        "build": "rm -rf ./dist && tsc && npm run copyFiles",
         "publishNPM": "npm run build && npm version patch && npm version minor && npm publish --dry-run && npm publish --access public"
     },
     "publishConfig": {

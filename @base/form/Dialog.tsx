@@ -1,9 +1,9 @@
-import { Box, BoxFooter } from "../box";
 import React, { ReactNode } from "react";
+import { Box, BoxFooter } from "../box";
 
-import { Button } from "./Button";
-import { Modal } from "../modal";
 import { createRoot } from "react-dom/client";
+import { Modal } from "../modal";
+import { Button } from "./Button";
 
 export type propsDialog = {
     message: any;
@@ -46,7 +46,7 @@ export const Dialog = (config: propsDialog) =>
             hideBackdrop: true,
             hideEsc: true,
             styleMessage: {
-                fontSize: "1.2rem",
+                fontSize: "1.1rem",
                 padding: "10px 20px"
             },
             styleBox: { padding: 0, margin: 0, minWidth: 250 },

@@ -34,6 +34,10 @@ export default function Home() {
             <Link href={"/test/form"}>Form</Link>
             <br />
             <Link href={"/test/uploadbase"}>UploadBase</Link>
+            <br />
+            <Link href={"/test/icon"}>Icon</Link>
+            <br />
+            <Link href={"/test/menu"}>Menu</Link>
         </main>
     );
 }

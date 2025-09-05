@@ -15,8 +15,9 @@
         "noUnusedParameters": true,
         "moduleResolution": "Node",
         "jsx": "react-jsx",
-        "esModuleInterop": true,
         "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     }
 }

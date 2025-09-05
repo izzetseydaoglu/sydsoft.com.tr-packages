@@ -24,3 +24,14 @@ body {
     height: 100vh;
     min-height: 100vh;
 }
+
+
+/* 
+.smenu li {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding: 7px 15px;
+    background-color: #1c1e21;
+} */
