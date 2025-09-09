@@ -10,3 +10,7 @@ global.css içinde .sbox, .sbox_header ve .sbox_footer ile müdahale edilebilir.
 
 # Icons
  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/> ekle
+
+
+ # Grid
+    <DevelopGridComponent>
