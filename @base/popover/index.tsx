@@ -5,7 +5,7 @@ import { createRoot } from "react-dom/client";
 type position = "top" | "bottom" | "left" | "right";
 
 interface Props {
-    Component: React.ReactElement;
+    component: React.ReactElement;
     children: React.ReactNode;
     position?: position;
     removeWhenClickInside?: boolean;
@@ -13,7 +13,7 @@ interface Props {
     distance?: number;
 }
 
-export const Popover = memo(function MemoFunction({ children, Component, position = "top", arrow = false, distance = 5, removeWhenClickInside = false, ...other }: Props) {
+export const Popover = memo(function MemoFunction({ children, component, position = "top", arrow = false, distance = 5, removeWhenClickInside = false, ...other }: Props) {
     // const refChildren = useRef<any>(null);
 
     useEffect((): any => {
@@ -149,7 +149,7 @@ export const Popover = memo(function MemoFunction({ children, Component, positio
         }
     };
 
-    return React.cloneElement(Component, {
+    return React.cloneElement(component, {
         onClick: popoverEkle,
         ...other
     });

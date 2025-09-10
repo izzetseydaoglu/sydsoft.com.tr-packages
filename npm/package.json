@@ -1,7 +1,7 @@
 {
     "name": "@sydsoft/base",
     "private": false,
-    "version": "1.16.0",
+    "version": "1.19.0",
     "description": "",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.js",
@@ -15,7 +15,7 @@
         "buildCommonJS": "rm -rf ./dist && tsc && tsc --module commonjs --outDir ./dist/csj",
         "copyFiles": "copyfiles -u 2 \"../@base/**/*.css\" dist/esm",
         "build": "rm -rf ./dist && tsc && npm run copyFiles",
-        "publishNPM": "npm run build && npm version patch && npm version minor && npm publish --dry-run && npm publish --access public"
+        "publishNPM": "npm run build && npm version patch && npm version minor && npm publish --dry-run && npm publish --access public && rm -rf ./dist"
     },
     "publishConfig": {
         "access": "public"
