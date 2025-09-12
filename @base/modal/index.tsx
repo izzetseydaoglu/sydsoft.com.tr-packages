@@ -89,9 +89,9 @@ export const Modal = memo(function MemoFunction({
 
     const Component = (
         <div className={`${styles.backdrop} ${open ? styles.backdrop_open : ""}`} style={{ alignItems: vertialAlign, justifyContent: horizontalAlign, ...backdropStyle }}>
-            <div ref={ref} className={`${styles.modal} ${fullScreen ? styles.fullscreen : ""}`} style={modalStyle}>
+            <div ref={ref} className={`smodal ${styles.modal} ${fullScreen ? styles.fullscreen : ""}`} style={modalStyle}>
                 {!hideCloseButton && (
-                    <div className={styles.close_fixed}>
+                    <div className={`close ${styles.close_fixed}`}>
                         <div className={styles.close} onClick={onClose}>
                             ✕
                         </div>
