@@ -4,7 +4,7 @@
  *  @last-modified: 30.01.2024 04:44
  */
 
-import dateTime from "@/@base/datetime";
+import dateTime from "@/@base/dateTime";
 
 export default function Home() {
     const tarih = new dateTime();
