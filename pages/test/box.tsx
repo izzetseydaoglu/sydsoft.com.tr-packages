@@ -4,6 +4,7 @@ export default function Test() {
     return (
         <Box style={{ margin: 10, maxHeight: 300 }}>
             <BoxHeader
+                component={"h1"}
                 icon={<Icon iconMui={"inbox"} />}
                 menu={
                     <>

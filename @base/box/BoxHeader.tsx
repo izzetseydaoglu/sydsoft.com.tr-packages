@@ -1,6 +1,6 @@
-import React, { ReactNode, memo } from "react";
+import React, { ReactNode, memo } from 'react';
 
-import styles from "./Box.module.css";
+import styles from './Box.module.css';
 
 interface Props {
     children?: ReactNode;
@@ -16,30 +16,31 @@ interface Props {
     marginBottom?: number;
 }
 
-export const BoxHeader = memo(function FunctionMemo({ children, className, title, icon, menu, mainStyle, iconStyle, titleStyle, menuStyle, marginBottom, component = "div" }: Props) {
+export const BoxHeader = memo(function FunctionMemo({ children, className, title, icon, menu, mainStyle, iconStyle, titleStyle, menuStyle, marginBottom, component = 'div' }: Props) {
     const Comp = component;
     return (
-        <Comp
-            className={`sbox_header ${styles.header} ${className || ""}`}
+        <div
+            className={`sbox_header ${styles.header} ${className || ''}`}
             style={{
                 marginBottom,
                 ...mainStyle
-            }}>
+            }}
+        >
             {icon && (
                 <div className={styles.icon} style={iconStyle}>
                     {icon}
                 </div>
             )}
 
-            <div className={styles.title} style={titleStyle}>
+            <Comp className={`sbox_title ${styles.title}`} style={titleStyle}>
                 {children || title}
-            </div>
+            </Comp>
 
             {menu && (
                 <div className={styles.menu} style={menuStyle}>
                     {menu}
                 </div>
             )}
-        </Comp>
+        </div>
     );
 });
