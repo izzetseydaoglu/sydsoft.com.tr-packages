@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { seoCevirFunction, tumuBuyukCevir, tumuKucukCevir } from "../_lib/baseFunctions";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { seoCevirFunction, tumuBuyukCevir, tumuKucukCevir } from '../_lib/baseFunctions';
 
-import { Dialog } from "./Dialog";
-import { alert_add } from "../alert";
-import { applyInputMask } from "../_lib/inputMask";
-import styles from "./styles/Input.module.css";
+import { applyInputMask } from '../_lib/inputMask';
+import { alert_add } from '../alert';
+import { Dialog } from './Dialog';
+import styles from './styles/Input.module.css';
 
 type maskSettingsTranslation = {
     [key: string]: {
@@ -154,7 +154,7 @@ export const Input: React.FC<PropsInput> = ({
 
     useEffect(() => {
         // if (type === "number") sadeceSayi = true; //TODO: sadeceSayi burada değiştirelemez ki!!!
-        if (select && ilkSec && value.toString().length === 0) {
+        if (select && ilkSec && (value === '' || !value)) {
             if (select.length) {
                 const ilkItem = select[0][valueKey] ? select[0][valueKey] : '';
                 onChange && onChange({ target: { name, value: ilkItem } });
