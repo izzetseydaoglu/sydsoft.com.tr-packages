@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { seoCevirFunction, tumuBuyukCevir, tumuKucukCevir } from "../_lib/baseFunctions";
 
-import { Dialog } from "./Dialog";
-import { alert_add } from "../alert";
 import { applyInputMask } from "../_lib/inputMask";
+import { alert_add } from "../alert";
+import { Dialog } from "./Dialog";
 import styles from "./styles/Input.module.css";
 
 type maskSettingsTranslation = {

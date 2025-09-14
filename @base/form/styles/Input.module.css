@@ -25,7 +25,8 @@
 }
 
 .component.error {
-    border-color: #e70b39;
+    border-color: #e70b3978;
+    box-shadow: 0px 0px 5px 2px #f40d0d3d;
 }
 
 .component:hover {
@@ -124,7 +125,7 @@
     display: block;
     min-width: 0;
     width: 100%;
-    padding: 9px 14px;
+    padding: 12px 14px;
     border: none;
     outline: none;
     z-index: 1;

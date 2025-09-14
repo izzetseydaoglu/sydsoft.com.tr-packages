@@ -1,7 +1,7 @@
 {
     "name": "@sydsoft/base",
     "private": false,
-    "version": "1.26.0",
+    "version": "1.29.0",
     "description": "",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.js",
@@ -30,7 +30,8 @@
     "homepage": "https://github.com/izzetseydaoglu/sydsoft.com.tr-packages/#readme",
     "peerDependencies": {
         "react": ">=18",
-        "react-dom": ">=18"
+        "react-dom": ">=18",
+        "nookies": "^2.5.2"
     },
     "devDependencies": {
         "@types/react": "^18",
