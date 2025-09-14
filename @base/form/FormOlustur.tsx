@@ -1,10 +1,10 @@
-import { Col, Row, typeJustifyContent, typeSpacingValues } from "../grid";
-import React, { memo, useEffect, useMemo } from "react";
+import React, { memo, useEffect, useMemo } from 'react';
+import { Col, Row, typeJustifyContent, typeSpacingValues } from '../grid';
 
-import { Label } from "./Label";
-import { isDev } from "../_lib/baseFunctions";
+import { isDev } from '../_lib/baseFunctions';
+import { Label } from './Label';
 
-type gridValues = "auto" | "full" | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+type gridValues = 'auto' | 'full' | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 type grid = {
     xs?: gridValues;
     sm?: gridValues;
@@ -36,7 +36,7 @@ interface Props {
         label: grid;
         input: grid;
     };
-    formType: "label" | "noLabel";
+    formType: 'label' | 'noLabel';
     justifyContent: typeJustifyContent;
     rowSpacing?: typeSpacingValues;
     colSpacing?: typeSpacingValues;
@@ -47,13 +47,14 @@ export const FormOlustur = memo(function FunctionMemo(props: Props) {
     useEffect(() => {
         if (formOgeler && onChange && form) {
             formOgeler.forEach((formOgeler: any) => {
-                if (formOgeler.noRender && formOgeler?.component?.props?.name && form[formOgeler?.component?.props?.name] != "") {
-                    isDev && console.log("noRenderGuncelle");
+                const fieldName = formOgeler?.component?.props?.name;
+                if (formOgeler.noRender && fieldName && form[fieldName] && form[fieldName] != '') {
+                    isDev && console.log('noRenderGuncelle');
                     if (formOgeler?.component && formOgeler?.component?.props?.name) {
                         onChange({
                             target: {
-                                name: formOgeler.component.props.name,
-                                value: ""
+                                name: fieldName,
+                                value: ''
                             }
                         });
                     }
@@ -77,10 +78,10 @@ export const FormOlustur = memo(function FunctionMemo(props: Props) {
             }
 
             if (onChange && form && component.props.name && !component.props.value) {
-                newProps = { ...newProps, value: form[component.props.name] && form[component.props.name].length > 0 ? String(form[component.props.name]) : "" };
+                newProps = { ...newProps, value: form[component.props.name] && form[component.props.name].length > 0 ? String(form[component.props.name]) : '' };
             }
 
-            if (formType === "label") newProps = { ...newProps, label: "" };
+            if (formType === 'label') newProps = { ...newProps, label: '' };
 
             const detectLabel = label || component.props.label;
             gridLabel = { ...sabitGrid.label, ...gridLabel };
@@ -88,7 +89,7 @@ export const FormOlustur = memo(function FunctionMemo(props: Props) {
 
             return (
                 <Row key={i} justifyContent={justifyContent} rowSpacing={rowSpacing} colSpacing={colSpacing} {...propsRow}>
-                    {formType === "label" && detectLabel && (
+                    {formType === 'label' && detectLabel && (
                         <Col {...gridLabel}>
                             <Label required={component.props.required} {...propsLabel}>
                                 {detectLabel}
