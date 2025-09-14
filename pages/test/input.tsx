@@ -8,6 +8,8 @@ export default function Test() {
     const [valueSelect, setValueSelect] = useState("2");
     const inputRef = useRef();
 
+    const [form, setForm] = useState<any>({});
+
     useEffect(() => {
         isDev && console.log("Input value changed:", value);
     }, [value]);
@@ -27,6 +29,7 @@ export default function Test() {
     }, []);
     return (
         <BoxContent style={{ padding: 20 }}>
+            <Input label="formTest" value={form["test"]} /> <br />
             <Input inputRef={inputRef} required label="Dışardan" value={value} onChange={(e: { target: { value: any } }) => setValue(e.target.value)} startAdornment={<Icon iconMui="lock" />} />
             <br />
             <Input

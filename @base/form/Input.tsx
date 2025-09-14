@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { seoCevirFunction, tumuBuyukCevir, tumuKucukCevir } from "../_lib/baseFunctions";
 
-import { applyInputMask } from "../_lib/inputMask";
-import { alert_add } from "../alert";
 import { Dialog } from "./Dialog";
+import { alert_add } from "../alert";
+import { applyInputMask } from "../_lib/inputMask";
 import styles from "./styles/Input.module.css";
 
 type maskSettingsTranslation = {
@@ -30,14 +30,13 @@ export interface PropsInput {
     id?: string;
     name?: string;
     value?: any;
-    defaultValue?: any;
     label?: string;
     loading?: boolean;
     autoFocus?: boolean | undefined;
     disabled?: boolean;
     required?: boolean;
     placeholder?: string;
-    type?: "text" | "number" | "email" | "color" | "date" | "time" | "datetime-local" | "hidden" | "file" | "password" | "tel" | "search";
+    type?: 'text' | 'number' | 'email' | 'color' | 'date' | 'time' | 'datetime-local' | 'hidden' | 'file' | 'password' | 'tel' | 'search';
 
     // - Select
     select?: any[];
@@ -89,7 +88,6 @@ export const Input: React.FC<PropsInput> = ({
     id,
     name,
     value,
-    defaultValue,
     type,
     label,
     startAdornment,
@@ -107,8 +105,8 @@ export const Input: React.FC<PropsInput> = ({
     loading,
     autoFocus,
     select,
-    valueKey = "value",
-    labelKey = "label",
+    valueKey = 'value',
+    labelKey = 'label',
     ilkSec,
     multiline,
     rows,
@@ -121,7 +119,7 @@ export const Input: React.FC<PropsInput> = ({
     fileNameGiris,
     dateGecmisKontrol,
     autoSelectText,
-    mask = "",
+    mask = '',
     maskSettings = {
         clearIfNotMatch: true,
         reverse: false, //Tersten doldurmaya başla, fiyatlar için geçerli
@@ -147,26 +145,26 @@ export const Input: React.FC<PropsInput> = ({
     }, [autoSelectText, select]);
 
     useEffect(() => {
-        const filled = (String(value) && value.toString().length > 0) || (defaultValue && defaultValue.toString().length > 0);
+        const filled = value && String(value) && value.toString().length > 0;
         setInputFilled(filled);
         if (filled) {
             refMain?.current?.classList?.remove(styles.error);
         }
-    }, [value, defaultValue]);
+    }, [value]);
 
     useEffect(() => {
         // if (type === "number") sadeceSayi = true; //TODO: sadeceSayi burada değiştirelemez ki!!!
         if (select && ilkSec && value.toString().length === 0) {
             if (select.length) {
-                const ilkItem = select[0][valueKey] ? select[0][valueKey] : "";
+                const ilkItem = select[0][valueKey] ? select[0][valueKey] : '';
                 onChange && onChange({ target: { name, value: ilkItem } });
             }
         }
     }, [select]);
 
     useEffect(() => {
-        if (typeof window !== "undefined" && mask?.length > 0 && refInput?.current) {
-            refInput.current?.setAttribute("autocomplete", "off");
+        if (typeof window !== 'undefined' && mask?.length > 0 && refInput?.current) {
+            refInput.current?.setAttribute('autocomplete', 'off');
         }
         if (mask?.length > 0 && refInput?.current) {
             const maskInstance = applyInputMask(refInput.current, mask, {
@@ -208,25 +206,25 @@ export const Input: React.FC<PropsInput> = ({
 
     const Blur = useCallback(
         (e: any) => {
-            if (fileNameGiris && e.target.value !== "" && /[/\\?%*:|"'<>]/g.test(e.target.value)) {
-                e.target.value = e.target.value.replace(/[/\\?%*:|"'<>]/g, "-");
+            if (fileNameGiris && e.target.value !== '' && /[/\\?%*:|"'<>]/g.test(e.target.value)) {
+                e.target.value = e.target.value.replace(/[/\\?%*:|"'<>]/g, '-');
                 if (onChange) onChange(e);
-                alert_add({ type: "warning", message: "Lütfen dosya adındaki özel karakter değiştirildi." });
+                alert_add({ type: 'warning', message: 'Lütfen dosya adındaki özel karakter değiştirildi.' });
             }
-            if (dosyaNoGiris && e.target.value !== "" && !/^[1-2]\d{3}\/\d/.test(e.target.value)) {
-                e.target.value = "";
+            if (dosyaNoGiris && e.target.value !== '' && !/^[1-2]\d{3}\/\d/.test(e.target.value)) {
+                e.target.value = '';
                 if (onChange) onChange(e);
-                alert_add({ type: "error", message: "Lütfen doğru bir dosya numarası giriniz. Örn: 2022/123" });
+                alert_add({ type: 'error', message: 'Lütfen doğru bir dosya numarası giriniz. Örn: 2022/123' });
             }
 
-            if (dateGecmisKontrol && e.target.value !== "") {
+            if (dateGecmisKontrol && e.target.value !== '') {
                 const today = new Date().toISOString().slice(0, 10);
                 if (e.target.value < today) {
                     Dialog({
-                        message: "Geçmiş bir tarihi seçtiniz. Devam etmek istiyor musunuz?"
+                        message: 'Geçmiş bir tarihi seçtiniz. Devam etmek istiyor musunuz?'
                     }).then((r) => {
                         if (!r) {
-                            e.target.value = "";
+                            e.target.value = '';
                             if (onChange) onChange(e);
                             e.target.focus();
                         }
@@ -235,7 +233,7 @@ export const Input: React.FC<PropsInput> = ({
             }
 
             if (required) {
-                if (e.target.value === "") {
+                if (e.target.value === '') {
                     refMain?.current?.classList?.add(styles.error);
                 } else {
                     refMain?.current?.classList?.remove(styles.error);
@@ -264,8 +262,8 @@ export const Input: React.FC<PropsInput> = ({
                 }
             }
             if ((sadeceSayi || dosyaNoGiris) && (e.which < 48 || e.which > 57)) e.preventDefault();
-            if (dosyaNoGiris && e.which !== 8 && e.target.value.length === 4 && e.target.value.search("/") === -1) {
-                e.target.value = e.target.value + "/";
+            if (dosyaNoGiris && e.which !== 8 && e.target.value.length === 4 && e.target.value.search('/') === -1) {
+                e.target.value = e.target.value + '/';
             }
             onKeyPress ? onKeyPress(e) : null;
         },
@@ -286,7 +284,6 @@ export const Input: React.FC<PropsInput> = ({
         id,
         name,
         value,
-        defaultValue,
         autoFocus,
         disabled,
         required,
@@ -304,7 +301,7 @@ export const Input: React.FC<PropsInput> = ({
     if (select) {
         component = (
             <select className={`${styles.input} ${styles.select}`} {...ortakProps} {...propsInput}>
-                {ilkSec === false && <option value={""} />}
+                {ilkSec === false && <option value={''} />}
                 {select.map((item: any) => {
                     const value = item[valueKey];
                     const label = item[labelKey];
@@ -323,20 +320,20 @@ export const Input: React.FC<PropsInput> = ({
     }
 
     const classList = useCallback(() => {
-        const list = ["sInputComponent", styles.component];
+        const list = ['sInputComponent', styles.component];
         if (className) list.push(className);
         if (label) {
             list.push(styles.hidePlaceHolder);
         }
         // if (props.required && (value.length === 0 || !value)) list.push("error");
-        return list.join(" ");
+        return list.join(' ');
     }, [value, className]);
 
     useEffect(() => {
-        if (propsComponent && propsComponent.hasOwnProperty("style")) {
+        if (propsComponent && propsComponent.hasOwnProperty('style')) {
             const background = propsComponent.style.background ? propsComponent.style.background : propsComponent.style.backgroundColor ? propsComponent.style.backgroundColor : null;
             if (background && refLabel.current) {
-                refLabel.current.style.setProperty("--label-bg", background);
+                refLabel.current.style.setProperty('--label-bg', background);
             }
         }
     }, [propsComponent]);
@@ -345,7 +342,7 @@ export const Input: React.FC<PropsInput> = ({
         <div ref={refMain} className={classList()} data-disabled={disabled} {...propsComponent}>
             {startAdornment && <div className={`adornment_start ${styles.adornment} ${styles.start}`}>{startAdornment}</div>}
 
-            <div className={`${styles.inputBase} ${inputFilled || focus || type == "date" ? styles.open : ""}`}>
+            <div className={`${styles.inputBase} ${inputFilled || focus || type == 'date' ? styles.open : ''}`}>
                 {component}
                 {label && (
                     <div ref={refLabel} className={`label ${styles.label}`}>
@@ -366,7 +363,7 @@ export const Input: React.FC<PropsInput> = ({
 };
 
 Input.defaultProps = {
-    value: "",
+    value: '',
     disabled: false,
     required: false,
     ilkSec: false,
