@@ -1,4 +1,5 @@
 export const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
+export const isServerReq = (context: any) => !context?.req?.url?.startsWith('/_next');
 
 export function tumuBuyukCevir(e: React.ChangeEvent<HTMLInputElement>) {
     if (e?.target && e?.target?.setSelectionRange) {
@@ -38,12 +39,11 @@ export function seoCevirFunction(e: React.ChangeEvent<HTMLInputElement>) {
     }
 }
 
-
 export function getDomain(context: any = null) {
-    let url = "";
+    let url = '';
     if (context) {
         url = context.req.headers.host;
-    } else if (typeof window !== "undefined") {
+    } else if (typeof window !== 'undefined') {
         url = window.location.hostname;
     }
 
@@ -54,11 +54,11 @@ export function getDomain(context: any = null) {
             // see if the second level domain is a common SLD.
             if (parts[1].match(/^(com|edu|gov|net|mil|org|nom|co|name|info|biz)$/i)) {
                 const domain = parts[2] + '.' + parts[1] + '.' + parts[0];
-                return domain.split(":")[0];
+                return domain.split(':')[0];
             }
         }
         const domain = parts[1] + '.' + parts[0];
-        return domain.split(":")[0];
+        return domain.split(':')[0];
     }
     return url;
 }
