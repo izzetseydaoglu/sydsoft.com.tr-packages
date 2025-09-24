@@ -20,14 +20,13 @@ interface Props extends PropsInput {
     labelKey?: string;
     itemComponent?: any;
     isDataFromApi?: boolean; // api ile çalışıyorsa true gönderin.
+    parentInputValue?: string | number | undefined; // Eğer bu input bir başka inputa bağlı ise, o inputun value'sunu gönderin. (örneğin; şehir - ilçe)
     onText?: (text: string) => void; // Text değiştiğinde tetiklenir.
     onSelect?: (item: any) => void; // Bir item seçildiğinde tetiklenir.
     onLoad?: (value: string | number) => void; // Component hazır olduğunda tetiklenir.
     newCreate?: boolean; // Yeni bir item oluşturulabilir.
-    refModal?: any; // Modal içerisinde kullanılacaksa, modal ref'ini gönderin.
     style?: React.CSSProperties;
     disabled?: boolean;
-    parentInputValue?: string | number | undefined; // Eğer bu input bir başka inputa bağlı ise, o inputun value'sunu gönderin. (örneğin; şehir - ilçe)
     listPositionRelative?: boolean; // Liste pozisyonu relative olacaksa true gönderin. (Varsayılan absolute)
 }
 
@@ -57,7 +56,6 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = (
         labelKey = 'label',
         placeholder,
         endAdornment,
-        refModal,
         style,
         disabled,
         parentInputValue,
@@ -80,7 +78,10 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = (
     const [newItemCreate, setNewItemCreate] = useState<any>({ created: false });
 
     useImperativeHandle(forwardedRef, () => ({
-        open: () => setOpen(true),
+        open: () => {
+            setOpen(true);
+            refInput.current && refInput.current.focus();
+        },
         close: () => setOpen(false),
         checkByValue: (value: string, openList: boolean = false) => checkByValue(value, openList),
         setLoading: (value) => setLoading(value),
@@ -147,19 +148,8 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = (
         window.addEventListener('mousedown', checkHideBackDrop);
         if (refMain.current) refMain.current.addEventListener('keydown', checkESC);
 
-        if (refModal && refModal.current) {
-            if (open) {
-                refModal.current.style.overflow = 'visible';
-            } else {
-                refModal.current.style.overflow = 'auto overlay';
-            }
-        }
         if (open) {
             setScrollPosition();
-            if (refModal && refModal.current && refMain && refMain.current) {
-                refModal.current.scrollTop = refMain.current.offsetTop + 300;
-            }
-
             if (!listPositionRelative) {
                 window.addEventListener('scroll', handleUpdatePosition, true);
                 window.addEventListener('resize', handleUpdatePosition);
@@ -382,26 +372,6 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = (
         setScrollPosition();
     };
 
-    const ListComponent = () => {
-        return (
-            <div className={'listDiv'} data-relative={listPositionRelative}>
-                <ul ref={refList} className={`list ${open ? 'open' : ''}`}>
-                    {(filteredData.length === 0 || loading) && <div className={`message ${loading ? 'loading' : ''}`}>{loading ? 'Lütfen bekleyiniz...' : 'Kayıt bulunamadı...'}</div>}
-                    {filteredData.map((item: any, key: number) => {
-                        const itemValue = item[valueKey];
-                        const itemLabel = item[labelKey];
-                        return (
-                            <li key={key} className={`item ${itemValue === value ? 'active' : ''}`} data-value={itemValue} data-label={itemLabel} onClick={() => setValue(item, false)}>
-                                {item.create && <span className={'newCreate'}>Yeni Oluştur: </span>}
-                                {itemComponent ? itemComponent(item) : itemLabel}
-                            </li>
-                        );
-                    })}
-                </ul>
-            </div>
-        );
-    };
-
     return (
         <div ref={refMain} className={styles.searchableInputComponent} onKeyDown={onKeyDown} style={style}>
             <Input
@@ -440,7 +410,23 @@ const Component: React.ForwardRefRenderFunction<handle, Props> = (
                     autoComplete: 'off'
                 }}
             />
-            {open && <ListComponent />}
+            {open && (
+                <div className={'listDiv'} data-relative={listPositionRelative}>
+                    <ul ref={refList} className={`list ${open ? 'open' : ''}`}>
+                        {(filteredData.length === 0 || loading) && <div className={`message ${loading ? 'loading' : ''}`}>{loading ? 'Lütfen bekleyiniz...' : 'Kayıt bulunamadı...'}</div>}
+                        {filteredData.map((item: any, key: number) => {
+                            const itemValue = item[valueKey];
+                            const itemLabel = item[labelKey];
+                            return (
+                                <li key={key} className={`item ${itemValue === value ? 'active' : ''}`} data-value={itemValue} data-label={itemLabel} onClick={() => setValue(item, false)}>
+                                    {item.create && <span className={'newCreate'}>Yeni Oluştur: </span>}
+                                    {itemComponent ? itemComponent(item) : itemLabel}
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 };
