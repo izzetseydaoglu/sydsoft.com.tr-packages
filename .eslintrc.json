@@ -4,6 +4,11 @@
         "react-hooks/exhaustive-deps": 0,
         "react/no-unescaped-entities": 0,
         "react/no-children-prop": 0,
-        "@next/next/no-img-element": 0
+        "@next/next/no-img-element": 0,
+        "@next/next/no-page-custom-font": "off",
+        "react-hooks/rules-of-hooks": "off",
+        "react/display-name": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unused-expressions": "off"
     }
 }

@@ -1,10 +1,11 @@
 import { isDev } from "@sydsoft/base";
 
-const keys: number[] = [3, 5, 8, 11, 15, 22];
+const encDecDataKeys: number[] = [3, 5, 8, 11, 15, 22];
 
-export const encData = (data: any) => {
+export const encData = (data: object | string | number, keys: number[] = encDecDataKeys) => {
   try {
-    const utf8Data = unescape(encodeURIComponent(JSON.stringify(data))); // Dizeyi UTF-8'e dönüştür
+    const newJSON = { data: data };
+    const utf8Data = unescape(encodeURIComponent(JSON.stringify(newJSON))); // Dizeyi UTF-8'e dönüştür
     let newData = btoa(utf8Data);
     keys.map((value) => {
       const randomChar = String.fromCharCode(Math.floor(Math.random() * (122 - 97 + 1)) + 97);
@@ -17,7 +18,7 @@ export const encData = (data: any) => {
   }
 };
 
-export const decData = (data: string) => {
+export const decData = (data: string, keys: number[] = encDecDataKeys) => {
   try {
     let decode = data;
     keys.map((value, index) => {
@@ -31,7 +32,8 @@ export const decData = (data: string) => {
     const decodedString = atob(decode);
     const utf8DecodedString = decodeURIComponent(escape(decodedString));
 
-    return JSON.parse(utf8DecodedString);
+    const parse = JSON.parse(utf8DecodedString);
+    return parse?.data ?? "";
   } catch (e) {
     isDev && console.log("ERROR => decData =>", e);
     return "";

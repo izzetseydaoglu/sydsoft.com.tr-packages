@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { seoCevirFunction, tumuBuyukCevir, tumuKucukCevir } from '../_lib/baseFunctions';
+import { convertForSEO, inputTumuBuyukCevir, inputTumuKucukCevir } from '../_lib/baseFunctions';
 
-import { applyInputMask } from '../_lib/inputMask';
-import { alert_add } from '../alert';
 import { Dialog } from './Dialog';
+import { alert_add } from '../alert';
+import { applyInputMask } from '../_lib/inputMask';
 import styles from './styles/Input.module.css';
 
 type maskSettingsTranslation = {
@@ -186,9 +186,9 @@ export const Input: React.FC<PropsInput> = ({
 
     const Change = useCallback(
         (e: any) => {
-            if (tumuBuyuk) tumuBuyukCevir(e);
-            if (tumuKucuk) tumuKucukCevir(e);
-            if (seoCevir) seoCevirFunction(e);
+            if (tumuBuyuk) inputTumuBuyukCevir(e);
+            if (tumuKucuk) inputTumuKucukCevir(e);
+            if (seoCevir) convertForSEO(e);
             setInputFilled(e.target.value.length > 0);
             onChange ? onChange(e) : null;
         },

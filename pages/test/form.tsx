@@ -1,31 +1,31 @@
-import { BoxContent, Button, Form, FormOlustur, Input, PropsFormOgeler, isDev } from "@/@base";
-import { useCallback, useEffect, useState } from "react";
+import { BoxContent, Button, Col, Form, FormOlustur, Input, PropsFormOgeler, Row, isDev } from '@/@base';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function Test() {
     const [form, setForm] = useState<object | any>({
-        email: "test@davasis.com",
-        ad: "izzet"
+        email: 'test@davasis.com',
+        ad: 'izzet'
     });
 
     useEffect(() => {
-        console.log("Form state has changed:", form);
+        console.log('Form state has changed:', form);
     }, [form]);
 
     const onChange = useCallback((e: any) => {
-        isDev && console.log("onChange", e.target.name, e.target.value);
+        isDev && console.log('onChange', e.target.name, e.target.value);
         setForm((prev: any) => ({ ...prev, [e.target.name]: e.target.value }));
     }, []);
     const formOgeler: PropsFormOgeler[] = [
         {
             component: (
                 <Input
-                    label={"E-mail"}
+                    label={'E-mail'}
                     name="email"
                     type="email"
                     required={true}
-                    placeholder={"E-mail adresinizi giriniz..."}
+                    placeholder={'E-mail adresinizi giriniz...'}
                     propsInput={{
-                        autoComplete: "username"
+                        autoComplete: 'username'
                     }}
                 />
             )
@@ -33,12 +33,12 @@ export default function Test() {
         {
             component: (
                 <Input
-                    label={"Ad"}
+                    label={'Ad'}
                     name="ad"
                     required={true}
-                    placeholder={"Adınızı giriniz..."}
+                    placeholder={'Adınızı giriniz...'}
                     propsInput={{
-                        autoComplete: "name"
+                        autoComplete: 'name'
                     }}
                 />
             ),
@@ -53,8 +53,8 @@ export default function Test() {
                     formOgeler={formOgeler}
                     form={form}
                     onChange={onChange}
-                    formType={"noLabel"}
-                    justifyContent={"center"}
+                    formType={'noLabel'}
+                    justifyContent={'center'}
                     sabitGrid={{
                         label: { xs: 9 },
                         input: { xs: 9 }
@@ -62,13 +62,25 @@ export default function Test() {
                 />
             </Form>
 
+            <Row justifyContent='center'>
+                <Col xs={5}>
+                    <Input />
+                </Col>
+                <Col xs={'auto'}>
+                    <Button buttonClass="primary" buttonSize='large'>Test</Button>
+                    <Button buttonClass="primary">Test</Button>
+                    <Button buttonClass="primary" buttonSize='small'>Test</Button>
+                </Col>
+            </Row>
+
             <Button
                 onClick={() =>
                     setForm({
                         email: form.email,
-                        ad: form.ad ? form.ad + "1" : "1"
+                        ad: form.ad ? form.ad + '1' : '1'
                     })
-                }>
+                }
+            >
                 Arttır
             </Button>
 
