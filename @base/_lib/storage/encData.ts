@@ -1,4 +1,4 @@
-import { isDev } from "@sydsoft/base";
+import { isDev } from "../baseFunctions";
 
 const encDecDataKeys: number[] = [3, 5, 8, 11, 15, 22];
 
