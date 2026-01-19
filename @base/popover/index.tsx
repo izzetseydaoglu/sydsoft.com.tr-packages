@@ -1,11 +1,17 @@
-import React, { memo, useEffect } from "react";
+/**
+ * @author    : izzetseydaoglu
+ * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
+ * @version   : 2026-01-17 18:20:08
+ */
 
-import { createRoot } from "react-dom/client";
+import React, { cloneElement, memo, useEffect, useRef } from 'react';
 
-type position = "top" | "bottom" | "left" | "right";
+import { createRoot } from 'react-dom/client';
+
+type position = 'top' | 'bottom' | 'left' | 'right';
 
 interface Props {
-    component: React.ReactElement;
+    component: any;
     children: React.ReactNode;
     position?: position;
     removeWhenClickInside?: boolean;
@@ -13,17 +19,17 @@ interface Props {
     distance?: number;
 }
 
-export const Popover = memo(function MemoFunction({ children, component, position = "top", arrow = false, distance = 5, removeWhenClickInside = false, ...other }: Props) {
-    // const refChildren = useRef<any>(null);
+export const Popover = memo(function MemoFunction({ children, component, position = 'top', arrow = false, distance = 5, removeWhenClickInside = false, ...other }: Props) {
+    const refComponent = useRef<any>(null);
 
-    useEffect((): any => {
-        if (typeof window === "undefined") return null;
-        const cssCheck = document.getElementsByClassName("spopover_css")[0];
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const cssCheck = document.getElementsByClassName('spopover_css')[0];
         if (!cssCheck) {
-            const head = document.getElementsByTagName("head")[0];
-            const s = document.createElement("style");
-            s.setAttribute("type", "text/css");
-            s.classList.add("spopover_css");
+            const head = document.getElementsByTagName('head')[0];
+            const s = document.createElement('style');
+            s.setAttribute('type', 'text/css');
+            s.classList.add('spopover_css');
             s.appendChild(document.createTextNode(popoverCss));
             head.appendChild(s);
         }
@@ -33,123 +39,126 @@ export const Popover = memo(function MemoFunction({ children, component, positio
     }, []);
 
     const checkHideBackDrop = (e: any) => {
-        const spopover = document.querySelector(".spopover");
+        const spopover = document.querySelector('.spopover');
         if (spopover && !spopover.contains(e.target)) popoverSil();
     };
 
     const popoverEkle = (e: any) => {
         popoverSil();
-        const popover = document.createElement("div");
-        popover.classList.add("spopover");
+        const popover = document.createElement('div');
+        popover.classList.add('spopover');
         document.body.appendChild(popover);
         // ReactDOM.render(children, popover)
         const root = createRoot(popover!); // createRoot(container!) if you use TypeScript
         root.render(children);
         const target = e.currentTarget;
+        refComponent.current && refComponent.current.classList.add('spopover_active');
         setTimeout(() => {
             popoverPosition({ target, position: position });
         }, 100);
-        window.addEventListener("mousedown", checkHideBackDrop);
-        if (removeWhenClickInside) popover.addEventListener("mouseup", popoverGecikmeliSil);
-        document.body.classList.add("spopover_open");
+        window.addEventListener('mousedown', checkHideBackDrop);
+        if (removeWhenClickInside) popover.addEventListener('mouseup', popoverGecikmeliSil);
+        document.body.classList.add('spopover_open');
     };
 
     const popoverSil = () => {
-        const check = document.body.getElementsByClassName("spopover")[0];
+        refComponent.current && refComponent.current.classList.remove('spopover_active');
+        const check = document.body.getElementsByClassName('spopover')[0];
         if (check) {
-            if (removeWhenClickInside) check.removeEventListener("mouseup", popoverGecikmeliSil);
+            if (removeWhenClickInside) check.removeEventListener('mouseup', popoverGecikmeliSil);
             check.remove();
         }
-        window.removeEventListener("mousedown", checkHideBackDrop);
-        document.body.classList.remove("spopover_open");
+        window.removeEventListener('mousedown', checkHideBackDrop);
+        document.body.classList.remove('spopover_open');
     };
 
     const popoverGecikmeliSil = () => setTimeout(() => popoverSil(), 100);
 
     const popoverPosition = ({ target, position }: { target: HTMLElement; position: position }) => {
-        const popover = document.body.getElementsByClassName("spopover")[0];
+        const popover = document.body.getElementsByClassName('spopover')[0];
         if (popover) {
             const arrowMargin = arrow ? 5 : 0;
             const margin = distance + arrowMargin;
 
-            if (arrow) popover.classList.add("arrow");
+            if (arrow) popover.classList.add('arrow');
 
             const targetPosition = target.getBoundingClientRect();
             const popoverPosition = popover.getBoundingClientRect();
 
             const style = [];
 
-            if (position === "top" || position === "bottom") {
-                if (position === "top") {
+            if (position === 'top' || position === 'bottom') {
+                if (position === 'top') {
                     if (targetPosition.top - popoverPosition.height - margin < 0) {
-                        style.push("top:" + (targetPosition.bottom + margin) + "px");
-                        popover.classList.add("bottom");
+                        style.push('top:' + (targetPosition.bottom + margin) + 'px');
+                        popover.classList.add('bottom');
                     } else {
-                        style.push("top:" + (targetPosition.top - popoverPosition.height - margin) + "px");
-                        popover.classList.add("top");
+                        style.push('top:' + (targetPosition.top - popoverPosition.height - margin) + 'px');
+                        popover.classList.add('top');
                     }
                 }
-                if (position === "bottom") {
+                if (position === 'bottom') {
                     if (targetPosition.bottom + popoverPosition.height + margin > window.innerHeight) {
-                        style.push("top:" + (targetPosition.top - popoverPosition.height - margin) + "px");
-                        popover.classList.add("top");
+                        style.push('top:' + (targetPosition.top - popoverPosition.height - margin) + 'px');
+                        popover.classList.add('top');
                     } else {
-                        style.push("top:" + (targetPosition.bottom + margin) + "px");
-                        popover.classList.add("bottom");
+                        style.push('top:' + (targetPosition.bottom + margin) + 'px');
+                        popover.classList.add('bottom');
                     }
                 }
 
                 if (targetPosition.left + targetPosition.width / 2 - popoverPosition.width / 2 < 0) {
-                    style.push("left:2px");
-                    popover.classList.add("start");
+                    style.push('left:2px');
+                    popover.classList.add('start');
                 } else if (targetPosition.left + targetPosition.width / 2 + popoverPosition.width > window.innerWidth) {
-                    style.push("right:2px");
-                    popover.classList.add("end");
+                    style.push('right:2px');
+                    popover.classList.add('end');
                 } else {
-                    style.push("left:" + (targetPosition.left + targetPosition.width / 2) + "px");
-                    style.push("transform:translate(-50%,0)");
-                    popover.classList.add("center");
+                    style.push('left:' + (targetPosition.left + targetPosition.width / 2) + 'px');
+                    style.push('transform:translate(-50%,0)');
+                    popover.classList.add('center');
                 }
             }
 
-            if (position === "left" || position === "right") {
-                if (position === "left") {
+            if (position === 'left' || position === 'right') {
+                if (position === 'left') {
                     if (targetPosition.left - popoverPosition.width - margin < 0) {
-                        style.push("left:" + (targetPosition.right + margin) + "px");
-                        popover.classList.add("right");
+                        style.push('left:' + (targetPosition.right + margin) + 'px');
+                        popover.classList.add('right');
                     } else {
-                        style.push("left:" + (targetPosition.left - popoverPosition.width - margin) + "px");
-                        popover.classList.add("left");
+                        style.push('left:' + (targetPosition.left - popoverPosition.width - margin) + 'px');
+                        popover.classList.add('left');
                     }
                 }
-                if (position === "right") {
+                if (position === 'right') {
                     if (targetPosition.left + targetPosition.width / 2 + popoverPosition.width + margin > window.innerWidth) {
-                        style.push("left:" + (targetPosition.left - popoverPosition.width - margin) + "px");
-                        popover.classList.add("left");
+                        style.push('left:' + (targetPosition.left - popoverPosition.width - margin) + 'px');
+                        popover.classList.add('left');
                     } else {
-                        style.push("left:" + (targetPosition.right + margin) + "px");
-                        popover.classList.add("right");
+                        style.push('left:' + (targetPosition.right + margin) + 'px');
+                        popover.classList.add('right');
                     }
                 }
 
                 if (targetPosition.top + targetPosition.height / 2 - popoverPosition.height / 2 < 0) {
-                    style.push("top:2px");
-                    popover.classList.add("start");
+                    style.push('top:2px');
+                    popover.classList.add('start');
                 } else if (targetPosition.top + targetPosition.height / 2 + popoverPosition.height / 2 > window.innerHeight) {
-                    style.push("bottom:2px");
-                    popover.classList.add("end");
+                    style.push('bottom:2px');
+                    popover.classList.add('end');
                 } else {
-                    style.push("top:" + (targetPosition.top + targetPosition.height / 2) + "px");
-                    style.push("transform:translate(0,-50%)");
-                    popover.classList.add("center");
+                    style.push('top:' + (targetPosition.top + targetPosition.height / 2) + 'px');
+                    style.push('transform:translate(0,-50%)');
+                    popover.classList.add('center');
                 }
             }
 
-            popover.setAttribute("style", style.join(";"));
+            popover.setAttribute('style', style.join(';'));
         }
     };
 
-    return React.cloneElement(component, {
+    return cloneElement(component, {
+        ref: refComponent,
         onClick: popoverEkle,
         ...other
     });

@@ -43,7 +43,8 @@ const createMaskCore = () => {
     const applyMask = (inputValue: string, maskTokens: any, reverse = false) => {
         if (!maskTokens.length) return inputValue;
 
-        const cleanValue = inputValue.replace(/[^\w\s]/g, "");
+        const normalizedValue = inputValue == null ? "" : String(inputValue);
+        const cleanValue = normalizedValue.replace(/[^\w\s]/g, "");
 
         if (reverse) {
             return applyReverseMask(cleanValue, maskTokens);

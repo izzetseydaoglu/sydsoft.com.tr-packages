@@ -42,8 +42,8 @@ export function convertForSEO(e: React.ChangeEvent<HTMLInputElement>) {
         const start = e.target.selectionStart;
         const end = e.target.selectionEnd;
         let string = e.target.value.toString().toLocaleLowerCase('tr');
-        let turkce = [' ', '-', 'ş', 'Ş', 'ı', 'ü', 'Ü', 'ö', 'Ö', 'ç', 'Ç', 'ş', 'Ş', 'ı', 'ğ', 'Ğ', 'İ', 'ö', 'Ö', 'Ç', 'ç', 'ü', 'Ü', 'â', 'ê', 'Â', '“', '”'];
-        let duzgun = ['-', '-', 's', 'S', 'i', 'u', 'U', 'o', 'O', 'c', 'C', 's', 'S', 'i', 'g', 'G', 'I', 'o', 'O', 'C', 'c', 'u', 'U', 'a', 'ê', 'a', '', ''];
+        const turkce = [' ', '-', 'ş', 'Ş', 'ı', 'ü', 'Ü', 'ö', 'Ö', 'ç', 'Ç', 'ş', 'Ş', 'ı', 'ğ', 'Ğ', 'İ', 'ö', 'Ö', 'Ç', 'ç', 'ü', 'Ü', 'â', 'ê', 'Â', '“', '”'];
+        const duzgun = ['-', '-', 's', 'S', 'i', 'u', 'U', 'o', 'O', 'c', 'C', 's', 'S', 'i', 'g', 'G', 'I', 'o', 'O', 'C', 'c', 'u', 'U', 'a', 'ê', 'a', '', ''];
         for (let i = 0; i < turkce.length; i++) {
             string = string.split(turkce[i]).join(duzgun[i]);
         }
