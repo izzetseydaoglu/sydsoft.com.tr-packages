@@ -1,0 +1,89 @@
+.popover {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 160ms ease;
+}
+
+.noFade {
+    transition: none;
+}
+
+.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.closing {
+    opacity: 0;
+}
+
+.arrow::after {
+    content: "";
+    position: absolute;
+    border-width: 5px;
+    border-style: solid;
+    width: 0;
+    height: 0;
+    border-color: var(--popover-arrow-color, #757575);
+}
+
+.arrow.top::after {
+    top: 100%;
+    border-color: var(--popover-arrow-color, #757575) transparent transparent transparent;
+}
+
+.arrow.bottom::after {
+    bottom: 100%;
+    border-color: transparent transparent var(--popover-arrow-color, #757575) transparent;
+}
+
+.arrow.left::after {
+    left: 100%;
+    margin-left: -1px;
+    border-color: transparent transparent transparent var(--popover-arrow-color, #757575);
+}
+
+.arrow.right::after {
+    right: 100%;
+    margin-right: -1px;
+    border-color: transparent var(--popover-arrow-color, #757575) transparent transparent;
+}
+
+.arrow.top.alignStart::after,
+.arrow.bottom.alignStart::after {
+    left: 12px;
+}
+
+.arrow.top.alignCenter::after,
+.arrow.bottom.alignCenter::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.arrow.top.alignEnd::after,
+.arrow.bottom.alignEnd::after {
+    right: 12px;
+}
+
+.arrow.left.alignStart::after,
+.arrow.right.alignStart::after {
+    top: 12px;
+}
+
+.arrow.left.alignCenter::after,
+.arrow.right.alignCenter::after {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.arrow.left.alignEnd::after,
+.arrow.right.alignEnd::after {
+    bottom: 12px;
+}

@@ -1,9 +1,15 @@
+/**
+ * @author    : izzetseydaoglu
+ * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
+ * @version   : 2026-01-21 21:35:48
+ */
+
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { convertForSEO, inputTumuBuyukCevir, inputTumuKucukCevir } from '../_lib/baseFunctions';
 
-import { Dialog } from './Dialog';
-import { alert_add } from '../alert';
 import { applyInputMask } from '../_lib/inputMask';
+import { alert_add } from '../alert';
+import { Dialog } from './Dialog';
 import styles from './styles/Input.module.css';
 
 type maskSettingsTranslation = {
@@ -49,13 +55,13 @@ export interface PropsInput {
     rows?: number | undefined;
 
     //--Fonk Props
-    onChange?: Function;
-    onFocus?: Function;
-    onBlur?: Function;
-    onClick?: Function;
-    onKeyPress?: Function;
-    onKeyUp?: Function;
-    onKeyDown?: Function;
+    onChange?: (e: any) => void;
+    onFocus?: (e: any) => void;
+    onBlur?: (e: any) => void;
+    onClick?: (e: any) => void;
+    onKeyPress?: (e: any) => void;
+    onKeyUp?: (e: any) => void;
+    onKeyDown?: (e: any) => void;
 
     //--Ozel Props
     propsComponent?: object | any;
@@ -87,7 +93,7 @@ export const Input: React.FC<PropsInput> = ({
     propsInput,
     id,
     name,
-    value,
+    value = '',
     type,
     label,
     startAdornment,
@@ -100,16 +106,16 @@ export const Input: React.FC<PropsInput> = ({
     onKeyPress,
     onKeyUp,
     onKeyDown,
-    disabled,
-    required,
-    loading,
-    autoFocus,
+    disabled = false,
+    required = false,
+    loading = false,
+    autoFocus = false,
     select,
     valueKey = 'value',
     labelKey = 'label',
-    ilkSec,
-    multiline,
-    rows,
+    ilkSec = false,
+    multiline = false,
+    rows = 2,
     sadeceYazi,
     sadeceSayi,
     tumuBuyuk,
@@ -130,8 +136,8 @@ export const Input: React.FC<PropsInput> = ({
     const refInput = useRef<any>(null);
     const refLabel = useRef<any>(null);
 
-    const [inputFilled, setInputFilled] = useState(value && value.toString().length > 0);
-    const [focus, setFocus] = useState(false);
+    const [inputFilled, setInputFilled] = useState<boolean>(value && value.toString().length > 0);
+    const [focus, setFocus] = useState<boolean>(false);
 
     useEffect(() => {
         if (inputRef) inputRef.current = refInput.current;
@@ -139,22 +145,18 @@ export const Input: React.FC<PropsInput> = ({
     }, [componentRef, inputRef]);
 
     useEffect(() => {
-        if (autoSelectText && !select && refInput?.current) {
-            refInput.current.select();
-        }
+        autoSelectText && !select && refInput?.current && refInput.current.select();
     }, [autoSelectText, select]);
 
     useEffect(() => {
-        const filled = value && String(value) && value.toString().length > 0;
+        const filled = String(value) && value.toString().length > 0 ? true : false;
         setInputFilled(filled);
-        if (filled) {
-            refMain?.current?.classList?.remove(styles.error);
-        }
+        filled && refMain?.current?.classList?.remove(styles.error);
     }, [value]);
 
     useEffect(() => {
         // if (type === "number") sadeceSayi = true; //TODO: sadeceSayi burada değiştirelemez ki!!!
-        if (select && ilkSec && (value === '' || !value)) {
+        if (select && ilkSec && (value === '' || value === null || value === undefined)) {
             if (select.length) {
                 const ilkItem = select[0][valueKey] ? select[0][valueKey] : '';
                 onChange && onChange({ target: { name, value: ilkItem } });
@@ -181,7 +183,6 @@ export const Input: React.FC<PropsInput> = ({
             maskInstance?.setValue(value ? value : null);
             return () => maskInstance?.destroy();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mask]);
 
     const Change = useCallback(
@@ -319,7 +320,7 @@ export const Input: React.FC<PropsInput> = ({
         component = <input className={`${styles.input}`} type={type} {...ortakProps} {...propsInput} />;
     }
 
-    const classList = useCallback(() => {
+    const classList = () => {
         const list = ['sInputComponent', styles.component];
         if (className) list.push(className);
         if (label) {
@@ -327,7 +328,7 @@ export const Input: React.FC<PropsInput> = ({
         }
         // if (props.required && (value.length === 0 || !value)) list.push("error");
         return list.join(' ');
-    }, [value, className]);
+    };
 
     useEffect(() => {
         if (propsComponent && propsComponent.hasOwnProperty('style')) {
@@ -360,15 +361,4 @@ export const Input: React.FC<PropsInput> = ({
             )}
         </div>
     );
-};
-
-Input.defaultProps = {
-    value: '',
-    disabled: false,
-    required: false,
-    ilkSec: false,
-    multiline: false,
-    rows: 2,
-    loading: false,
-    autoFocus: false
 };

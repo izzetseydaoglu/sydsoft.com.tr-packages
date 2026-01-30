@@ -41,9 +41,12 @@ const defaultIconStyle: React.CSSProperties = {
     userSelect: 'none',
     width: '1em',
     height: '1em',
-    display: 'inline-block',
+    // display: 'inline-block',
     verticalAlign: 'middle',
-    flexShrink: 0
+    flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
 };
 
 export const Icon: React.FC<Props> = ({ name, iconMui, customIcon, fontSize, color, className, style, ...other }) => {
