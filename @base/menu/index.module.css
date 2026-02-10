@@ -1,10 +1,12 @@
 .ul {
     position: relative;
     width: 100%;
+    max-height: calc(100vh - 94px);
     list-style: none;
+    padding: 0;
     margin: 0;
-    padding: 6px 0;
     background: #fff;
+    letter-spacing: 0.2px;
     outline: none;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -12,53 +14,48 @@
     overflow-y: auto;
     user-select: none;
 }
-.li {
+
+.ul > li {
     cursor: pointer;
-    padding: 6px 15px;
+    padding: 2px 6px;
     min-height: 25px;
 }
-.li,
-.li a {
+.ul > li,
+.ul > li a {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     width: 100%;
 }
-.li a,
-.li a:visited {
+.ul > li a,
+.ul > li a:visited {
     color: inherit;
     text-decoration: none;
 }
 
-.li.seperator {
-    display: block;
-    border-bottom: 1px #ced0d4 solid;
-    margin: 4px;
-    padding: 0;
-    cursor: default;
-    min-height: unset;
-}
-
-.li:first-child {
+.ul > li:first-child {
     margin-top: 5px;
 }
 
-.li:last-child {
+.ul > li:last-child {
     margin-bottom: 5px;
 }
 
-.li:hover {
+.ul > li:hover {
     background: #f0f2f5;
+}
+
+.ul > li:global(.spopover_active) {
+    background: #e8f0fe;
 }
 
 .menuicon {
     display: inline-flex;
     overflow: hidden;
-    width: 35px;
+    width: 30px;
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    margin-right: 15px;
     color: #606060;
 }
 
@@ -67,5 +64,29 @@
     flex: 1;
     align-items: center;
     justify-content: flex-start;
-    margin-right: 10px;
+    margin: 0 10px;
+}
+
+.rightmenu {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    color: #909090;
+    font-size: 12px;
+    width: 50px;
+}
+.rightmenu span {
+    user-select: none;
+}
+
+.seperator {
+    cursor: default !important;
+    background: #00000014 !important;
+    border: 0;
+    height: 1px;
+    min-height: 1px !important;
+    margin: 4px 0;
+    padding: 0 !important;
+    display: block !important;
 }

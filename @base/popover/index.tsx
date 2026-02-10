@@ -1,7 +1,7 @@
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-01-31 00:00:00
+ * @version   : 2026-02-10 16:12:35
  */
 
 import React, { cloneElement, memo, useEffect, useRef } from 'react';
@@ -30,15 +30,22 @@ type VerticalAlign = 'top' | 'center' | 'bottom';
 type AlignClass = 'start' | 'center' | 'end';
 type ArrowColor = 'auto' | string;
 
-interface Props {
-    component: any;
-    children: React.ReactNode;
+export interface PopoverConfigBaseProps {
     position?: PopoverPosition;
     removeWhenClickInside?: boolean;
+    hideBackdrop?: boolean;
     arrow?: boolean;
     distance?: number;
     fade?: boolean;
     arrowColor?: ArrowColor;
+    hover?: boolean;
+    hoverCloseDelay?: number;
+    keepMounted?: boolean;
+}
+
+interface PopoverProps extends PopoverConfigBaseProps {
+    component: any;
+    children: React.ReactNode;
 }
 
 export const Popover = memo(function MemoFunction({
@@ -48,12 +55,20 @@ export const Popover = memo(function MemoFunction({
     arrow = false,
     distance = 5,
     removeWhenClickInside = false,
+    hideBackdrop = true,
     fade = true,
     arrowColor = 'auto',
+    hover = false,
+    hoverCloseDelay = 120,
+    keepMounted = false,
     ...other
-}: Props) {
+}: PopoverProps) {
     const refComponent = useRef<any>(null);
     const closeTimer = useRef<number | null>(null);
+    const hoverCloseTimer = useRef<number | null>(null);
+    const popoverRef = useRef<HTMLDivElement | null>(null);
+    const rootRef = useRef<any>(null);
+    const zIndexRef = useRef<number | null>(null);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -63,7 +78,7 @@ export const Popover = memo(function MemoFunction({
     }, []);
 
     const checkHideBackDrop = (e: any) => {
-        const spopover = document.querySelector('.spopover');
+        const spopover = popoverRef.current;
         if (!spopover) return;
 
         if (!(e?.target instanceof Node)) {
@@ -75,50 +90,121 @@ export const Popover = memo(function MemoFunction({
     };
 
     const popoverEkle = (e: any) => {
+        if (popoverRef.current && keepMounted) {
+            const popover = popoverRef.current;
+            const target = e.currentTarget;
+            const wasVisible = popover.classList.contains(styles.visible);
+            rootRef.current?.render?.(children);
+            applyArrowColor(popover);
+            popoverPosition({ target, position: position });
+            popover.style.zIndex = String(nextPopoverZIndex());
+            popover.classList.remove(styles.closing);
+            popover.classList.add(styles.visible);
+            if (!wasVisible) {
+                if (hideBackdrop) {
+                    window.addEventListener('mousedown', checkHideBackDrop);
+                    window.addEventListener('blur', checkHideBackDrop);
+                }
+                if (removeWhenClickInside) popover.addEventListener('mouseup', popoverGecikmeliSil);
+                if (hover) {
+                    popover.addEventListener('mouseenter', clearHoverClose);
+                    popover.addEventListener('mouseleave', scheduleHoverClose);
+                }
+                incrementBodyPopover();
+            }
+            return;
+        }
         popoverSil(false);
         const popover = document.createElement('div');
         popover.classList.add('spopover', styles.popover);
+        const zIndex = nextPopoverZIndex();
+        zIndexRef.current = zIndex;
         document.body.appendChild(popover);
         // ReactDOM.render(children, popover)
         const root = createRoot(popover!);
         root.render(children);
+        popoverRef.current = popover;
+        rootRef.current = root;
         const target = e.currentTarget;
         refComponent.current && refComponent.current.classList.add('spopover_active');
         setTimeout(() => {
             applyArrowColor(popover);
             popoverPosition({ target, position: position });
+            popover.style.zIndex = String(zIndexRef.current ?? zIndex);
             popover.classList.add(styles.visible);
         }, 100);
-        window.addEventListener('mousedown', checkHideBackDrop);
-        window.addEventListener('blur', checkHideBackDrop);
+        if (hideBackdrop) {
+            window.addEventListener('mousedown', checkHideBackDrop);
+            window.addEventListener('blur', checkHideBackDrop);
+        }
         if (removeWhenClickInside) popover.addEventListener('mouseup', popoverGecikmeliSil);
-        document.body.classList.add('spopover_open');
+        if (hover) {
+            popover.addEventListener('mouseenter', clearHoverClose);
+            popover.addEventListener('mouseleave', scheduleHoverClose);
+        }
+        incrementBodyPopover();
     };
 
     const popoverSil = (animate = true) => {
         refComponent.current && refComponent.current.classList.remove('spopover_active');
-        const check = document.body.getElementsByClassName('spopover')[0];
+        const check = popoverRef.current;
+        const wasVisible = !!check?.classList.contains(styles.visible);
         if (check) {
             if (removeWhenClickInside) check.removeEventListener('mouseup', popoverGecikmeliSil);
+            if (hover) {
+                check.removeEventListener('mouseenter', clearHoverClose);
+                check.removeEventListener('mouseleave', scheduleHoverClose);
+            }
             if (closeTimer.current) window.clearTimeout(closeTimer.current);
+            if (hoverCloseTimer.current) window.clearTimeout(hoverCloseTimer.current);
             if (!fade || !animate) {
-                check.remove();
+                if (!keepMounted) {
+                    const root = rootRef.current;
+                    window.setTimeout(() => {
+                        root?.unmount?.();
+                    }, 0);
+                    check.remove();
+                    popoverRef.current = null;
+                    rootRef.current = null;
+                } else {
+                    check.classList.remove(styles.visible);
+                    check.classList.remove(styles.closing);
+                }
             } else if (!check.classList.contains(styles.closing)) {
                 check.classList.add(styles.closing);
                 closeTimer.current = window.setTimeout(() => {
-                    check.remove();
+                    if (!keepMounted) {
+                        const root = rootRef.current;
+                        root?.unmount?.();
+                        check.remove();
+                        popoverRef.current = null;
+                        rootRef.current = null;
+                    } else {
+                        check.classList.remove(styles.visible);
+                        check.classList.remove(styles.closing);
+                    }
                 }, FADE_DURATION);
             }
         }
-        window.removeEventListener('mousedown', checkHideBackDrop);
-        window.removeEventListener('blur', checkHideBackDrop);
-        document.body.classList.remove('spopover_open');
+        if (hideBackdrop) {
+            window.removeEventListener('mousedown', checkHideBackDrop);
+            window.removeEventListener('blur', checkHideBackDrop);
+        }
+        if (wasVisible) decrementBodyPopover();
     };
 
     const popoverGecikmeliSil = () => setTimeout(() => popoverSil(), 100);
+    const clearHoverClose = () => {
+        if (hoverCloseTimer.current) window.clearTimeout(hoverCloseTimer.current);
+        hoverCloseTimer.current = null;
+    };
+    const scheduleHoverClose = () => {
+        clearHoverClose();
+        hoverCloseTimer.current = window.setTimeout(() => popoverSil(), hoverCloseDelay);
+    };
 
     const popoverPosition = ({ target, position }: { target: HTMLElement; position: PopoverPosition }) => {
-        const popover: any = document.body.getElementsByClassName('spopover')[0];
+        const popover: any = popoverRef.current;
         if (popover) {
             const arrowMargin = arrow ? 5 : 0;
             const margin = distance + arrowMargin;
@@ -176,11 +262,54 @@ export const Popover = memo(function MemoFunction({
         popoverEl.style.setProperty('--popover-arrow-color', arrowColor);
     }
 
-    return cloneElement(component, {
+    function incrementBodyPopover() {
+        const body = document.body;
+        const count = Number(body.dataset.spopoverCount || '0') + 1;
+        body.dataset.spopoverCount = String(count);
+        if (count > 0) body.classList.add('spopover_open');
+    }
+
+    function decrementBodyPopover() {
+        const body = document.body;
+        const count = Math.max(0, Number(body.dataset.spopoverCount || '0') - 1);
+        if (count === 0) {
+            delete body.dataset.spopoverCount;
+            body.classList.remove('spopover_open');
+        } else {
+            body.dataset.spopoverCount = String(count);
+        }
+    }
+
+    function nextPopoverZIndex() {
+        const body = document.body;
+        const current = Number(body.dataset.spopoverZIndex || '10000');
+        const next = current + 1;
+        body.dataset.spopoverZIndex = String(next);
+        return next;
+    }
+
+    const componentProps: Record<string, any> = {
         ref: refComponent,
-        onClick: popoverEkle,
+        onClick: (e: any) => {
+            component.props?.onClick?.(e);
+            popoverEkle(e);
+        },
         ...other
-    });
+    };
+
+    if (hover) {
+        componentProps.onMouseEnter = (e: any) => {
+            component.props?.onMouseEnter?.(e);
+            clearHoverClose();
+            popoverEkle(e);
+        };
+        componentProps.onMouseLeave = (e: any) => {
+            component.props?.onMouseLeave?.(e);
+            scheduleHoverClose();
+        };
+    }
+
+    return cloneElement(component, componentProps);
 });
 
 const sideClass: Record<PopoverSide, string> = {

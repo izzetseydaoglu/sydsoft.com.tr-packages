@@ -1,4 +1,6 @@
 // https://fonts.google.com/icons adresinden ikonu seçtikten sonra kopyalayalıp alıyoruz. Icon adı da en atta hangisiyse onu ekleyelim, isimler karışmasın
+// https://icons8.com/icons/set/google-drive adresinden ikonu seçtikten sonra kopyalayalıp alıyoruz. Icon adı da en atta hangisiyse onu ekleyelim, isimler karışmasın
+// https://www.svgrepo.com/svg/353811/google-drive?edit=true adresinden ikonu seçtikten sonra kopyalayalıp alıyoruz. Icon adı da en atta hangisiyse onu ekleyelim, isimler karışmasın
 
 import React from 'react';
 import { iconMap } from './icons';
@@ -57,11 +59,12 @@ export const Icon: React.FC<Props> = ({ name, iconMui, customIcon, fontSize, col
                 style={{
                     ...defaultIconStyle,
                     ...style,
-                    fontSize: fontSize || '1.5rem',
+                    fontSize: fontSize || '1.3rem',
                     color: color || 'inherit'
                 }}
                 aria-hidden="true"
-                {...other}>
+                {...other}
+            >
                 {iconMui}
             </span>
         );
@@ -82,8 +85,9 @@ export const Icon: React.FC<Props> = ({ name, iconMui, customIcon, fontSize, col
                 fontSize: fontSize || '1.5rem',
                 color: color || 'inherit'
             }}
-            {...other}>
-            <svg viewBox={iconComponent.viewBox} fill={'currentColor'} xmlns="http://www.w3.org/2000/svg">
+            {...other}
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox={iconComponent.viewBox} fill={'currentColor'} width="1em" height="1em" style={{ display: 'block', flexShrink: 0 }}>
                 {iconComponent.content}
             </svg>
         </span>
