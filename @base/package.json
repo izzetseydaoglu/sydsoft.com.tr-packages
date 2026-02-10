@@ -1,0 +1,49 @@
+{
+    "name": "@sydsoft/base",
+    "private": false,
+    "version": "1.47.0",
+    "description": "",
+    "main": "./dist/esm/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/esm/index.d.ts",
+    "files": [
+        "./dist/",
+        "README.md"
+    ],
+    "exports": {
+        ".": {
+            "types": "./dist/esm/index.d.ts",
+            "default": "./dist/esm/index.js"
+        }
+    },
+    "scripts": {
+        "clean": "rm -rf ./dist",
+        "copyFiles": "copyfiles -u 1 \"**/*.css\" dist/esm",
+        "build": "npm run clean && tsc && npm run copyFiles",
+        "publishNPM": "npm run build && npm publish --dry-run && npm publish --access public && npm run clean"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "keywords": [],
+    "author": "izzetseydaoglu",
+    "license": "MIT",
+    "bugs": {
+        "email": "izzetseydaoglu@gmail.com",
+        "url": "https://github.com/izzetseydaoglu/sydsoft.com.tr-packages"
+    },
+    "homepage": "https://github.com/izzetseydaoglu/sydsoft.com.tr-packages/#readme",
+    "peerDependencies": {
+        "react": ">=18",
+        "react-dom": ">=18",
+        "nookies": "^2.5.2"
+    },
+    "devDependencies": {
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "copyfiles": "^2.4.1",
+        "react": "^18",
+        "react-dom": "^18",
+        "typescript": "^5"
+    }
+}

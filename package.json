@@ -1,31 +1,16 @@
 {
-    "name": "sydsoft.com.tr_package",
-    "version": "1.0.0",
+    "name": "e-udf-monorepo",
     "private": true,
+    "version": "1.0.0",
     "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
-        "lint": "next lint"
+        "cleanInstall": "find . -type d \\( -name node_modules -o -name .next \\) -prune -exec rm -rf {} + && pnpm install",
+        "dev:web": "pnpm --filter editorWeb devStart",
+        "dev:core": "pnpm --filter editorCore devEditor",
+        "dev": "pnpm -r --parallel --filter editorWeb --filter editorCore dev",
+        "build:web": "pnpm --filter editorWeb... build",
+        "deploy:web": "rm -rf .deploy/editorWeb && pnpm --filter editorWeb --prod deploy .deploy/editorWeb",
+        "build": "pnpm -r --parallel --filter editorWeb --filter editorCore build",
+        "lint": "pnpm -r --parallel --filter editorWeb --filter editorCore lint"
     },
-    "dependencies": {
-        "@sydsoft/base": "file:sydsoft-base-1.8.0.tgz",
-        "html-react-parser": "^5.2.6",
-        "jquery": "^3.7.1",
-        "next": "14.1.0",
-        "nookies": "^2.5.2",
-        "react": "^18",
-        "react-dom": "^18",
-        "styled-components": "^6.1.8"
-    },
-    "devDependencies": {
-        "@types/jquery": "^3.5.29",
-        "@types/node": "^20",
-        "@types/react": "^18",
-        "@types/react-dom": "^18",
-        "copyfiles": "^2.4.1",
-        "eslint": "^8",
-        "eslint-config-next": "14.1.0",
-        "typescript": "^5"
-    }
+    "packageManager": "pnpm@10.29.2+sha512.bef43fa759d91fd2da4b319a5a0d13ef7a45bb985a3d7342058470f9d2051a3ba8674e629672654686ef9443ad13a82da2beb9eeb3e0221c87b8154fff9d74b8"
 }

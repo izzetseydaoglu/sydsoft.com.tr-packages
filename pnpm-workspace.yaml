@@ -1,0 +1,8 @@
+packages:
+  - @base
+  - testBase
+
+
+onlyBuiltDependencies:
+  - sharp
+  - unrs-resolver

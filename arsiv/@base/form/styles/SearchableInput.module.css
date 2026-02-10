@@ -1,0 +1,80 @@
+.searchableInputComponent {
+  cursor: unset;
+}
+.searchableInputComponent input {
+
+}
+
+.searchableInputComponent :global(.listDiv) {
+  position: relative;
+  margin-top: -4px;
+  z-index: 1000;
+}
+
+.searchableInputComponent :global(.listDiv[data-relative="true"]) {
+  z-index: 1 !important;
+}
+.searchableInputComponent :global(.listDiv[data-relative="true"]) > ul {
+  position: relative !important;
+}
+
+.searchableInputComponent :global(.list) {
+  position: absolute;
+  top: 3px;
+  left: 1%;
+  width: 98%;
+  height: 0;
+  overflow: hidden;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.searchableInputComponent :global(.list.open) {
+  height: auto;
+  max-height: 300px;
+  overflow-x: hidden;
+  overflow-y: visible;
+  padding: 5px 0;
+  border: 1px #ced4da solid;
+  background: #fff;
+}
+
+.searchableInputComponent :global(.list li) {
+  cursor: pointer;
+  display: block;
+  padding: 8px 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.searchableInputComponent :global(.list li:hover),
+.searchableInputComponent :global(.list li.selected) {
+  background: #d9e0e3;
+}
+
+.searchableInputComponent :global(.list li.active) {
+  background: #cbe2ef;
+  font-weight: 500;
+}
+
+.searchableInputComponent :global(.newCreate) {
+  margin-right: 5px;
+  font-style: italic;
+}
+
+.searchableInputComponent :global(.message) {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+  padding: 15px 10px;
+  cursor: default;
+}
+.searchableInputComponent :global(.loading) {
+  padding: 5px 10px;
+  background-color: #ced4da38;
+  text-align: center;
+}

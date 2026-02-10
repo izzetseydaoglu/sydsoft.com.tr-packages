@@ -1,0 +1,77 @@
+.backdrop {
+    position: fixed;
+    z-index: 1300;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.23);
+    width: 100%;
+    height: 100%;
+    outline: none;
+}
+.backdrop_open {
+    display: flex !important;
+}
+
+.modal {
+    position: relative;
+    min-width: 200px;
+    max-width: 90%;
+    max-height: calc(100% - 64px);
+    overflow-x: hidden;
+    border-radius: 8px;
+    background: transparent;
+    box-shadow:
+        rgb(0 0 0 / 32%) 0 4px 8px,
+        rgb(0 0 0 / 40%) 0 8px 40px;
+    margin: 15px;
+    padding: 0;
+    z-index: 1;
+    outline: none;
+}
+.fullscreen {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    margin: 0;
+}
+.close_fixed {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 1000;
+    text-align: right;
+    border-radius: inherit;
+}
+
+.close {
+    position: fixed;
+    background: linear-gradient(0deg, transparent, #00000026, transparent);
+    padding: 8px 10px;
+    font-size: 11px;
+    transform: scale(1) translateX(-100%);
+    border-radius: none;
+    cursor: pointer;
+    font-weight: bold;
+    text-shadow: 1px 0px 0px #000000;
+    transition: all 0.3s ease-in-out;
+}
+.close:hover {
+    transform: scale(1.3) translateX(-85%);
+    background: linear-gradient(180deg, transparent, #0000003a, transparent);
+}
+
+.sbox_header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.sbox_footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+}

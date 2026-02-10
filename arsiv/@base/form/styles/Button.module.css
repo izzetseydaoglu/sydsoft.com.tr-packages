@@ -1,0 +1,145 @@
+.button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    appearance: none;
+    user-select: none;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    text-transform: none;
+    border-radius: 6px;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    line-height: inherit;
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+    background-color: #e0e0e0;
+    padding: 4px 10px;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.button.fullwidth {
+    width: 100%;
+}
+.button[data-button-size="small"] {
+   font-size: 0.875rem;
+    padding: 4px 10px;
+    min-width: 64px;
+    height: 32px;
+}
+
+.button[data-button-size="medium"] {
+    font-size: 1rem;
+    padding: 6px 12px;
+    min-width: 72px;
+    height: 36px;
+}
+
+.button[data-button-size="large"] {
+    font-size: 1.2rem;
+    padding: 8px 16px;
+    min-width: 80px;
+    height: 40px;
+}
+
+.button[hidden] {
+    display: none;
+}
+
+.button[disabled] {
+    opacity: 0.7;
+    box-shadow: inset 0 0 20px #000000ad;
+    cursor: not-allowed;
+}
+.button:focus,
+.button:hover {
+    opacity: 0.9;
+}
+
+.button.primary {
+    color: #fff;
+    background-color: #3772c4;
+    border-color: #1877f2;
+}
+
+.button.secondary {
+    color: #fff;
+    background-color: #6c7573;
+    border-color: #6c757d;
+}
+
+.button.success {
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.button.danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.button.warning {
+    color: #000;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.button.info {
+    color: #000;
+    background-color: #0dcaf0;
+    border-color: #0dcaf0;
+}
+
+.button.light {
+    color: #000;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+.button.dark {
+    color: #fff;
+    background-color: #212529;
+    border-color: #212529;
+}
+
+.button.link {
+    box-shadow: none;
+    background-color: transparent;
+    color: inherit;
+}
+
+.iconbutton {
+    padding: 8px;
+    border-radius: 50%;
+    background-color: transparent;
+    box-shadow: none;
+    color: #707274;
+    /* overflow: unset; */
+}
+.iconbutton:focus,
+.iconbutton:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.ripple {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 900ms linear;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}

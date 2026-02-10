@@ -1,0 +1,119 @@
+.message {
+  flex: 1;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  letter-spacing: 0;
+  transform: translate(-50%, -50%) scale(0);
+  transition: ease-in-out 0.2s;
+  border: 1px #97979740 solid;
+  box-shadow: 1px 1px 4px 0 #000000a6;
+  cursor: pointer;
+  background: inherit;
+}
+.close:hover {
+  zoom: 1.1;
+}
+.salert:hover .close {
+  transform: translate(-50%, -50%) scale(1);
+}
+.salert {
+  position: relative;
+  min-width: 50px;
+  width: fit-content;
+  margin: 6px 0 6px auto;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: default;
+  background: #1f1f1f;
+  color: rgba(255, 255, 255, 0.93);
+  border: 1px #97979740 solid;
+  box-shadow: 1px 1px 4px 0 #000000a6;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+  animation: show 0.3s;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.error {
+  background: rgb(211, 47, 47);
+  background: linear-gradient(
+    135deg,
+    rgba(211, 47, 47, 1) 0%,
+    rgba(211, 47, 47, 0.8) 70%
+  );
+  color: rgba(255, 255, 255, 0.93);
+}
+
+.success {
+  background: rgb(67, 160, 71);
+  background: linear-gradient(
+    135deg,
+    rgba(67, 160, 71, 1) 0%,
+    rgba(67, 160, 71, 0.8) 70%
+  );
+  color: rgba(255, 255, 255, 0.93);
+}
+
+.info {
+  background: rgb(13, 141, 189);
+  background: linear-gradient(
+    135deg,
+    rgba(13, 141, 189, 1) 0%,
+    rgba(13, 141, 189, 0.8) 70%
+  );
+  color: rgba(255, 255, 255, 0.93);
+}
+
+.warning {
+  background: rgb(217, 142, 4);
+  background: linear-gradient(
+    135deg,
+    rgba(217, 142, 4, 1) 0%,
+    rgba(217, 142, 4, 0.8) 70%
+  );
+  color: rgba(255, 255, 255, 0.93);
+}
+
+.loading {
+  background: linear-gradient(
+    60deg,
+    rgb(15 33 34) 0%,
+    rgba(0, 172, 193, 1) 100%
+  );
+  color: rgba(255, 255, 255, 0.93);
+  animation: waves 50s infinite linear;
+}
+
+@keyframes show {
+  from {
+    transform: translateX(200%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes waves {
+  from {
+    background-position: 0;
+  }
+  to {
+    background-position: 100vw 0;
+  }
+}
