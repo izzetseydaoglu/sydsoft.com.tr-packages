@@ -1,6 +1,6 @@
 packages:
-  - @base
-  - testBase
+  - "@base"
+  - "testBase"
 
 
 onlyBuiltDependencies:

@@ -1,8 +1,9 @@
 /**
- * Copyright (c) 2023
- *  @author: izzetseydaoglu
- *  @last-modified: 9.02.2024 06:07
+ * @author    : izzetseydaoglu
+ * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
+ * @version   : 2026-02-10 20:26:27
  */
+
 import React, { memo, useEffect, useRef, useState } from "react";
 
 import ReactDOM from "react-dom";

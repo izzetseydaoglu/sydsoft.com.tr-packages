@@ -1,12 +1,12 @@
 {
     "files.exclude": {
         "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/.DS_Store": true,
-        "**/Thumbs.db": true,
+        "**/.svn": false,
+        "**/.hg": false,
+        "**/.DS_Store": false,
+        "**/Thumbs.db": false,
         "**/node_modules": true,
-        "**/.idea": true,
+        "**/.idea": false,
         "**/dist": false,
         "**/.next": true,
         "**/.vscode": true

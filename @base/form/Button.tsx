@@ -1,3 +1,9 @@
+/**
+ * @author    : izzetseydaoglu
+ * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
+ * @version   : 2026-02-10 20:23:07
+ */
+
 import { Dialog, propsDialog } from "./Dialog";
 import React, { memo, useCallback, useEffect, useState } from "react";
 import { Tooltip, typeTooltipPosition } from "../tooltip";

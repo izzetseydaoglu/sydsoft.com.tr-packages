@@ -1,3 +1,9 @@
+/**
+ * @author    : izzetseydaoglu
+ * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
+ * @version   : 2026-02-10 20:23:07
+ */
+
 export const isDev = !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
 export const isServerReq = (context: any) => !context?.req?.url?.startsWith('/_next');
 export const sleep = (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms));

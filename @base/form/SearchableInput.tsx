@@ -1,3 +1,9 @@
+/**
+ * @author    : izzetseydaoglu
+ * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
+ * @version   : 2026-02-10 20:23:07
+ */
+
 import { Button, Input, PropsInput } from './index';
 import { convertForSearch, convertLowerCase } from '../_lib/baseFunctions';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from 'react';

@@ -1,3 +1,9 @@
+/**
+ * @author    : izzetseydaoglu
+ * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
+ * @version   : 2026-02-10 20:23:07
+ */
+
 export const iconMap = {
     close: {
         viewBox: '0 -960 960 960',

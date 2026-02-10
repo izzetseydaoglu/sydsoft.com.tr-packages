@@ -1,26 +1,20 @@
 {
     "name": "@sydsoft/base",
     "private": false,
-    "version": "1.47.0",
-    "description": "",
-    "main": "./dist/esm/index.js",
+    "version": "1.59.0",
+    "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.js",
     "types": "./dist/esm/index.d.ts",
     "files": [
         "./dist/",
         "README.md"
     ],
-    "exports": {
-        ".": {
-            "types": "./dist/esm/index.d.ts",
-            "default": "./dist/esm/index.js"
-        }
-    },
     "scripts": {
         "clean": "rm -rf ./dist",
-        "copyFiles": "copyfiles -u 1 \"**/*.css\" dist/esm",
+        "test": "rm -rf ../*.tgz && rm -rf ../.next && npm run build && npm pack --pack-destination ../ && cd ../ && npm uninstall @sydsoft/base && npm install *.tgz && npm run dev",
+        "copyFiles": "find . -name \"*.css\" -not -path \"./dist/*\" -exec sh -c 'for f do mkdir -p \"./dist/esm/$(dirname \"$f\")\"; cp \"$f\" \"./dist/esm/$f\"; done' sh {} +",
         "build": "npm run clean && tsc && npm run copyFiles",
-        "publishNPM": "npm run build && npm publish --dry-run && npm publish --access public && npm run clean"
+        "publishNPM": "npm run build && npm version patch && npm version minor && npm publish --dry-run && npm publish --access public && npm run clean"
     },
     "publishConfig": {
         "access": "public"

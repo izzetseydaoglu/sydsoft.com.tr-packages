@@ -1,0 +1,30 @@
+{
+    "name": "testbase",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@sydsoft/base": "workspace:*",
+        "html-react-parser": "^5.2.6",
+        "jquery": "^3.7.1",
+        "next": "14.1.0",
+        "nookies": "^2.5.2",
+        "react": "^18",
+        "react-dom": "^18",
+        "styled-components": "^6.1.8"
+    },
+    "devDependencies": {
+        "@types/jquery": "^3.5.29",
+        "@types/node": "^20",
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "eslint": "^8",
+        "eslint-config-next": "14.1.0",
+        "typescript": "^5"
+    }
+}

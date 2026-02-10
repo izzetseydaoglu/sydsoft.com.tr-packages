@@ -1,3 +1,9 @@
+/**
+ * @author    : izzetseydaoglu
+ * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
+ * @version   : 2026-02-10 20:23:07
+ */
+
 import { isDev } from "../baseFunctions";
 
 const encDecDataKeys: number[] = [3, 5, 8, 11, 15, 22];

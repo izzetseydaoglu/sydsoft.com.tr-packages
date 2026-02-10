@@ -1,3 +1,9 @@
+/**
+ * @author    : izzetseydaoglu
+ * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
+ * @version   : 2026-02-10 20:23:07
+ */
+
 export default class dateTime {
     private datetime: Date | string;
     private resut_format: string = "y-m-d h:i:s";
