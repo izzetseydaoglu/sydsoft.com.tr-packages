@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { BoxContent } from "@/@base";
-import { Checkbox } from "@/@base/form/Checkbox";
+import { BoxContent } from "@sydsoft/base";
+import { Checkbox } from "@sydsoft/base/form/Checkbox";
 
 export default function Test() {
     const [checked, setChecked] = useState<boolean | "0" | "1">("1");

@@ -1,4 +1,4 @@
-import { BoxContent, SearchableInput } from "@/@base";
+import { BoxContent, SearchableInput } from "@sydsoft/base";
 
 import { useState } from "react";
 

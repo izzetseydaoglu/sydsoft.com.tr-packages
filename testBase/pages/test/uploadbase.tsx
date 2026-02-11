@@ -1,4 +1,4 @@
-import { UploadBase, isDev } from "@/@base";
+import { UploadBase, isDev } from "@sydsoft/base";
 import { useEffect, useState } from "react";
 
 export default function Test() {

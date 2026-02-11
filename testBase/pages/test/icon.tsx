@@ -1,7 +1,8 @@
-import { Box, BoxContent, BoxFooter, BoxHeader, Icon, iconList } from '@/@base';
+import { Box, BoxContent, BoxFooter, BoxHeader, Icon } from '@sydsoft/base';
 
-import { useEffect } from 'react';
 import { customIcons } from '../customIcons';
+import { iconMap } from '@sydsoft/base/icon/icons';
+import { useEffect } from 'react';
 
 export default function Test() {
     useEffect(() => {
@@ -19,21 +20,23 @@ export default function Test() {
     }, []);
 
     return (
-        <Box style={{ margin: 10, maxHeight: 300 }}>
-            <BoxHeader>IconList</BoxHeader>
-            <BoxContent style={{ display: 'flex', flexWrap: 'wrap', gap: 30 }}>
-                {iconList.map((item: any, index: number) => (
-                    <div key={index} title={item} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <Icon name={item} />
-                        <b style={{ fontSize: 15, marginTop: 5 }}>{item}</b>
-                    </div>
-                ))}
-                <br />
-                Custom ICON = <Icon customIcon={customIcons.logo} fontSize={50} />
-                MaterialICON= <Icon iconMui="edit" fontSize={50} color="red" />
-                Icon Yok= <Icon name="karşılıksız" />
-            </BoxContent>
-            <BoxFooter>Footer</BoxFooter>
-        </Box>
+        <>
+            <Box style={{ margin: 10, maxHeight: 300 }}>
+                <BoxHeader>IconList</BoxHeader>
+                <BoxContent style={{ display: 'flex', flexWrap: 'wrap', gap: 30 }}>
+                    {Object.keys(iconMap).map((item: any, index: number) => (
+                        <div key={index} title={item} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <Icon name={item} />
+                            <b style={{ fontSize: 15, marginTop: 5 }}>{item}</b>
+                        </div>
+                    ))}
+                    <br />
+                    Custom ICON = <Icon customIcon={customIcons.logo} fontSize={50} />
+                    MaterialICON= <Icon iconMui="edit" fontSize={50} color="red" />
+                    Icon Yok= <Icon name="karşılıksız" />
+                </BoxContent>
+                <BoxFooter>Footer</BoxFooter>
+            </Box>
+        </>
     );
 }

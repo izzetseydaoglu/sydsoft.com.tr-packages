@@ -1,7 +1,7 @@
-import { BoxContent, Button, Form, Icon, Input, Label, isDev } from "@/@base";
+import { BoxContent, Button, Form, Icon, Input, Label, isDev } from "@sydsoft/base";
 import { useEffect, useRef, useState } from "react";
 
-import { applyInputMask } from "@/@base/_lib/inputMask";
+import { applyInputMask } from "@sydsoft/base/_lib/inputMask";
 
 export default function Test() {
     const [value, setValue] = useState("(542)-544-68-26");

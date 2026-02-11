@@ -1,4 +1,4 @@
-import { BoxContent, Button, Col, Form, FormOlustur, Input, PropsFormOgeler, Row, isDev } from '@/@base';
+import { BoxContent, Button, Col, Form, FormOlustur, Input, PropsFormOgeler, Row, isDev } from '@sydsoft/base';
 import { useCallback, useEffect, useState } from 'react';
 
 export default function Test() {

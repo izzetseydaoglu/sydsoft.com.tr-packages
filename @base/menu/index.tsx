@@ -1,12 +1,14 @@
+'use client';
+
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-07 19:31:01
+ * @version   : 2026-02-11 17:55:42
  */
 
-import React, { memo, useMemo } from 'react';
 import { Dialog, propsDialog } from '../form';
 import { Popover, PopoverConfigBaseProps } from '../popover';
+import React, { memo, useMemo } from 'react';
 
 import Link from 'next/link';
 import styles from './index.module.css';

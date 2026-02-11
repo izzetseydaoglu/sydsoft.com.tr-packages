@@ -1,7 +1,6 @@
-import { Col, Hidden, Row } from '@/@base/grid';
-import React from 'react';
+import { Col, DevelopGridComponent, Hidden, Row } from '@sydsoft/base/grid';
 
-import DevelopGridComponent from '@/@base/grid/DevelopGridComponent';
+import React from 'react';
 
 const GridTestPage: React.FC = () => {
     const boxStyle = (color: string) => ({

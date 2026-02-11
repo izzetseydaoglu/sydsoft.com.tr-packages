@@ -4,7 +4,7 @@
  *  @last-modified: 30.01.2024 04:44
  */
 
-import { Popover } from "@/@base";
+import { Popover } from "@sydsoft/base";
 
 export default function Home() {
     return (

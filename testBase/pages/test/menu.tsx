@@ -1,4 +1,4 @@
-import { Box, BoxContent, BoxFooter, BoxHeader, Button, Icon, Menu, Popover, isDev, typeMenu } from '@/@base';
+import { Box, BoxContent, BoxFooter, BoxHeader, Button, Icon, Menu, Popover, isDev, typeMenu } from '@sydsoft/base';
 
 import React from 'react';
 import styled from 'styled-components';

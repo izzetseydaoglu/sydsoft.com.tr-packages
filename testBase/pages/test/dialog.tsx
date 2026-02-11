@@ -1,6 +1,6 @@
-import { BoxContent } from "@/@base";
-import { Button } from "@/@base/form/Button";
-import { Dialog } from "@/@base/form/Dialog";
+import { BoxContent } from "@sydsoft/base";
+import { Button } from "@sydsoft/base/form/Button";
+import { Dialog } from "@sydsoft/base/form/Dialog";
 
 export default function Test() {
     const buttons = ["default", "primary", "secondary", "success", "danger", "warning", "info", "light", "dark", "link"];

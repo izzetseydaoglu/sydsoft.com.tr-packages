@@ -4,7 +4,7 @@
  *  @last-modified: 30.01.2024 04:44
  */
 
-import { Modal } from "@/@base";
+import { Modal } from "@sydsoft/base";
 import { useState } from "react";
 
 export default function Home() {

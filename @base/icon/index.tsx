@@ -1,18 +1,17 @@
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-10 20:23:07
+ * @version   : 2026-02-11 17:57:22
  */
 
 // https://fonts.google.com/icons adresinden ikonu seçtikten sonra kopyalayalıp alıyoruz. Icon adı da en atta hangisiyse onu ekleyelim, isimler karışmasın
 // https://icons8.com/icons/set/google-drive adresinden ikonu seçtikten sonra kopyalayalıp alıyoruz. Icon adı da en atta hangisiyse onu ekleyelim, isimler karışmasın
 // https://www.svgrepo.com/svg/353811/google-drive?edit=true adresinden ikonu seçtikten sonra kopyalayalıp alıyoruz. Icon adı da en atta hangisiyse onu ekleyelim, isimler karışmasın
 
+import { MaterialIconName } from './mui';
 import React from 'react';
 import { iconMap } from './icons';
-import { MaterialIconName } from './mui';
 
-export const iconList = Object.keys(iconMap) as IconName[];
 export type IconName = keyof typeof iconMap;
 
 interface BaseProps {
