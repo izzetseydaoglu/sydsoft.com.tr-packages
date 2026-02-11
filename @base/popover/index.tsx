@@ -1,7 +1,7 @@
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-10 16:12:35
+ * @version   : 2026-02-11 18:50:06
  */
 
 import React, { cloneElement, memo, useEffect, useRef } from 'react';

@@ -1,14 +1,12 @@
-'use client';
-
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-11 17:55:42
+ * @version   : 2026-02-11 18:48:47
  */
 
+import React, { memo, useMemo } from 'react';
 import { Dialog, propsDialog } from '../form';
 import { Popover, PopoverConfigBaseProps } from '../popover';
-import React, { memo, useMemo } from 'react';
 
 import Link from 'next/link';
 import styles from './index.module.css';
@@ -16,6 +14,8 @@ import styles from './index.module.css';
 interface BaseProps {
     style?: React.CSSProperties;
     itemProps?: any;
+    disabled?: boolean;
+    noRender?: boolean;
     [key: string]: any;
 }
 interface SeperatorProps extends BaseProps {
@@ -24,6 +24,7 @@ interface SeperatorProps extends BaseProps {
     icon?: never;
     fullComponent?: never;
     href?: never;
+    target?: never;
     onClick?: never;
     dialog?: never;
 }
@@ -33,6 +34,7 @@ interface FullComponentProps extends BaseProps {
     title?: never;
     icon?: never;
     href?: never;
+    target?: never;
     onClick?: never;
     dialog?: never;
 }
@@ -44,6 +46,7 @@ interface ItemComponentProps extends BaseProps {
     icon?: React.ReactNode;
     rightComponent?: React.ReactNode;
     href?: string;
+    target?: '_blank' | '_self' | '_parent' | '_top';
     onClick?: (e: React.MouseEvent<HTMLLIElement>) => void;
     dialog?: propsDialog;
 }
@@ -63,6 +66,7 @@ interface SubMenuProps extends BaseProps {
     seperator?: never;
     fullComponent?: never;
     href?: never;
+    target?: never;
     onClick?: never;
     dialog?: never;
 }
@@ -86,8 +90,15 @@ export const Menu = memo(function MemoFunction({ menu, className, style, withIco
     const withRightComponent = useMemo(() => {
         return Object.values(menu).some((item) => 'rightComponent' in item && !!item.rightComponent);
     }, [menu]);
+
     const handleClick = (item: any, e: any) => {
+        if (item.disabled) {
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+        }
         if (!item.onClick) return;
+
         if (item.dialog) {
             Dialog({ ...item.dialog }).then((result) => {
                 if (result && item.onClick) {
@@ -102,18 +113,23 @@ export const Menu = memo(function MemoFunction({ menu, className, style, withIco
     return (
         <ul className={`smenu ${styles.ul} ${className || ''}`} style={style}>
             {Object.values(menu).map((item: typeMenu, key: number) => {
-                const { fullComponent, icon, title, rightComponent, seperator, href, style, itemProps, type, items, menuProps, subMenuPopoverProps, ...other } = item as typeMenu & {
-                    subMenuPopoverProps?: PopoverConfigBaseProps;
-                };
+                const { noRender, fullComponent, icon, title, rightComponent, seperator, href, target, style, itemProps, type, items, menuProps, subMenuPopoverProps, disabled, ...other } =
+                    item as typeMenu & {
+                        subMenuPopoverProps?: PopoverConfigBaseProps;
+                    };
+                if (noRender) return null;
+
                 const hasSubmenu = type === 'submenu' && Array.isArray(items) && items.length > 0;
 
                 if (fullComponent) return React.cloneElement(fullComponent, { key: key });
+
                 if (seperator) return <li key={key} className={styles.seperator} style={style} {...itemProps} {...other} />;
+
                 const Component = (
                     <>
-                        {withIconComponent && <div className={styles.menuicon}>{icon}</div>}
-                        <div className={styles.menutitle}>{title}</div>
-                        {withRightComponent && <div className={styles.rightmenu}>{rightComponent}</div>}
+                        {withIconComponent && <div className={'menuicon'}>{icon}</div>}
+                        <div className={'menutitle'}>{title}</div>
+                        {withRightComponent && <div className={'menuright'}>{rightComponent}</div>}
                     </>
                 );
 
@@ -122,7 +138,7 @@ export const Menu = memo(function MemoFunction({ menu, className, style, withIco
                         <Popover
                             key={key}
                             component={
-                                <li style={style} {...itemProps} {...other}>
+                                <li style={style} disabled={disabled} {...itemProps} {...other}>
                                     {Component}
                                 </li>
                             }
@@ -135,8 +151,14 @@ export const Menu = memo(function MemoFunction({ menu, className, style, withIco
                 }
 
                 return (
-                    <li key={key} style={style} onClick={(e: any) => handleClick(item, e)} {...itemProps} {...other}>
-                        {href ? <Link href={href}>{Component}</Link> : Component}
+                    <li key={key} style={style} disabled={disabled} {...itemProps} {...other} onClick={(e: any) => handleClick(item, e)}>
+                        {href ? (
+                            <Link href={href} target={target}>
+                                {Component}
+                            </Link>
+                        ) : (
+                            Component
+                        )}
                     </li>
                 );
             })}

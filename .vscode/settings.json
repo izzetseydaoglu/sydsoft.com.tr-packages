@@ -9,7 +9,8 @@
         "**/.idea": false,
         "**/dist": false,
         "**/.next": true,
-        "**/.vscode": true
+        "**/.vscode": true,
+        "arsiv": true
     },
     "explorerExclude.backup": {}
 }
