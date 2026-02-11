@@ -1,8 +1,8 @@
 {
     "name": "@sydsoft/base",
     "private": false,
-    "version": "2.0.0",
-    "main": "./dist/esm/index.js",
+    "version": "2.2.1",
+    "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.js",
     "types": "./dist/esm/index.d.ts",
     "files": [
@@ -11,9 +11,10 @@
     ],
     "scripts": {
         "clean": "rm -rf ./dist",
-        "test": "rm -rf ../*.tgz && rm -rf ../.next && npm run build && npm pack --pack-destination ../ && cd ../ && npm uninstall @sydsoft/base && npm install *.tgz && npm run dev",
+        "test": "rm -rf ../*.tgz && npm run build && npm pack --pack-destination ../ && npm run clean",
         "copyFiles": "find . -name \"*.css\" -not -path \"./dist/*\" -exec sh -c 'for f do mkdir -p \"./dist/esm/$(dirname \"$f\")\"; cp \"$f\" \"./dist/esm/$f\"; done' sh {} +",
         "build": "npm run clean && tsc && npm run copyFiles",
+        "publishNPM": "npm run build && npm version patch && npm version minor && npm publish --dry-run && npm publish --access public && npm run clean",
         "publish:patch": "npm run build && npm version patch && npm publish --access public && npm run clean",
         "publish:minor": "npm run build && npm version minor && npm publish --access public && npm run clean",
         "publish:major": "npm run build && npm version major && npm publish --access public && npm run clean",
