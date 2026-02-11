@@ -1,7 +1,7 @@
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-10 20:25:31
+ * @version   : 2026-02-11 20:46:35
  */
 
 .button {
@@ -127,12 +127,15 @@
     border-radius: 50%;
     background-color: transparent;
     box-shadow: none;
-    color: #707274;
+    color: currentColor;
     /* overflow: unset; */
 }
 .iconbutton:focus,
 .iconbutton:hover {
     background-color: rgba(0, 0, 0, 0.04);
+}
+.iconbutton[disabled] {
+    box-shadow: none;
 }
 
 .ripple {

@@ -1,7 +1,7 @@
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-11 17:53:21
+ * @version   : 2026-02-11 22:01:16
  */
 
 import React, { useState } from 'react';
@@ -102,7 +102,7 @@ export const Col: React.FC<ColProps> = ({ children, className = '', style, xs, s
 
 // Hidden Component
 export interface HiddenProps {
-    children: React.ReactElement;
+    children: any;
     hidden?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
     onlyHidden?: ('xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl')[];
 }

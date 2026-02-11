@@ -1,15 +1,15 @@
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-10 20:23:07
+ * @version   : 2026-02-11 22:05:17
  */
 
-import React, { ReactElement, memo, useEffect } from "react";
+import React, { memo, useEffect } from "react";
 
 export type typeTooltipPosition = "top" | "bottom" | "left" | "right";
 
 interface Props {
-    children: ReactElement;
+    children: any;
     title: string;
     position?: typeTooltipPosition;
     arrow?: boolean;
