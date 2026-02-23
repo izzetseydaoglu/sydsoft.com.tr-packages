@@ -1,0 +1,514 @@
+/* Root Container */
+.root {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.root:global(.dragging) :global(.path[data-droppable='false']),
+.root:global(.dragging) :global(tr[data-droppable='false']) {
+    opacity: 0.4;
+}
+
+.root:global(.dragging) :global(.path.droppable .name) {
+    background: linear-gradient(0deg, #7be3e7, transparent);
+    border-radius: 14px;
+}
+
+.root:global(.dragging) :global(tr > td > .filename) {
+    width: max-content;
+    pointer-events: none;
+}
+
+.root:global(.dragging) :global(tr.droppable > td > .filename) {
+    background: linear-gradient(0deg, #7be3e7, transparent);
+    padding: 5px 10px;
+    width: max-content;
+    border-radius: 14px;
+    font-weight: 500;
+}
+
+.root:global(.dragging) :global(.filemanager_body.droppable tr.mainupload) {
+    background: linear-gradient(0deg, #7be3e7, transparent);
+}
+
+.root:global(.dragging) :global(.filemanager_body.droppable tr.mainupload .icon) {
+    transition: all 4s;
+    color: #47840a !important;
+}
+
+/* Body */
+.body {
+    position: relative;
+    overflow: auto;
+    flex: 1;
+}
+
+.body table {
+    width: 100%;
+    background: #fff;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.body table thead {
+    position: sticky;
+    top: -1px;
+    z-index: 1;
+    border-spacing: 0;
+}
+
+.body table thead tr th {
+    background: #fcfcfc;
+    box-shadow: inset 0 -1px 0 0 rgb(217 213 213);
+}
+
+.body table thead tr th :global(.th_div) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    background: #fcfcfc;
+    text-align: left;
+    padding: 10px;
+    white-space: nowrap;
+}
+
+.body table thead tr th :global(.th_div[data-sortable='true']) {
+    cursor: pointer;
+}
+
+.body table tbody > tr {
+    position: relative;
+    border-bottom: 1px #f4f4f4 solid;
+    user-select: none;
+    cursor: pointer;
+}
+
+.body table tbody > tr:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.body table tbody > tr:global(.selected) {
+    color: rgb(0, 0, 0);
+    box-shadow: none;
+    background: rgba(31, 149, 233, 0.26) !important;
+    border-bottom: 1px #c6e4f9 solid;
+}
+
+.body table tbody > tr:global(.selected) :global(.filename) {
+    color: #263047;
+}
+
+.body table tbody > tr > td {
+    vertical-align: middle;
+    text-align: left;
+    padding: 2px 10px;
+    white-space: nowrap;
+}
+
+.body table tbody > tr > td:first-child {
+    padding-left: 20px;
+}
+
+.body table tbody > tr > td:last-child {
+    padding-right: 20px;
+}
+
+.body table tbody > tr > td :global(.filename) {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 3px 0;
+    white-space: nowrap;
+    text-after-overflow: ellipsis;
+}
+
+.body table tbody > tr > td :global(.filename img) {
+    width: 24px;
+    height: auto;
+}
+
+.body :global(#selectionarea) {
+    display: none;
+    position: absolute;
+    background: #8dbfefad;
+}
+
+.body :global(.nofile) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    color: #263047;
+    font-size: 14px;
+}
+
+.body :global(.nofile img) {
+    width: 64px;
+    height: auto;
+}
+
+.body :global(.nofile .title) {
+    text-align: center;
+}
+
+.body :global(.mainupload) {
+    background: #f4f4f4;
+    color: #263047;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.body :global(.mainupload .content) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.body :global(.mainupload .content .message) {
+    text-align: center;
+}
+
+/* Header */
+.header {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 0;
+    padding: 5px 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.header :global(.seperator) {
+    width: 1px;
+    height: 30px;
+    background-color: #e0e0e0;
+}
+
+.header :global(.path_list) {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex: 1;
+    min-width: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    gap: 5px;
+    font-size: 14px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.header :global(.path_list::-webkit-scrollbar) {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.header :global(.path_list .path) {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.header :global(.path_list .path .name) {
+    padding: 5px;
+    color: #0d293e;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100px;
+    cursor: pointer;
+}
+
+.header :global(.path_list .path .name:last-child) {
+    font-weight: 500;
+    overflow: visible;
+    white-space: nowrap;
+    text-overflow: unset;
+    max-width: unset;
+}
+
+.header :global(.search) {
+    flex: 1;
+    margin: 0 10px;
+    max-width: 300px;
+}
+
+.header :global(.search input) {
+    padding: 5px 15px !important;
+}
+
+/* Header Menu */
+.headerMenu {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.headerMenu > :first-child {
+    margin-left: 10px;
+}
+
+.headerMenu > * {
+    cursor: pointer;
+}
+
+.headerMenu > *:hover {
+    color: #666;
+}
+
+.headerMenu > *:active {
+    color: #333;
+}
+
+.headerMenu > *:focus {
+    color: #333;
+}
+
+/* Context Menu */
+.contextMenu {
+    position: fixed;
+    max-width: 300px;
+    min-width: 200px;
+    background: #fff;
+    font-size: 13px;
+    color: #3c4043;
+    z-index: 111111;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 2px 4px -1px, rgba(0, 0, 0, 0.14) 0 4px 5px 0, rgba(0, 0, 0, 0.12) 0 1px 10px 0;
+    transition: height 267ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, margin-top 267ms cubic-bezier(0.4, 0, 0.2, 1), opacity 267ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: height, margin-top, opacity;
+    padding: 8px 0;
+}
+
+.contextMenu button {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    user-select: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    gap: 10px;
+    overflow: visible;
+    height: auto;
+    min-height: 32px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    text-align: left;
+    margin: 3px 0;
+}
+
+.contextMenu button:hover {
+    background: #f0f0f0;
+}
+
+.contextMenu button > :global(.icon) {
+    color: #707375;
+    flex: 0 0 auto;
+    min-width: 30px;
+    text-align: center;
+}
+
+.contextMenu button > :global(.name) {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.contextMenu button[disabled] :global(.icon) {
+    opacity: 0.5;
+}
+
+.contextMenu :global(.seperator_h) {
+    content: "";
+    border-top: 1px solid #ebebeb;
+    color: #dadce0;
+    margin: 3px 0;
+}
+
+/* Drag Preview */
+.cloneDrag {
+    position: fixed;
+    left: -5000px;
+    display: none;
+    padding: 10px;
+}
+
+.cloneDrag :global(.list) {
+    position: relative;
+}
+
+.cloneDrag :global(.file) {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 10px 20px;
+    background: #fff;
+    border: 1px #00000070 solid;
+}
+
+.cloneDrag :global(.file img) {
+    width: 24px;
+    height: auto;
+}
+
+.cloneDrag :global(.file span) {
+    font-size: 14px;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 200px;
+    margin-right: 10px;
+}
+
+.cloneDrag :global(.count) {
+    position: absolute;
+    right: -15px;
+    top: -15px;
+    background: #d22929f2;
+    color: #fff;
+    padding: 1px 7px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1;
+    border-radius: 8px;
+}
+
+/* Loading Overlay */
+.loadingOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f4f7faa6;
+    overflow: hidden;
+    border-radius: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loadingOverlay::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, rgb(183 190 199 / 2%) 0, rgb(182 190 198 / 19%) 20%, rgb(183 190 199 / 2%) 60%, rgb(184 192 200 / 1%));
+    animation: fileManagerShimmer 2s infinite;
+    content: "";
+}
+
+.loadingOverlay :global(.loading_spinner) {
+    position: relative;
+    margin: 6px;
+    width: 24px;
+    height: 24px;
+}
+
+.loadingOverlay :global(.loading_spinner)::before {
+    position: absolute;
+    display: block;
+    content: "";
+    z-index: 12;
+    top: 3px;
+    left: 3px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.loadingOverlay :global(.loading_spinner)::after {
+    position: absolute;
+    display: block;
+    content: "";
+    z-index: 11;
+    width: 18px;
+    height: 18px;
+    border-radius: 200px 0 0;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0) 0, rgba(69, 154, 215, 1) 50%, rgba(69, 154, 215, 1) 100%);
+    animation: fileManagerSpinner 0.5s linear infinite;
+}
+
+@keyframes fileManagerShimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes fileManagerSpinner {
+    0% {
+        transform-origin: 100% 100%;
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform-origin: 100% 100%;
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 600px) {
+    .header {
+        flex-wrap: wrap;
+        row-gap: 8px;
+    }
+
+    .header :global(.path_list) {
+        order: 1;
+        flex: 1 1 100%;
+    }
+
+    .header :global(.search) {
+        order: 2;
+        flex: 1 1 auto;
+        max-width: none;
+        margin: 0;
+    }
+
+    .headerMenu {
+        order: 3;
+        flex: 1 1 100%;
+        justify-content: flex-end;
+    }
+
+    .headerMenu > :first-child {
+        display: none;
+        margin-left: 0;
+    }
+}

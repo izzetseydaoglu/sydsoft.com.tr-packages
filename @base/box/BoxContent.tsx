@@ -4,9 +4,9 @@
  * @version   : 2026-02-10 20:23:07
  */
 
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 
-import styles from "./Box.module.css";
+import './Box.module.css';
 
 interface Props {
     className?: string;
@@ -17,7 +17,7 @@ interface Props {
 
 export const BoxContent = ({ className, style, padding, children }: Props) => {
     return (
-        <div className={`${styles.content} sbox_content ${className || ""}`} style={{ ...style, padding }}>
+        <div className={`sbox_content ${className || ''}`} style={{ ...style, padding }}>
             {children}
         </div>
     );

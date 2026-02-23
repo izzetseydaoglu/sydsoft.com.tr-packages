@@ -1,42 +1,50 @@
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-10 20:25:31
+ * @version   : 2026-02-19 23:53:35
  */
 
-.sbox {
+:global(.sbox) {
     position: relative;
     max-width: 100%;
     background-color: #fff;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+    box-shadow:
+        0 2px 4px rgb(0 0 0 / 10%),
+        0 8px 16px rgb(0 0 0 / 10%);
     border-radius: 8px;
     overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
 }
 
-.sbox h1,
-.sbox h2,
-.sbox h3,
-.sbox h4,
-.sbox h5,
-.sbox h6 {
+:global(.sbox) h1,
+:global(.sbox) h2,
+:global(.sbox) h3,
+:global(.sbox) h4,
+:global(.sbox) h5,
+:global(.sbox) h6 {
     margin: 0;
     padding: 0;
 }
 
-.content {
+:global(.sbox_content) {
     padding: 20px;
     box-sizing: border-box;
     overflow: auto;
+    flex: 1 1 auto;
 }
 
-.header,
-.footer {
+:global(.sbox_header),
+:global(.sbox_footer) {
     z-index: 1;
     position: sticky;
     padding: 12px 16px;
     background: inherit;
+    flex: 0 0 auto;
 }
-.header {
+
+:global(.sbox_header) {
     top: 0;
     border-bottom: 1px solid #00000020;
     display: flex;
@@ -44,9 +52,9 @@
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    /* margin: 10px 0 5px 0; */
 }
-.footer {
+
+:global(.sbox_footer) {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -58,32 +66,32 @@
     background-color: #f7f7f7;
 }
 
-.icon {
+:global(.sbox_icon) {
     display: inline-flex;
     align-items: center;
     flex: 0 0 auto;
     text-align: center;
-    
 }
 
-.title {
+:global(.sbox_title) {
     flex: 1;
     font-size: 1.1rem;
     font-weight: 500;
     line-height: 1.5;
 }
 
-.menu {
+:global(.sbox_menu) {
     display: inline-flex;
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
 }
-.menu > * {
+
+:global(.sbox_menu) > * {
     margin: 0 3px;
 }
 
-.loading {
+:global(.sbox_loading) {
     position: absolute;
     top: 0;
     left: 0;
@@ -98,7 +106,7 @@
     z-index: 9999;
 }
 
-.loading::after {
+:global(.sbox_loading)::after {
     position: absolute;
     top: 0;
     right: 0;
@@ -107,19 +115,20 @@
     transform: translateX(-100%);
     background: linear-gradient(90deg, rgb(183 190 199 / 2%) 0, rgb(182 190 198 / 19%) 20%, rgb(183 190 199 / 2%) 60%, rgb(184 192 200 / 1%));
     animation: shimmer 2s infinite;
-    content: "";
+    content: '';
 }
 
-.loading_spinner {
+:global(.sbox_loading_spinner) {
     position: relative;
     margin: 6px;
     width: 24px;
     height: 24px;
 }
-.loading_spinner:before {
+
+:global(.sbox_loading_spinner):before {
     position: absolute;
     display: block;
-    content: "";
+    content: '';
     z-index: 12;
     top: 3px;
     left: 3px;
@@ -129,10 +138,10 @@
     background-color: #fff;
 }
 
-.loading_spinner:after {
+:global(.sbox_loading_spinner):after {
     position: absolute;
     display: block;
-    content: "";
+    content: '';
     z-index: 11;
     width: 18px;
     height: 18px;
@@ -146,6 +155,7 @@
         transform: translateX(100%);
     }
 }
+
 @keyframes loading_spinner {
     0% {
         transform-origin: 100% 100%;

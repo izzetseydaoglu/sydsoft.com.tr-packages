@@ -1,12 +1,14 @@
+'use client';
+
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-11 18:48:47
+ * @version   : 2026-02-16 16:16:42
  */
 
-import React, { memo, useMemo } from 'react';
 import { Dialog, propsDialog } from '../form';
 import { Popover, PopoverConfigBaseProps } from '../popover';
+import React, { memo, useMemo } from 'react';
 
 import Link from 'next/link';
 import styles from './index.module.css';
@@ -48,6 +50,7 @@ interface ItemComponentProps extends BaseProps {
     href?: string;
     target?: '_blank' | '_self' | '_parent' | '_top';
     onClick?: (e: React.MouseEvent<HTMLLIElement>) => void;
+    closePopoverOnClick?: boolean;
     dialog?: propsDialog;
 }
 
@@ -91,11 +94,19 @@ export const Menu = memo(function MemoFunction({ menu, className, style, withIco
         return Object.values(menu).some((item) => 'rightComponent' in item && !!item.rightComponent);
     }, [menu]);
 
+    const closeAllPopovers = () => {
+        if (typeof window === 'undefined') return;
+        window.dispatchEvent(new MouseEvent('mousedown'));
+    };
+
     const handleClick = (item: any, e: any) => {
         if (item.disabled) {
             e.preventDefault();
             e.stopPropagation();
             return;
+        }
+        if (item?.closePopoverOnClick) {
+            closeAllPopovers();
         }
         if (!item.onClick) return;
 
@@ -113,10 +124,27 @@ export const Menu = memo(function MemoFunction({ menu, className, style, withIco
     return (
         <ul className={`smenu ${styles.ul} ${className || ''}`} style={style}>
             {Object.values(menu).map((item: typeMenu, key: number) => {
-                const { noRender, fullComponent, icon, title, rightComponent, seperator, href, target, style, itemProps, type, items, menuProps, subMenuPopoverProps, disabled, ...other } =
-                    item as typeMenu & {
-                        subMenuPopoverProps?: PopoverConfigBaseProps;
-                    };
+                const {
+                    noRender,
+                    fullComponent,
+                    icon,
+                    title,
+                    rightComponent,
+                    seperator,
+                    href,
+                    target,
+                    style,
+                    itemProps,
+                    type,
+                    items,
+                    menuProps,
+                    subMenuPopoverProps,
+                    disabled,
+                    closePopoverOnClick,
+                    ...other
+                } = item as typeMenu & {
+                    subMenuPopoverProps?: PopoverConfigBaseProps;
+                };
                 if (noRender) return null;
 
                 const hasSubmenu = type === 'submenu' && Array.isArray(items) && items.length > 0;

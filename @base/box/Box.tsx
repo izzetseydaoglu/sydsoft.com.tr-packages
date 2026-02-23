@@ -1,12 +1,12 @@
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-10 20:23:07
+ * @version   : 2026-02-19 23:44:42
  */
 
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from 'react';
 
-import styles from "./Box.module.css";
+import './Box.module.css';
 
 type Props = {
     children: React.ReactNode;
@@ -21,17 +21,17 @@ export const Box = memo(function MemoFunction({ children, className, style, load
     const [hasContent, setHasContent] = useState(false);
     useEffect(() => {
         if (!boxRef.current) return;
-        const found = boxRef.current.querySelector(".sbox_content");
+        const found = boxRef.current.querySelector('.sbox_content');
         setHasContent(!!found);
     }, [children]);
 
     return (
-        <div ref={boxRef} className={`sbox ${styles.sbox} ${className || ""}`} style={style}>
-            {(hasContent && children) || <div className={styles.content}>{children}</div>}
+        <div ref={boxRef} className={`sbox ${className || ''}`} style={style}>
+            {(hasContent && children) || <div className="sbox_content">{children}</div>}
 
             {loading && (
-                <div className={styles.loading}>
-                    <div className={styles.loading_spinner} />
+                <div className="sbox_loading">
+                    <div className="sbox_loading_spinner" />
                 </div>
             )}
         </div>

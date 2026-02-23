@@ -1,26 +1,28 @@
+'use client';
+
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-10 20:23:07
+ * @version   : 2026-02-22 03:15:23
  */
 
-import { Dialog, propsDialog } from "./Dialog";
-import React, { memo, useCallback, useEffect, useState } from "react";
-import { Tooltip, typeTooltipPosition } from "../tooltip";
+import { Dialog, propsDialog } from './Dialog';
+import React, { memo, useCallback, useEffect, useState } from 'react';
+import { Tooltip, typeTooltipPosition } from '../tooltip';
 
-import Link from "next/link";
-import styles from "./styles/Button.module.css";
+import Link from 'next/link';
+import styles from './styles/Button.module.css';
 
 interface Props {
     children?: React.ReactNode;
     onlyIcon?: React.ReactNode;
-    buttonClass?: "default" | "primary" | "secondary" | "success" | "danger" | "warning" | "info" | "light" | "dark" | "link";
-    buttonSize?: "small" | "medium" | "large";
+    buttonClass?: 'default' | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'light' | 'dark' | 'link';
+    buttonSize?: 'small' | 'medium' | 'large';
     autoFocus?: boolean;
     hidden?: boolean;
-    component?: "button" | "a" | "div" | any;
+    component?: 'button' | 'a' | 'div' | any;
     className?: string;
-    type?: "submit" | "reset" | "button";
+    type?: 'submit' | 'reset' | 'button';
     disabled?: boolean;
     fullWidth?: boolean;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -40,12 +42,12 @@ interface Props {
 
 export const Button = memo(function MemoFunction({
     children,
-    component = "button",
+    component = 'button',
     className,
-    buttonClass = "default",
-    buttonSize = "medium",
+    buttonClass = 'default',
+    buttonSize = 'medium',
     style,
-    type = "button",
+    type = 'button',
     fullWidth = false,
     onlyIcon,
     onClick,
@@ -62,7 +64,7 @@ export const Button = memo(function MemoFunction({
     const Comp = component;
     const ripple = (e: any): void => {
         const el = e.currentTarget;
-        const circle = document.createElement("span");
+        const circle = document.createElement('span');
         const diameter = Math.max(el.clientWidth, el.clientHeight);
         circle.style.width = circle.style.height = `${diameter}px`;
         circle.classList.add(styles.ripple);
@@ -85,22 +87,22 @@ export const Button = memo(function MemoFunction({
     };
 
     const createClassList = useCallback(() => {
-        const list = ["sbutton", styles.button];
+        const list = ['sbutton', styles.button];
         if (buttonClass) list.push(styles[buttonClass]);
         if (className) list.push(className);
         if (onlyIcon) list.push(styles.iconbutton);
         if (fullWidth) list.push(styles.fullwidth);
-        return list.join(" ");
+        return list.join(' ');
     }, [buttonClass, className, onlyIcon, fullWidth]);
 
     const [classList, setClassList] = useState<string>(() => createClassList());
 
     useEffect(() => {
-        const newClassList = createClassList().split(" ").filter(Boolean);
-        if (href && typeof window !== "undefined" && window.location.pathname === href) {
-            newClassList.push("active");
+        const newClassList = createClassList().split(' ').filter(Boolean);
+        if (href && typeof window !== 'undefined' && window.location.pathname === href) {
+            newClassList.push('active');
         }
-        setClassList(newClassList.join(" "));
+        setClassList(newClassList.join(' '));
     }, [href, createClassList]);
 
     let ortakProps = {
@@ -109,23 +111,21 @@ export const Button = memo(function MemoFunction({
         onClick: handleClick,
         tabIndex,
         autoFocus,
-        "data-button-size": (!onlyIcon)? buttonSize :null,
+        'data-button-size': !onlyIcon ? buttonSize : null,
         ...other
     };
-
-     
-
-
 
     let renderComponent;
     if (href !== undefined) {
         if (other?.hidden) {
             renderComponent = null;
         } else {
-            let checkHref = other?.disabled ? "#" : href;
+            let checkHref = other?.disabled ? '#' : href;
             renderComponent = (
-                <Link href={checkHref} target={other?.disabled ? "_self" : target}>
-                    <Comp {...ortakProps}>{onlyIcon ? onlyIcon : children}</Comp>
+                <Link href={checkHref} target={other?.disabled ? '_self' : target}>
+                    <Comp type="button" {...ortakProps}>
+                        {onlyIcon ? onlyIcon : children}
+                    </Comp>
                 </Link>
             );
         }

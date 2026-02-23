@@ -1,12 +1,12 @@
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-10 20:23:07
+ * @version   : 2026-02-19 23:44:23
  */
 
 import React, { ReactNode, memo } from 'react';
 
-import styles from './Box.module.css';
+import './Box.module.css';
 
 interface Props {
     children?: ReactNode;
@@ -26,24 +26,24 @@ export const BoxHeader = memo(function FunctionMemo({ children, className, title
     const Comp = component;
     return (
         <div
-            className={`sbox_header ${styles.header} ${className || ''}`}
+            className={`sbox_header ${className || ''}`}
             style={{
                 marginBottom,
                 ...mainStyle
             }}
         >
             {icon && (
-                <div className={styles.icon} style={iconStyle}>
+                <div className="sbox_icon" style={iconStyle}>
                     {icon}
                 </div>
             )}
 
-            <Comp className={`sbox_title ${styles.title}`} style={titleStyle}>
+            <Comp className="sbox_title" style={titleStyle}>
                 {children || title}
             </Comp>
 
             {menu && (
-                <div className={styles.menu} style={menuStyle}>
+                <div className="sbox_menu" style={menuStyle}>
                     {menu}
                 </div>
             )}
