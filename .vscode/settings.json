@@ -1,16 +1,15 @@
 {
     "files.exclude": {
         "**/.git": true,
-        "**/.svn": false,
-        "**/.hg": false,
-        "**/.DS_Store": false,
-        "**/Thumbs.db": false,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
         "**/node_modules": true,
-        "**/.idea": false,
-        "**/dist": false,
+        "**/.idea": true,
+        "**/dist": true,
         "**/.next": true,
-        "**/.vscode": true,
-        "arsiv": true
+        "**/.vscode": true
     },
     "explorerExclude.backup": {}
 }

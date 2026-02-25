@@ -1,33 +1,35 @@
 <?php
-   /**
- * Copyright (c) 2024
- *  @author: izzetseydaoglu
- *  @last-modified: 8.04.2024 01:35
+
+/**
+ * @author    : izzetseydaoglu
+ * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
+ * @version   : 2026-02-24 02:58:27
  */
 
-   use _slib_php\sMail\sMail;
-   use _slib_php\sSQL;
 
-   include_once $_SERVER["DOCUMENT_ROOT"] . "/_lib/index.php";
+use _sydSOFT_PHPBase\sMail\SYDMAIL;
+use _sydSOFT_PHPBase\SYDSQL;
 
-   $mainBase = new mainBase();
-   mainBase::$mainFunction = static function () {
-	  $sSQL = new sSQL();
-	  $mailcfg = $sSQL->getResult("_cfg_mail", ["id" => "1"], [], true);
+include_once $_SERVER["DOCUMENT_ROOT"] . "/_lib/index.php";
 
-	  $mail = new sMail($mailcfg);
+$mainBase = new MainBase();
+MainBase::$mainFunction = static function () {
+    $sSQL = new SYDSQL();
+    $mailcfg = $sSQL->getResult("_cfg_mail", ["id" => "1"], [], true);
 
-	  $veriler = [
-		 "senderName" => "İzzet SEYDAOĞLU",
-	  ];
-	  $mailTemplate = file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/emailtemplates/genel.html");
-	  foreach ($veriler as $key => $value) {
-		 $mailTemplate = str_replace('{{' . $key . '}}', $value, $mailTemplate);
-	  }
+    $mail = new SYDMAIL($mailcfg);
 
-	  if ($mail->mailGonder(["izzetseydaoglu@gmail.com"], date("d.m.y h:i:s"), $mailTemplate)) {
-		 mainBase::$return["mail"] = "ok";
-	  } else {
-		 mainBase::$return["mail"] = $mail->error;
-	  }
-   };
+    $veriler = [
+        "senderName" => "İzzet SEYDAOĞLU",
+    ];
+    $mailTemplate = file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/emailtemplates/genel.html");
+    foreach ($veriler as $key => $value) {
+        $mailTemplate = str_replace('{{' . $key . '}}', $value, $mailTemplate);
+    }
+
+    if ($mail->mailGonder(["izzetseydaoglu@gmail.com"], date("d.m.y h:i:s"), $mailTemplate)) {
+        MainBase::$return["mail"] = "ok";
+    } else {
+        MainBase::$return["mail"] = $mail->error;
+    }
+};

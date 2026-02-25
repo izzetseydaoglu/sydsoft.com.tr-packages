@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Copyright (c) 2024
- *  @author: izzetseydaoglu
- *  @last-modified: 01.10.2025 
+ * @author    : izzetseydaoglu
+ * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
+ * @version   : 2026-02-24 02:58:27
  */
 
-namespace _slib_php;
+namespace _sydSOFT_PHPBase;
 
-use mainBase;
+use MainBase;
 
-class sToken
+class SYDTOKEN
 {
-    public static string|null $secretKey = null;
-    public static array|null $encDecKeys = null;
+    public static ?string $secretKey = null;
+    public static ?array $encDecKeys = null;
 
     public function __construct()
     {
@@ -37,7 +37,7 @@ class sToken
 
     public function setLog($log, $title = null): void
     {
-        mainBase::setDebug($log, $title);
+        MainBase::setDebug($log, $title);
     }
 
     public static function setsecretKey(?string $secretKey): void
@@ -114,12 +114,9 @@ class sToken
         }
     }
 
-
-
     public function encData($data): string
     {
         $keys = self::$encDecKeys;
-
 
         try {
             // JS'teki gibi { data: value } sarmalaması
