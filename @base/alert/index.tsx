@@ -2,7 +2,7 @@
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-11 22:15:04
+ * @version   : 2026-04-30 13:28:58
  */
 
 import React, { useEffect } from "react";
@@ -126,8 +126,8 @@ export const alert_clear = () => {
 };
 
 export function alertCheck(response: any) {
-    if (response.data && response.data["alert"]) {
-        response.data["alert"].map(function (alert: any) {
+    if (response && response["alert"]) {
+        response["alert"].map(function (alert: any) {
             alert_add({
                 type: alert.type,
                 message: alert.message,

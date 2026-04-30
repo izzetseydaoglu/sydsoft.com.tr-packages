@@ -3,7 +3,7 @@
 /**
  * @author    : izzetseydaoglu
  * @copyright : sydSOFT Bilişim Hizmetleri (c) 2026
- * @version   : 2026-02-25 16:57:23
+ * @version   : 2026-03-03 23:48:02
  */
 
 namespace _sydSOFT_PHPBase;
@@ -12,7 +12,8 @@ class SYDFORM
 {
 	public function createForm($postAccept = [], $postExclude = []): array
 	{
-		$form = [];
+		//test
+        $form = [];
 		foreach ($_POST as $name => $value) {
 			if (count($postAccept) > 0) {
 				if (in_array($name, $postAccept, true)) {
@@ -32,13 +33,20 @@ class SYDFORM
 	public function checkFormRequired(string $requiredFieldsName = 'requiredfields'): bool
 	{
 		if ($requiredFieldsName === '' || !isset($_POST[$requiredFieldsName])) {
-			return false;
+			return true;
 		}
-		foreach (explode(',', $_POST[$requiredFieldsName]) as $name) {
-			if ($name !== '' && $_POST[$name] === '') {
+
+		foreach (explode(',', (string) $_POST[$requiredFieldsName]) as $name) {
+			$name = trim($name);
+			if ($name === '') {
+				continue;
+			}
+
+			if (!isset($_POST[$name]) || trim((string) $_POST[$name]) === '') {
 				return false;
 			}
 		}
+
 		return true;
 	}
 
